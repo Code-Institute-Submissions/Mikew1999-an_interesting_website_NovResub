@@ -1,0 +1,43 @@
+/* from Bulma */
+.icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.brand-icon {
+    font-size: xx-large!important;
+    margin-left: 2rem!important;
+}
+
+.secondary-nav {
+    width: 100vw;
+    margin-top: 10px;
+}
+
+.btn-outline-black{
+    border: 1px solid black;
+    width: 150px;
+}
+
+.btn-outline-black:hover, .btn-outline-black:focus {
+    border: none;
+    background-color: black;
+    color: white;
+}
+
+.profile-dropdown {
+    border: 1px solid black;
+}
+
+.full-screen {
+    height: calc(100vh - 200px);
+    width: 100vh;
+}
+
+.full-screen-image {
+    height: calc(100vh - 200px);
+    width: 100vh;
+}
