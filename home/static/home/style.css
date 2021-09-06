@@ -32,12 +32,17 @@
     border: 1px solid black;
 }
 
-.full-screen {
-    height: calc(100vh - 200px);
-    width: 100vh;
+.image-container {
+    height: calc(100vh - 85px);
+    width: 100vw;
+    position: absolute;
 }
 
 .full-screen-image {
-    height: calc(100vh - 200px);
-    width: 100vh;
+    position: relative;
+    background-image: url('mike-meyers-v8XaVfyo41Q-unsplash.jpg');
+    background-size: cover;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
 }
