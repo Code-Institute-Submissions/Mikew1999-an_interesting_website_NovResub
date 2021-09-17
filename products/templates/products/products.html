@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1 class="display-2 pl-2 mt-2 mb-4 text-center">All Products</h1>
+
+    <div class="text-center">
+        <a class="btn btn-outline-primary mb-2" onclick="showHideCategories()" >Categories</a>
+    </div>
+
+    <div class="categories-container text-center mt-4 mb-2">
+        <ul class="list-inline categories">
+            {% for category in categories %}
+                <li class="list-inline-item">
+                    <a class="btn btn-outline-primary" href="">{{ category.friendly_name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {% for item in products %}
+                <div class="col-lg-6 col">
+                    <h4 class="pb-2">{{ item.title }}</h4>
+
+                    <img class="product-image" src="{{ item.image }}" alt="Product Image">
+
+                    <p class="description">{{ item.description }}</p>
+
+                    <p class="rating">
+                        Rating: {{ item.rate }}
+                        <br>
+                        Number of reviews: {{ item.count }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+    <script type="text/javascript">
+    
+        $('.categories-container').css('display', 'none');
+        function showHideCategories() {
+            $('.categories-container').toggle();
+        }
+        
+    </script>
+{% endblock %}
