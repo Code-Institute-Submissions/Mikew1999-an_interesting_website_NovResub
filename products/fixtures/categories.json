@@ -1,0 +1,34 @@
+[
+    {
+        "pk": 1,
+        "model": "products.category",
+        "fields": {
+            "name": "electronics",
+            "friendly_name": "Electronics"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "products.category",
+        "fields": {
+            "name": "jewelery",
+            "friendly_name": "Jewelery"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "products.category",
+        "fields": {
+            "name": "mens_clothing",
+            "friendly_name": "Men's Clothing"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "products.category",
+        "fields": {
+            "name": "womens_clothing",
+            "friendly_name": "Women's Clothing"
+        }
+    }
+]

@@ -10,7 +10,9 @@
                     <div class="col">
                         <h4 class="mx-auto display-4 inner-header">Check out the new stuff yo</h4>
 
-                        <a href="{% url 'home' %}" class="mt-2 btn btn-outline-black products-button btn-xl">View products</a>
+                        <a id="show-products" class="mt-2 btn btn-outline-black products-button btn-xl">View products</a>
+
+                        <p id="data"></p>
                     </div>
                 </div>
             </h4>
@@ -23,5 +25,9 @@
     from <a
         href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2618897">Pixabay</a>
     -->
+
+
+{% block postloadjs %}
+{% endblock %}
 
 {% endblock %}
