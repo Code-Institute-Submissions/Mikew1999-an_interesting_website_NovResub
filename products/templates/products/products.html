@@ -6,6 +6,7 @@
 
 <div class="text-center">
     <a class="btn btn-sm btn-outline-primary" onclick="showHideCategories()">Categories</a>
+    <a class="btn btn-sm btn-outline-primary">Sort</a>
 </div>
 
 <div class="categories-container text-center mt-4">
@@ -23,13 +24,21 @@
     </form>
 </div>
 
+{% if selected %}
+    <p class="lead text-center">
+        {{ products.count }} products found from your search
+        "{{ selected }}"    
+    </p>
+{% endif %}
+
 <div class="container">
     <div class="row">
         {% for item in products %}
         <div class="col-12 col-lg-6">
-            <h4 class="pb-2">{{ item.title }}</h4>
 
             <img class="product-image" src="{{ item.image }}" alt="Product Image">
+
+            <h4 class="pb-2">{{ item.title }}</h4>
 
             <p class="description">{{ item.description }}</p>
 
