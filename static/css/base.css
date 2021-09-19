@@ -76,3 +76,8 @@ body {
 .categories-container {
     width: 100%;
 }
+
+.product-image {
+    width: 100%;
+    height: 400px;
+}
