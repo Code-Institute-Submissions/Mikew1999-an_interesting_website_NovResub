@@ -5,7 +5,8 @@ from django.db.models import Q
 
 def products(request):
     ''' A view to show all products '''
-    products = Products.objects.all()
+    sort = 'title'
+    products = Products.objects.all().order_by(sort)
     category_list = Category.objects.all()
     selected = None
     search = None
@@ -14,7 +15,7 @@ def products(request):
         if 'category' in request.GET:
             categories = request.GET.getlist('category')
             products = products.filter(category__name__in=categories)
-            selected = ', '.join(categories).capitalize()
+            selected = ', '.join(categories)
 
         if 'q' in request.GET:
             search = request.GET['q']
@@ -23,10 +24,16 @@ def products(request):
             products = products.filter(results)
             selected = str(search)
 
+        if 'sort' in request.GET:
+            sort = request.GET['sort']
+            products = Products.objects.all().order_by(sort)
+
+
     context = {
         'products': products,
         'categories': category_list,
         'selected': selected,
+        'sort': sort,
     }
 
     return render(

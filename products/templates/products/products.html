@@ -1,12 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_title %}
+    Products
+{% endblock %}
+
 {% block content %}
+
 <h1 class="display-4 pl-2 mt-2 mb-2 text-center">All Products</h1>
+
+{% if selected %}
+    <p class="lead text-center">
+        {{ products.count }} products found from your search
+        "{{ selected }}"
+        <br>
+        {% if sort != 'title' %}
+            Sorting by {{ sort }} <a href="{% url 'products' %}">Remove Sorting</a>
+        {% endif %}
+    </p>
+{% endif %}
+
 
 <div class="text-center">
     <a class="btn btn-sm btn-outline-primary" onclick="showHideCategories()">Categories</a>
-    <a class="btn btn-sm btn-outline-primary">Sort</a>
+    <a class="btn btn-sm btn-outline-primary" onclick="showHideSort()">Sort</a>
 </div>
 
 <div class="categories-container text-center mt-4">
@@ -24,12 +41,26 @@
     </form>
 </div>
 
-{% if selected %}
-    <p class="lead text-center">
-        {{ products.count }} products found from your search
-        "{{ selected }}"    
-    </p>
-{% endif %}
+<div class="sort-container text-center mt-4">
+    <form method="GET">
+        <label for="sort">Sorting</label>
+        <select class="form-select" name="sort" aria-label="Sort">
+            <option selected value="{{ sort }}">Product {{ sort }} ascending</option>
+            <option value="-title">Product title ascending</option>
+            <option value="category__name">Category descending</option>
+            <option value="-category__name">Category Ascending</option>
+            <option value="price">Price descending</option>
+        </select>
+        
+        <br>
+
+        <a href="{% url 'products' %}">Clear Sorting</a>
+
+        <br>
+
+        <input type="submit" value="Search">
+    </form>
+</div>
 
 <div class="container">
     <div class="row">
@@ -51,19 +82,19 @@
             <form class="form" action="" method="POST">
                 {% csrf_token %}
                 {% if user %}
-                {% if item.pk in user.liked %}
-                <a class="liked">
-                    <i class="fas fa-thumbs-up"></i>
-                </a>
+                    {% if item.pk in user.liked %}
+                        <a class="liked">
+                            <i class="fas fa-thumbs-up"></i>
+                        </a>
+                    {% else %}
+                        <a class="unliked">
+                            <i class="far fa-thumbs-up"></i>
+                        </a>
+                    {% endif %}
                 {% else %}
-                <a class="unliked">
-                    <i class="far fa-thumbs-up"></i>
-                </a>
-                {% endif %}
-                {% else %}
-                <a class="unliked">
-                    <i class="far fa-thumbs-up"></i>
-                </a>
+                    <a class="unliked">
+                        <i class="far fa-thumbs-up"></i>
+                    </a>
                 {% endif %}
             </form>
         </div>
@@ -75,9 +106,15 @@
 {% block postloadjs %}
 <script type="text/javascript">
     $('.categories-container').css('display', 'none');
+    $('.sort-container').css('display', 'none');
 
     function showHideCategories() {
         $('.categories-container').toggle();
     }
+
+    function showHideSort() {
+        $('.sort-container').toggle();
+    }
+
 </script>
 {% endblock %}
