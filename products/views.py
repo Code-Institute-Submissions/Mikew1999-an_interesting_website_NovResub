@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
 from .models import Products, Category
 from django.db.models import Q
 
@@ -10,6 +11,7 @@ def products(request):
     category_list = Category.objects.all()
     selected = None
     search = None
+    users = User.objects.all()
 
     if request.GET:
         if 'category' in request.GET:
@@ -33,6 +35,7 @@ def products(request):
         'categories': category_list,
         'selected': selected,
         'sort': sort,
+        'users': users,
     }
 
     return render(
@@ -45,9 +48,13 @@ def products(request):
 def productdetails(request, product_id):
     ''' A view to return details of the specified product '''
     product = get_object_or_404(Products, pk=product_id)
+    users = User.objects.all()
 
+    if 'sessionid' in request.session:
+        print("hello")
     context = {
         'product': product,
+        'users': users
     }
 
     return render(request, 'products/product_details.html', context)

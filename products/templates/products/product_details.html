@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_title %}
+    Products | {{ product.pk }}
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
             <h4>{{ product.title|title }}</h4>
 
-            <img src="{{ product.image }}" alt="">
+            <img src="{{ product.image }}" alt="Product image">
 
             <p>
                 Category: {{ product.category|title }}
