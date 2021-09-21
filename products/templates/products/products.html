@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_title %}
-    Products
+Products
 {% endblock %}
 
 {% block content %}
@@ -10,14 +10,14 @@
 <h1 class="display-4 pl-2 mt-2 mb-2 text-center">All Products</h1>
 
 {% if selected %}
-    <p class="lead text-center">
-        {{ products.count }} products found from your search
-        "{{ selected }}"
-        <br>
-        {% if sort != 'title' %}
-            Sorting by {{ sort }} <a href="{% url 'products' %}">Remove Sorting</a>
-        {% endif %}
-    </p>
+<p class="lead text-center">
+    {{ products.count }} products found from your search
+    "{{ selected }}"
+    <br>
+    {% if sort != 'title' %}
+    Sorting by {{ sort }} <a href="{% url 'products' %}">Remove Sorting</a>
+    {% endif %}
+</p>
 {% endif %}
 
 
@@ -50,15 +50,18 @@
             <option value="category__name">Category descending</option>
             <option value="-category__name">Category Ascending</option>
             <option value="price">Price descending</option>
+            <option value="-price">Price</option>
         </select>
-        
-        <br>
 
-        <a href="{% url 'products' %}">Clear Sorting</a>
+        <ul class="list-inline-group">
+            <li class="list-inline-item">
+                <a class="btn btn-sm" href="{% url 'products' %}">Clear Sorting</a>
+            </li>
+            <li class="list-inline-item">
+                <input class="btn btn-sm" type="submit" value="Search">
+            </li>
+        </ul>
 
-        <br>
-
-        <input type="submit" value="Search">
     </form>
 </div>
 
@@ -66,37 +69,42 @@
     <div class="row">
         {% for item in products %}
         <div class="col-12 col-lg-6">
+            <div class="card">
+                <img class="product-image" src="{{ item.image }}" alt="Product Image">
 
-            <img class="product-image" src="{{ item.image }}" alt="Product Image">
+                <div class="card-body">
+                    <div class="card-header">{{ item.title }}</div>
 
-            <h4 class="pb-2">{{ item.title }}</h4>
+                    <p class="description">{{ item.description }}</p>
 
-            <p class="description">{{ item.description }}</p>
+                    <a href="{% url 'productdetails' product_id=item.pk %}">Read More</a>
 
-            <p class="rating">
-                Rating: {{ item.rate }}
-                <br>
-                Number of reviews: {{ item.count }}
-            </p>
+                    <p class="rating">
+                        Rating: {{ item.rate }}
+                        <br>
+                        Number of reviews: {{ item.count }}
+                    </p>
 
-            <form class="form" action="" method="POST">
-                {% csrf_token %}
-                {% if user %}
-                    {% if item.pk in user.liked %}
+                    <form class="form" action="" method="POST">
+                        {% csrf_token %}
+                        {% if user %}
+                        {% if item.pk in user.liked %}
                         <a class="liked">
                             <i class="fas fa-thumbs-up"></i>
                         </a>
-                    {% else %}
+                        {% else %}
                         <a class="unliked">
                             <i class="far fa-thumbs-up"></i>
                         </a>
-                    {% endif %}
-                {% else %}
-                    <a class="unliked">
-                        <i class="far fa-thumbs-up"></i>
-                    </a>
-                {% endif %}
-            </form>
+                        {% endif %}
+                        {% else %}
+                        <a class="unliked">
+                            <i class="far fa-thumbs-up"></i>
+                        </a>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
         </div>
         {% endfor %}
     </div>
@@ -116,5 +124,19 @@
         $('.sort-container').toggle();
     }
 
+    function moreless() {
+        $('.description').each(function() {
+            // Finds item description
+            var itemDescription = ($(this).html());
+            // Finds length of description
+            var itemLength = itemDescription.length;
+            // Pulls the first 100 characters of description
+            var sub = itemDescription.substring(0, 101);
+            // sets description to first 100 characters
+            $(this).html(sub);
+        })
+    }
+
+    moreless();
 </script>
 {% endblock %}

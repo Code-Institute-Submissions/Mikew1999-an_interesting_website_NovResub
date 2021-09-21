@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h4>{{ product.title|title }}</h4>
+
+            <img src="{{ product.image }}" alt="">
+
+            <p>
+                Category: {{ product.category|title }}
+            </p>
+
+            <p>
+                {{ product.description }}
+            </p>
+
+            <p>
+                £{{ product.price }}
+            </p>
+
+            <p class="rating">
+                Rating: {{ product.rate }}
+                <br>
+                Number of reviews: {{ product.count }}
+            </p>
+
+        </div>
+    </div>
+{% endblock %}
