@@ -2,34 +2,118 @@
 {% load static %}
 
 {% block extra_title %}
-    Products | {{ product.pk }}
+Products | {{ product.pk }}
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <h4>{{ product.title|title }}</h4>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <!-- Title -->
+            <h4 class="text-center mt-2">{{ product.title|title }}</h4>
 
-            <img src="{{ product.image }}" alt="Product image">
-
+            <!-- Image -->
+            <a href="{{ product.image }}" target="_blank">
+                <img src="{{ product.image }}" alt="Product image">
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <p>
-                Category: {{ product.category|title }}
+                <form id="category-form" action="{% url 'products' %}">
+                    <label for="category">
+                        See More in:
+                    </label>
+                    <a id="category-button" class="btn btn-sm btn-outline-primary">
+                        {{ product.category.name|title }}
+                        <input type="hidden" name="category" value="{{ product.category.name }}">
+                    </a>
+                </form>
             </p>
-
+        </div>
+        <div class="col-12">
             <p>
                 {{ product.description }}
             </p>
-
-            <p>
-                £{{ product.price }}
-            </p>
-
-            <p class="rating">
-                Rating: {{ product.rate }}
-                <br>
-                Number of reviews: {{ product.count }}
-            </p>
-
         </div>
     </div>
+
+    <div class="mx-auto w-50">
+
+        <p>
+            <strong>Price: £<span id="price">{{ product.price }}</span></strong>
+        </p>
+
+        <p class="rating">
+            Rating: {{ product.rate }}
+            <br>
+            Number of reviews: {{ product.count }}
+        </p>
+
+        <form method="POST" action="{% url 'products' %}">
+            {% csrf_token %}
+            {% if product.has_sizes %}
+            <select name="size" id="size" class="mb-4">
+                <option selected value="">Please select a size</option>
+                <option value="xs">Extra Small</option>
+                <option value="s">Small</option>
+                <option value="m">Medium</option>
+                <option value="lg">Large</option>
+                <option value="xl">Extra Large</option>
+            </select>
+            {% endif %}
+            <div class="input-group mb-2 w-50">
+                <span class="input-group-text" id="minus"><i class="fas fa-minus"></i></span>
+                <input type="text" id="quantity" name="quantity" value="1" min="1" max="99" class="form-control"
+                    aria-label="Quantity">
+                <span class="input-group-text" id="plus"><i class="fas fa-plus"></i></span>
+            </div>
+            <p>
+                Total = £<span id="total"></span>
+                <input id="tot" name="tot" type="hidden">
+            </p>
+            <input class="form-control text-center mb-4 w-50 btn btn-outline-primary" type="submit" value="Add to cart">
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#category-button').click(function () {
+            $('#category-form').submit();
+        })
+
+        $('#minus').click(function () {
+            let value = parseInt($(this).next('#quantity').val());
+            if (value != 1) {
+                value -= 1;
+                $(this).next().val(value);
+                checkPrice();
+            }
+        })
+
+        $('#plus').click(function () {
+            let value = parseInt($(this).prev('#quantity').val());
+            if (value != 99) {
+                value += 1;
+                $(this).prev().val(value);
+                checkPrice();
+            }
+        })
+
+        function checkPrice() {
+            let price = parseFloat($('#price').html());
+            let quantity = parseInt($('#quantity').val());
+            let total = price * quantity;
+            $('#total').html(total.toString());
+            $('#tot').val(total);
+        }
+        checkPrice();
+    })
+</script>
 {% endblock %}

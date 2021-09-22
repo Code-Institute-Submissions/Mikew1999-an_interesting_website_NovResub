@@ -4,6 +4,10 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
+.w-10 {
+    width: 10vw;
+}
+
 .h-10 {
     height: 10vh;
 }
@@ -38,6 +42,10 @@ body {
 .btn-outline-black{
     border: 1px solid black;
     width: 150px;
+}
+
+.btn-outline-primary:hover {
+    color: white!important;
 }
 
 .btn-outline-black:hover, .btn-outline-black:focus {

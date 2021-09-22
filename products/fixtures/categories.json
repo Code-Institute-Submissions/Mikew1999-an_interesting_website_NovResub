@@ -30,5 +30,13 @@
             "name": "womens_clothing",
             "friendly_name": "Women's Clothing"
         }
+    },
+    {
+        "pk": 5,
+        "model": "products.category",
+        "fields": {
+            "name": "accessories",
+            "friendly_name": "accessories"
+        }
     }
 ]

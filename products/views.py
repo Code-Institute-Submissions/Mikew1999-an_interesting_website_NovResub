@@ -45,11 +45,11 @@ def products(request):
 def productdetails(request, product_id):
     ''' A view to return details of the specified product '''
     product = get_object_or_404(Products, pk=product_id)
+    price = product.price
 
-    if 'sessionid' in request.session:
-        print("hello")
     context = {
         'product': product,
+        'price': price,
     }
 
     return render(request, 'products/product_details.html', context)

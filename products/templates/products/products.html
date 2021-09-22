@@ -37,7 +37,7 @@
                 </label>
             </div>
         {% endfor %}
-        <input type="submit" value="Search">
+        <input class="mx-auto form-control btn-outline-primary w-10" type="submit" value="Search">
     </form>
 </div>
 
@@ -70,8 +70,10 @@
         {% for item in products %}
         <div class="col-12 col-lg-6 mt-2 mb-4">
             <div class="card">
-                <img class="product-image" src="{{ item.image }}" alt="Product Image">
-
+                <a href="{% url 'productdetails' product_id=item.pk %}">
+                    <img class="product-image" src="{{ item.image }}" alt="Product Image">
+                </a>
+                
                 <div class="card-body">
                     <div class="card-header h-10">{{ item.title }}</div>
 
@@ -136,7 +138,7 @@
             var itemDescription = ($(this).html());
             // Finds length of description
             var itemLength = itemDescription.length;
-            // Pulls the first 100 characters of description
+            // Pulls the first 150 characters of description
             var sub = itemDescription.substring(0, 150);
             // sets description to first 150 characters
             $(this).html(sub);

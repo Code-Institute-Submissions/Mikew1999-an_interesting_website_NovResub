@@ -19,6 +19,7 @@ class Products(models.Model):
         'Category', null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=150, null=False, blank=False)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    has_sizes = models.BooleanField(default=False)
     description = models.TextField()
     image = models.URLField(max_length=1024)
     rate = models.DecimalField(max_digits=2, decimal_places=1)

@@ -55,7 +55,7 @@
 
         <!-- Search form -->
         <span class="mx-auto">
-          <form class="form" action="" methods="GET">
+          <form class="form" action="{% url 'products' %}" methods="GET">
             <div class="input-group">
               <input class="form-control border border-black" type="text" name="q" placeholder="Search our site">
 
@@ -70,6 +70,14 @@
           </form>
         </span>
 
+        <span class="mr-2">
+          {% if total %}
+            {{ total }}
+          {% else %}
+            £0.00
+          {% endif %}
+          <i class="fas fa-shopping-cart"></i>
+        </span>
         {% if user.is_authenticated %}
           <span class="float-right">
             <div class="dropdown">
