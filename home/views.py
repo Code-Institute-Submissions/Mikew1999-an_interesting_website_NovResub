@@ -9,9 +9,8 @@ def index(request):
     if user.is_authenticated:
         username = request.user.username
 
-    print(username)
     context = {
         'username': username,
     }
 
-    return render(request, 'home/index.html')
+    return render(request, 'home/index.html', context)

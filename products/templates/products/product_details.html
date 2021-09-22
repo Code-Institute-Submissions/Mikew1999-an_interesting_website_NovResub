@@ -51,7 +51,7 @@ Products | {{ product.pk }}
             Number of reviews: {{ product.count }}
         </p>
 
-        <form method="POST" action="{% url 'shopping_bag' %}">
+        <form method="POST" action="{% url 'add_to_bag' product.pk %}">
             {% csrf_token %}
             {% if product.has_sizes %}
             <select name="size" id="size" class="mb-4">
@@ -73,6 +73,7 @@ Products | {{ product.pk }}
                 Total = £<span id="total"></span>
                 <input id="tot" name="tot" type="hidden">
             </p>
+            <input type="hidden" name="redirect_url" value="{{ request.path }}">
             <input class="form-control text-center mb-4 w-50 btn btn-outline-primary" type="submit" value="Add to cart">
         </form>
     </div>

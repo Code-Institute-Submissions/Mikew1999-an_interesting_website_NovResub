@@ -76,7 +76,9 @@
           {% else %}
             £0.00
           {% endif %}
-          <i class="fas fa-shopping-cart"></i>
+          <a href="{% url 'shopping_bag' %}">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
         </span>
         {% if user.is_authenticated %}
           <span class="float-right">

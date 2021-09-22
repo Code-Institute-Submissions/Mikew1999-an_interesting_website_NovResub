@@ -126,10 +126,16 @@
 
     function showHideCategories() {
         $('.categories-container').toggle();
+        if ($('.sort-container').css('display', 'block')) {
+            $('.sort-container').toggle();
+        }
     }
 
     function showHideSort() {
         $('.sort-container').toggle();
+        if ($('.categories-container').css('display', 'block')) {
+            $('.categories-container').toggle();
+        }
     }
 
     function moreless() {
