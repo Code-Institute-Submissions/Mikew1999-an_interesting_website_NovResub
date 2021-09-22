@@ -38,5 +38,69 @@
             "name": "accessories",
             "friendly_name": "accessories"
         }
+    },
+    {
+        "pk": 6,
+        "model": "products.category",
+        "fields": {
+            "name": "books",
+            "friendly_name": "books"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "products.category",
+        "fields": {
+            "name": "garden",
+            "friendly_name": "garden"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "products.category",
+        "fields": {
+            "name": "furniture",
+            "friendly_name": "furniture"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "products.category",
+        "fields": {
+            "name": "sport_outdoors",
+            "friendly_name": "Sports & Outdoors"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "products.category",
+        "fields": {
+            "name": "health_beauty",
+            "friendly_name": "Health & Beauty"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "products.category",
+        "fields": {
+            "name": "food_drinks",
+            "friendly_name": "Food & Drinks"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "products.category",
+        "fields": {
+            "name": "cd_dvd",
+            "friendly_name": "CD's & DVD's"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "products.category",
+        "fields": {
+            "name": "video_games",
+            "friendly_name": "Video Games"
+        }
     }
 ]

@@ -51,7 +51,7 @@ Products | {{ product.pk }}
             Number of reviews: {{ product.count }}
         </p>
 
-        <form method="POST" action="{% url 'products' %}">
+        <form method="POST" action="{% url 'shopping_bag' %}">
             {% csrf_token %}
             {% if product.has_sizes %}
             <select name="size" id="size" class="mb-4">
