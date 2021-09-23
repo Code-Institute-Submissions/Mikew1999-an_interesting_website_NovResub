@@ -6,6 +6,40 @@ Add Product
 {% endblock %}
 
 {% block content %}
-    {{ form }}
-    {{ csrf_token }}
+<div class="fieldWrapper mx-auto">
+    <table class="add-product-form mx-auto">
+        {% for field in form %}
+
+
+        <tr>
+            <td>
+                {{ field.errors }}
+            </td>
+        </tr>
+        {% if field.html_name in "description" %}
+        <tr>
+            <td>
+                {{ field.label_tag }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ field }}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td>
+                {{ field.label_tag }} {{ field }}
+            </td>
+        </tr>
+        {% endif %}
+
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}

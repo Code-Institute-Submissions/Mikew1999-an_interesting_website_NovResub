@@ -1,7 +1,11 @@
 from django.forms import ModelForm
 from .models import Products
 
+# Create the form class.
+
 
 class ProductForm(ModelForm):
-    model = Products
-    fields = ['title', 'price', 'has_sizes', 'description', 'image']
+    class Meta:
+        model = Products
+        fields = ['category', 'title', 'price', 'has_sizes',
+                  'description', 'image', 'rate', 'count']

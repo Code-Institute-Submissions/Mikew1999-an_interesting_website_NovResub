@@ -3,6 +3,8 @@ from .models import Products, Category
 from .forms import ProductForm
 from django.db.models import Q
 
+form = ProductForm()
+
 
 def products(request):
     ''' A view to show all products '''
@@ -41,7 +43,6 @@ def products(request):
         'selected': selected,
         'sort': sort,
         'username': username,
-        'form': form,
     }
 
     return render(
@@ -65,11 +66,8 @@ def productdetails(request, product_id):
 
 
 def add_product(request):
-    ''' A view to return the add product form '''
-    form = ProductForm()
-
+    ''' A view to return a create product form '''
     context = {
-        'form': form
+        'form': form,
     }
-
     return render(request, 'products/add_product.html', context)

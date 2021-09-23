@@ -8,6 +8,10 @@ body {
     width: 10vw;
 }
 
+.w-80 {
+    width: 80vw;
+}
+
 .h-10 {
     height: 10vh;
 }
