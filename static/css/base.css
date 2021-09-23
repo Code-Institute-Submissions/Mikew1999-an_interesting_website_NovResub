@@ -16,6 +16,10 @@ body {
     height: 15vh;
 }
 
+.clear-both {
+    clear: both;
+}
+
 .btn-container a {
     width: 150px;
 }
@@ -100,4 +104,8 @@ body {
 .product-image {
     width: 100%;
     height: 400px;
+}
+
+#plus:hover, #minus:hover {
+    cursor: pointer;
 }

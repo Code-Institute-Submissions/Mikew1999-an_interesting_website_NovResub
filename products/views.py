@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Products, Category
+from .forms import ProductForm
 from django.db.models import Q
 
 
@@ -10,6 +11,12 @@ def products(request):
     category_list = Category.objects.all()
     selected = None
     search = None
+    username = None
+    user = request.user
+ 
+    if user.is_authenticated:
+        username = request.user.username
+
 
     if request.GET:
         if 'category' in request.GET:
@@ -33,6 +40,8 @@ def products(request):
         'categories': category_list,
         'selected': selected,
         'sort': sort,
+        'username': username,
+        'form': form,
     }
 
     return render(
@@ -53,3 +62,14 @@ def productdetails(request, product_id):
     }
 
     return render(request, 'products/product_details.html', context)
+
+
+def add_product(request):
+    ''' A view to return the add product form '''
+    form = ProductForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'products/add_product.html', context)

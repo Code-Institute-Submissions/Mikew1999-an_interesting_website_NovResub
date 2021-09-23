@@ -11,12 +11,17 @@ Products | {{ product.pk }}
         <div class="col">
             <!-- Title -->
             <h4 class="text-center mt-2">{{ product.title|title }}</h4>
-
-            <!-- Image -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <!-- Image -->
+        <div class="col-8">
             <a href="{{ product.image }}" target="_blank">
-                <img src="{{ product.image }}" alt="Product image">
+                <img class="img-fluid" src="{{ product.image }}" alt="Product image">
             </a>
         </div>
+        <div class="col-2"></div>
     </div>
     <div class="row">
         <div class="col-12">
@@ -39,7 +44,7 @@ Products | {{ product.pk }}
         </div>
     </div>
 
-    <div class="mx-auto w-50">
+    <div class="w-50">
 
         <p>
             <strong>Price: £<span id="price">{{ product.price }}</span></strong>
@@ -63,7 +68,7 @@ Products | {{ product.pk }}
                 <option value="xl">Extra Large</option>
             </select>
             {% endif %}
-            <div class="input-group mb-2 w-50">
+            <div class="input-group mb-2">
                 <span class="input-group-text" id="minus"><i class="fas fa-minus"></i></span>
                 <input type="text" id="quantity" name="quantity" value="1" min="1" max="99" class="form-control"
                     aria-label="Quantity">
