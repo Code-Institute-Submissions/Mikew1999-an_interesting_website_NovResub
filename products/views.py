@@ -67,7 +67,29 @@ def productdetails(request, product_id):
 
 def add_product(request):
     ''' A view to return a create product form '''
+    username = None
+    user = request.user
+    file = 'No image'
+ 
+    if user.is_authenticated:
+        username = request.user.username
+
+    if request.POST:
+        if request.FILES:
+            file = request.FILES['image']
+
+        title = request.POST['title']
+        category = request.POST['category']
+        price = request.POST['price']
+        description = request.POST['description']
+        username = request.POST['username']
+        rate = None
+        count = None
+        print(f'Title: {title}, Description: {description}, Price: {price}, Category: {category}, Username: {username}, Image: {file} ')
+
     context = {
         'form': form,
+        'username': username,
     }
+
     return render(request, 'products/add_product.html', context)
