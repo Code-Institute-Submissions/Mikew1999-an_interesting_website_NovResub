@@ -5,8 +5,15 @@ from products.views import products
 # Create your views here.
 def shopping_bag(request):
     ''' A view to return the shopping bag '''
-    bag = request.session.get('bag', {})
-    return render(request, 'shopping_bag/shopping_bag.html', bag)
+    bag = request.session['bag']
+    products = Products.objects.all()
+    products_in_bag = products.filter()
+
+    context = {
+        'bag': bag,
+        'products': products,
+    }
+    return render(request, 'shopping_bag/shopping_bag.html', context)
 
 
 def add_to_bag(request, item_id):
@@ -26,8 +33,6 @@ def add_to_bag(request, item_id):
                 bag[item_id]['items_by_size'][size] += quantity
             else:
                 bag[item_id]['items_by_size'][size] = quantity
-                messages.success(
-                    request, f'Added size {size.upper()} {product.name} to your bag')
         else:
             bag[item_id] = {'items_by_size': {size: quantity}}
     else:

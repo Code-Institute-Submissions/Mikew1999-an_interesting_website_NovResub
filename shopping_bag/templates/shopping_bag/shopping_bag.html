@@ -6,5 +6,15 @@
 {% endblock %}
 
 {% block content %}
-    {{ bag }}
+    <ul>
+    {% for item in bag %}
+        <li>
+            
+        </li>
+        
+    {% empty %}
+        <li>Your bag is empty</li>
+        <li><a href="{% url 'products' %}">Continue Shopping</a></li>
+    {% endfor %}
+    </ul>
 {% endblock %}
