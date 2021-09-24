@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Products, Category
 from .forms import ProductForm
 from django.db.models import Q
@@ -70,9 +70,18 @@ def add_product(request):
     username = None
     user = request.user
     file = 'No image'
+    categories = Category.objects.all()
+    category_list = []
+
+    for category in categories:
+        category_list.append(category.friendly_name)
  
     if user.is_authenticated:
         username = request.user.username
+
+    if username == None:
+        return redirect('account_login')
+
 
     if request.POST:
         if request.FILES:
@@ -82,7 +91,6 @@ def add_product(request):
         category = request.POST['category']
         price = request.POST['price']
         description = request.POST['description']
-        username = request.POST['username']
         rate = None
         count = None
         print(f'Title: {title}, Description: {description}, Price: {price}, Category: {category}, Username: {username}, Image: {file} ')
@@ -90,6 +98,8 @@ def add_product(request):
     context = {
         'form': form,
         'username': username,
+        'category_list': category_list,
+        'categories': categories,
     }
 
     return render(request, 'products/add_product.html', context)

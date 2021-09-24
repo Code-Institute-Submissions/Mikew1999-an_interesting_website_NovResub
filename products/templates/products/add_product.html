@@ -30,11 +30,10 @@ Add Product
                         <label for="{{ form.category.id_for_label }}" class="form-label float-left">Category:</label>
                         <br>
                         <select class="form-select float-left" name="category" id="{{ form.category.id_for_label }}">
-                            {% for i in form.category %}
-                            <option value="{{ i.value }}">
-                                {{ i }}
-                            </option>
-
+                            {% for i in category_list %}
+                                <option value="{{ forloop.counter }}">
+                                    {{ i }}
+                                </option>
                             {% endfor %}
                         </select>
                         <br>
@@ -53,7 +52,7 @@ Add Product
                     <div class="mb-3">
                         {{ form.price.errors }}
                         <label for="{{ form.price.id_for_label }}" class="form-label float-left">Price:</label>
-                        <input class="form-control" type="number" name="price" id="{{ form.price.id_for_label }}">
+                        <input class="form-control" type="number" step=".01" name="price" id="{{ form.price.id_for_label }}">
                     </div>
                 </div>
                 <div class="fieldWrapper">

@@ -9,11 +9,9 @@
 
 <h1 class="display-4 pl-2 mt-2 mb-2 text-center">All Products</h1>
 
-{% if username %}
-    <div class="text-center">
-        <a href="{% url 'add_product' %}">Add a product</a>
-    </div>
-{% endif %}
+<div class="text-center">
+    <a href="{% url 'add_product' %}">Add a product</a>
+</div>
 
 {% if selected %}
     <p class="lead text-center">
