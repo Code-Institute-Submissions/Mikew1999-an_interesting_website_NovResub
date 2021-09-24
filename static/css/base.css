@@ -20,10 +20,6 @@ body {
     height: 15vh;
 }
 
-.clear-both {
-    clear: both;
-}
-
 .btn-container a {
     width: 150px;
 }
@@ -72,7 +68,6 @@ body {
     width: 100%;
     top: 0;
     left: 0;
-    background: url('/static/media/yaboi.jpg');
     z-index: -100;
 }
 

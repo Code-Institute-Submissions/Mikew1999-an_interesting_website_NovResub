@@ -6,59 +6,6 @@ Add Product
 {% endblock %}
 
 {% block content %}
-<!-- <div class="fieldWrapper mx-auto">
-    <table class="add-product-form mx-auto">
-        {% for field in form %}
-        {% if field.html_name in "image" %}
-        <tr>
-            <td>
-                {{ field.errors }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{ field.label_tag }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="file" name="{{ field.name }}" class="{{ field.name }}" id="id_{{ field.name }}">
-            </td>
-        </tr>
-        {% endif %}
-
-        <tr>
-            <td>
-                {{ field.errors }}
-            </td>
-        </tr>
-        {% if field.html_name in "description" %}
-        <tr>
-            <td>
-                {{ field.label_tag }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{ field }}
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td>
-                {{ field.label_tag }} {{ field }}
-            </td>
-        </tr>
-        {% endif %}
-
-        {% if field.help_text %}
-        <p class="help">{{ field.help_text|safe }}</p>
-        {% endif %}
-
-        {% endfor %}
-    </table>
-</div> -->
-
 <div class="container text-center">
     <div class="row">
         <div class="col">
@@ -70,35 +17,58 @@ Add Product
             <form action="{% url 'add_product' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
-                <div class="fieldWrapper float-left mt-4">
-                    {{ form.subject.errors }}
-                    <label for="{{ form.title.id_for_label }}">Title / Name:</label>
-                    {{ form.title }}
+                <div class="fieldWrapper mt-4">
+                    <div class="mb-3">
+                        {{ form.title.errors }}
+                        <label for="{{ form.title.id_for_label }}" class="form-label float-left">Title / Name:</label>
+                        <input class="form-control" type="text" name="title" id="{{ form.title.id_for_label }}">
+                    </div>
                 </div>
-                <div class="fieldWrapper float-left">
-                    {{ form.category.errors }}
-                    <label for="{{ form.category.id_for_label }}">Category</label>
-                    {{ form.category }}
+                <div class="fieldWrapper">
+                    <div class="mb-3">
+                        {{ form.category.errors }}
+                        <label for="{{ form.category.id_for_label }}" class="form-label float-left">Category:</label>
+                        <br>
+                        <select class="form-select float-left" name="category" id="{{ form.category.id_for_label }}">
+                            {% for i in form.category %}
+                            <option value="{{ i.value }}">
+                                {{ i }}
+                            </option>
+
+                            {% endfor %}
+                        </select>
+                        <br>
+                    </div>
                 </div>
-                <div class="fieldWrapper float-left">
-                    {{ form.description.errors }}
-                    <label for="{{ form.description.id_for_label }}">Product Description: </label>
-                    <p>
-                        {{ form.description }}
-                    </p>
+                <div class="fieldWrapper">
+                    <div class="mb-3">
+                        {{ form.description.errors }}
+                        <label for="{{ form.description.id_for_label }}" class="form-label float-left">Product
+                            Description:</label>
+                        <textarea class="form-control" name="description" id="{{ form.description.id_for_label }}"
+                            rows="3"></textarea>
+                    </div>
                 </div>
-                <div class="fieldWrapper float-left">
-                    {{ form.price.errors }}
-                    <label for="{{ form.price.id_for_label }}">Price: </label>
-                    £ {{ form.price }}
+                <div class="fieldWrapper">
+                    <div class="mb-3">
+                        {{ form.price.errors }}
+                        <label for="{{ form.price.id_for_label }}" class="form-label float-left">Price:</label>
+                        <input class="form-control" type="number" name="price" id="{{ form.price.id_for_label }}">
+                    </div>
                 </div>
-                <div class="fieldWrapper float-left">
-                    <label for="{{ form.image.id_for_label }}">Product Image: </label>
-                    <input type="file" name="image" id="{{ form.image.id_for_label }}">
+                <div class="fieldWrapper">
+                    <div class="mb-3">
+                        {{ form.image.errors }}
+                        <label for="{{ form.image.id_for_label }}" class="form-label float-left">Product Image:</label>
+                        <input type="file" class="float-left" name="image" id="{{ form.image.id_for_label }}">
+
+                        <br>
+                    </div>
                 </div>
-                <div class="fieldWrapper float-left">
-                    <input type="hidden" name="username" value="{{ username }}">
-                    <input type="submit" value="Add product">
+                <div class="fieldWrapper">
+                    <div class="mb-3 text-center">
+                        <input class="btn btn-primary" type="submit" value="Add product">
+                    </div>
                 </div>
             </form>
         </div>
@@ -106,6 +76,7 @@ Add Product
 </div>
 {% endblock %}
 
-{% block postload_js %}
-
+{% block postloadjs %}
+<script type="text/javascript">
+</script>
 {% endblock %}
