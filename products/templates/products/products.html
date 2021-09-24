@@ -114,7 +114,14 @@
                     <div class="button-group text-center">
                         <a class="btn btn-primary text-white">Add to bag</a>
                     </div>
-
+                    <p>
+                        <form class="author-form" action="{% url 'products' %}" method="GET">
+                            <a class="author-button">
+                                Author / Owner: {{ item.author }}
+                                <input type="hidden" name="author" value="{{ item.author }}">
+                            </a>
+                        </form>
+                    </p>
                 </div>
             </div>
         </div>
@@ -154,6 +161,10 @@
             $(this).html(sub);
         })
     }
+
+    $('.author-button').click(function(){
+        $(this).prev('.author-form').submit();
+    })
 
     moreless();
 </script>

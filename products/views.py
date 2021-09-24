@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Products, Category
 from .forms import ProductForm
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 form = ProductForm()
 
@@ -15,10 +16,13 @@ def products(request):
     search = None
     username = None
     user = request.user
- 
+
     if user.is_authenticated:
         username = request.user.username
 
+    if 'author' in request.GET:
+        author = request.GET['author']
+        products = products.filter(author__in=author)
 
     if request.GET:
         if 'category' in request.GET:
@@ -66,38 +70,59 @@ def productdetails(request, product_id):
 
 
 def add_product(request):
-    ''' A view to return a create product form '''
-    username = None
+    ''' 
+    A view to return a create and render the add product form 
+    and handle users response
+    '''
     user = request.user
     file = 'No image'
     categories = Category.objects.all()
     category_list = []
+    if user.is_authenticated:
+        user_id = user.id
+        username = user.username
 
+    # Loops over the friendly names in categories model
     for category in categories:
         category_list.append(category.friendly_name)
- 
-    if user.is_authenticated:
-        username = request.user.username
 
+    # If user is not logged in, re-direct user to login page
+    # And show message telling user to login.
     if username == None:
         return redirect('account_login')
 
-
+    # Handles form response
     if request.POST:
         if request.FILES:
             file = request.FILES['image']
-
+        image = None
         title = request.POST['title']
-        category = request.POST['category']
+        category_input = request.POST['category']
+        category_object = Category(category_input)
         price = request.POST['price']
         description = request.POST['description']
         rate = None
         count = None
-        print(f'Title: {title}, Description: {description}, Price: {price}, Category: {category}, Username: {username}, Image: {file} ')
+        has_sizes = None
+
+        products = Products.objects.all()
+        ids = []
+        for x in products:
+            ids.append(x.id)
+
+        last_id = ids[-1]
+
+        author = User(user_id)
+
+        p = Products(title=title, price=price, description=description,
+                     rate=0, count=0, category=category_object, image=image,
+                     has_sizes=has_sizes, author=author)
+        p.save()
+
+        return redirect('productdetails', product_id=p.pk)
 
     context = {
         'form': form,
-        'username': username,
         'category_list': category_list,
         'categories': categories,
     }
