@@ -62,6 +62,10 @@ Add Product
                         <input type="file" class="float-left" name="image" id="{{ form.image.id_for_label }}">
 
                         <br>
+                        <input type="hidden" name="has_sizes" value="0">
+                        <input type="hidden" name="rate" value="0">
+                        <input type="hidden" name="count" value="0">
+                        <input type="hidden" name="author" value="{{ user_id }}">
                     </div>
                 </div>
                 <div class="fieldWrapper">

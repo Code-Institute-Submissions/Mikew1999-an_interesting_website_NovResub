@@ -75,6 +75,8 @@ def add_product(request):
     and handle users response
     '''
     user = request.user
+    user_id = None
+    form = ProductForm()
     file = 'No image'
     categories = Category.objects.all()
     category_list = []
@@ -93,38 +95,49 @@ def add_product(request):
 
     # Handles form response
     if request.POST:
-        if request.FILES:
-            file = request.FILES['image']
-        image = None
-        title = request.POST['title']
-        category_input = request.POST['category']
-        category_object = Category(category_input)
-        price = request.POST['price']
-        description = request.POST['description']
-        rate = None
-        count = None
-        has_sizes = None
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            image = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            title = form.cleaned_data['title']
+            category_input = form.cleaned_data['category']
+            category_object = Category(category_input)
+            price = form.cleaned_data['price']
+            description = form.cleaned_data['description']
 
-        products = Products.objects.all()
-        ids = []
-        for x in products:
-            ids.append(x.id)
+            rate = form.cleaned_data['rate']
+            count = form.cleaned_data['count']
+            has_sizes = form.cleaned_data['has_sizes']
 
-        last_id = ids[-1]
+            products = Products.objects.all()
 
-        author = User(user_id)
+            ids = []
+            for x in products:
+                ids.append(x.pk)
 
-        p = Products(title=title, price=price, description=description,
-                     rate=0, count=0, category=category_object, image=image,
-                     has_sizes=has_sizes, author=author)
-        p.save()
+            new_id = int(ids[-1]) + 1
 
-        return redirect('productdetails', product_id=p.pk)
+            print(f'New id = {new_id}')
+
+            author = User(user_id)
+
+            new_product = Products(title=title, image=image, category=category_input, price=price, description=description, rate=rate, count=count,
+                                   has_sizes=has_sizes, author=author)
+
+            new_product.save()
+        # author = User(user_id)
+
+        # p = Products(title=title, price=price, description=description,
+        #              rate=0, count=0, category=category_object, image=image,
+        #              has_sizes=has_sizes, author=author)
+        # p.save()
+
+        return redirect('products')
 
     context = {
         'form': form,
         'category_list': category_list,
         'categories': categories,
+        'user_id': user_id,
     }
 
     return render(request, 'products/add_product.html', context)
