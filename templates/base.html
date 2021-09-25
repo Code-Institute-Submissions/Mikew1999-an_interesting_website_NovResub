@@ -40,11 +40,13 @@
 <body>
   <!-- Header -->
   {% block header %}
-  <nav class="navbar navbar-expand-lg bg-light navbar-light">
+  <nav class="navbar navbar-expand-md bg-light navbar-light">
     <div class="container-fluid">
 
       <!-- Logo from https://fontawesome.com/v5.15/icons -->
-      <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-dragon"></i> Game place</a>
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="https://img.icons8.com/external-tulpahn-flat-tulpahn/48/000000/external-gift-ecology-tulpahn-flat-tulpahn.png"/>
+      </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
         aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +74,7 @@
 
         <span class="mr-2">
           {% if total %}
-            {{ total }}
+            £{{ total }}
           {% else %}
             £0.00
           {% endif %}

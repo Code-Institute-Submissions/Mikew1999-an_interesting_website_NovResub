@@ -76,6 +76,7 @@ def add_product(request):
     '''
     user = request.user
     user_id = None
+    username = None
     form = ProductForm()
     file = 'No image'
     categories = Category.objects.all()
