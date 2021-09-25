@@ -2,19 +2,34 @@
 {% load static %}
 
 {% block extra_title %}
-    Shopping bag
+Shopping bag
 {% endblock %}
 
 {% block content %}
-    <ul>
-    {% for item in bag %}
-        <li>
-            
-        </li>
-        
-    {% empty %}
-        <li>Your bag is empty</li>
-        <li><a href="{% url 'products' %}">Continue Shopping</a></li>
-    {% endfor %}
-    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4">Shopping Bag</h1>
+            </div>
+        </div>
+        {% for item in products %}
+            <div class="row mt-4">
+                <div class="offset-2 col-6">
+                    <p class="float-right">{{ item.title|title }}</p>
+                </div>
+                <div class="col-4">
+                    <img class="img-thumbnail" style="height: 125px; width: 125px;" src="{{ item.image }}" alt="Product Image">
+                </div>
+            </div>
+
+
+        {% empty %}
+            <div class="row mt-4">
+                <div class="col">
+                    <p>Your bag is empty</p>
+                <p><a href="{% url 'products' %}">Continue Shopping</a></p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

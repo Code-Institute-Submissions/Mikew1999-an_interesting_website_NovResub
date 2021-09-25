@@ -2,16 +2,22 @@ from django.shortcuts import render, redirect, get_object_or_404
 from products.models import Products
 from products.views import products
 
+
 # Create your views here.
 def shopping_bag(request):
     ''' A view to return the shopping bag '''
-    bag = request.session['bag']
+    bag = request.session.get('bag', {})
     products = Products.objects.all()
-    products_in_bag = products.filter()
+    items = []
+
+    for i in list(bag.keys()):
+        items.append(i)
+
+    products_in_bag = products.filter(pk__in=items)
 
     context = {
         'bag': bag,
-        'products': products,
+        'products': products_in_bag,
     }
     return render(request, 'shopping_bag/shopping_bag.html', context)
 
@@ -42,5 +48,4 @@ def add_to_bag(request, item_id):
             bag[item_id] = quantity
 
     request.session['bag'] = bag
-    print(bag)
     return redirect(redirect_url)

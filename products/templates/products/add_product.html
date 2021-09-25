@@ -21,7 +21,7 @@ Add Product
                     <div class="mb-3">
                         {{ form.title.errors }}
                         <label for="{{ form.title.id_for_label }}" class="form-label float-left">Title / Name:</label>
-                        <input class="form-control" type="text" name="title" id="{{ form.title.id_for_label }}">
+                        <input required aria-required="true" class="form-control" type="text" name="title" id="{{ form.title.id_for_label }}">
                     </div>
                 </div>
                 <div class="fieldWrapper">
@@ -30,7 +30,7 @@ Add Product
                         <label for="{{ form.category.id_for_label }}" class="form-label float-left">Category:</label>
                     </div>
                     <div class="mb-3">
-                        <select class="form-select ml-2 float-left" name="category" id="{{ form.category.id_for_label }}">
+                        <select required aria-required="true" class="form-select ml-2 float-left" name="category" id="{{ form.category.id_for_label }}">
                             {% for i in category_list %}
                                 <option value="{{ forloop.counter }}">
                                     {{ i }}
@@ -46,7 +46,7 @@ Add Product
                         {{ form.description.errors }}
                         <label for="{{ form.description.id_for_label }}" class="form-label float-left">Product
                             Description:</label>
-                        <textarea class="form-control" name="description" id="{{ form.description.id_for_label }}"
+                        <textarea required aria-required="true" class="form-control" name="description" id="{{ form.description.id_for_label }}"
                             rows="3"></textarea>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ Add Product
                     <div class="input-group mb-2">
                         {{ form.price.errors }}
                         <span class="input-group-text">£</span>
-                        <input class="form-control" type="number" step=".01" name="price" id="{{ form.price.id_for_label }}">
+                        <input required aria-required="true" class="form-control" type="number" step=".01" name="price" id="{{ form.price.id_for_label }}">
                     </div>
                 </div>
                 <div class="fieldWrapper">

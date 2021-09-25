@@ -3,6 +3,7 @@ from .models import Products, Category
 from .forms import ProductForm
 from django.db.models import Q
 from django.contrib.auth.models import User
+from an_interesting_site import settings
 
 form = ProductForm()
 
@@ -74,6 +75,8 @@ def add_product(request):
     A view to return a create and render the add product form 
     and handle users response
     '''
+    categories_with_sizes = settings.categories_with_sizes
+    print(categories_with_sizes)
     user = request.user
     user_id = None
     username = None
@@ -125,12 +128,6 @@ def add_product(request):
                                    has_sizes=has_sizes, author=author)
 
             new_product.save()
-        # author = User(user_id)
-
-        # p = Products(title=title, price=price, description=description,
-        #              rate=0, count=0, category=category_object, image=image,
-        #              has_sizes=has_sizes, author=author)
-        # p.save()
 
         return redirect('products')
 
@@ -139,6 +136,7 @@ def add_product(request):
         'category_list': category_list,
         'categories': categories,
         'user_id': user_id,
+        'categories_with_sizes': categories_with_sizes,
     }
 
     return render(request, 'products/add_product.html', context)
