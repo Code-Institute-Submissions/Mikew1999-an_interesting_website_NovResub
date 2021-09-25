@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from products.models import Category, Products
+from shopping_bag.views import shopping_bag
 
 
 def index(request):
