@@ -101,6 +101,7 @@ def add_product(request):
     if request.POST:
         form = ProductForm(request.POST)
         if form.is_valid():
+            # 
             image = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
             title = form.cleaned_data['title']
             category_input = form.cleaned_data['category']
@@ -113,14 +114,6 @@ def add_product(request):
             has_sizes = form.cleaned_data['has_sizes']
 
             products = Products.objects.all()
-
-            ids = []
-            for x in products:
-                ids.append(x.pk)
-
-            new_id = int(ids[-1]) + 1
-
-            print(f'New id = {new_id}')
 
             author = User(user_id)
 
