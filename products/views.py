@@ -4,6 +4,7 @@ from .forms import ProductForm
 from django.db.models import Q
 from django.contrib.auth.models import User
 from an_interesting_site import settings
+from reviews.models import Review
 
 form = ProductForm()
 
@@ -61,10 +62,12 @@ def productdetails(request, product_id):
     ''' A view to return details of the specified product '''
     product = get_object_or_404(Products, pk=product_id)
     price = product.price
+    reviews = Review.objects.filter(product_id=product_id)
 
     context = {
         'product': product,
         'price': price,
+        'reviews': reviews,
     }
 
     return render(request, 'products/product_details.html', context)
