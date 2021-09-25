@@ -1,6 +1,65 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_title %}
+Review
+{% endblock %}
+
 {% block content %}
-    Hi
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-3">Leave a Review for item:</h1>
+            <h4>{{ product.0 }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form method="POST" action="{% url 'review' product_id=product_id %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="fieldWrapper mt-4">
+                    <div class="mb-3">
+                        {{ form.title.errors }}
+                        <label for="{{ form.title.id_for_label }}" class="form-label float-left">Title Of
+                            review:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="title"
+                            id="{{ form.title.id_for_label }}">
+                    </div>
+                </div>
+                <div class="fieldWrapper">
+                    <div class="mb-3">
+                        {{ form.review_description.errors }}
+                        <label for="{{ form.review_description.id_for_label }}" class="form-label float-left">Review
+                            Description:</label>
+                        <textarea required aria-required="true" class="form-control" name="review_description"
+                            id="{{ form.review_description.id_for_label }}" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="fieldWrapper">
+                    <div class="mb-3">
+                        <label for="{{ form.rating.id_for_label }}" class="form-label mr-2 float-left">Rating:</label>
+                        
+                        <span>
+                            <select class="form-select float-left" name="rating" id="{{ form.rating.id_for_label }}">
+                                <option value="1">1 / 5</option>
+                                <option value="2">2 / 5</option>
+                                <option value="3">3 / 5</option>
+                                <option value="4">4 / 5</option>
+                                <option value="5">5 / 5</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+                <div class="fieldWrapper">
+                    <div class="mb-3">
+                        <br>
+                        <br>
+                        <input class="float-left btn btn-primary" type="submit" value="Submit review">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
