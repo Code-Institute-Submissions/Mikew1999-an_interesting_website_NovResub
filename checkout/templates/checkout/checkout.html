@@ -71,31 +71,43 @@ Checkout
     </div>
 
     <div class="row">
-        <div class="col">
-
+        <div class="col text-center">
+        
         {% if total > 75 %}
-                <p class="text-center">Delivery fee: £0.00</p>
+                <p>Delivery fee: £0.00</p>
+        {% else %}
+            {% if delivery_cost %}
+                <p> 
+                    {% if delivery_cost == 5 %}
+                        Standard Delivery (3 - 5 Working Days): £{{ delivery_cost }}
+                    {% else %}
+                        Next Day Delivery: £{{ delivery_cost }}
+                    {% endif %}
+                    <br>
+                    <a class="btn btn-primary" href="">Change Delivery Method</a>
+                </p>
             {% else %}
-                <form action="{% url 'checkout' %}" method="POST">
+                <form id="delivery-form" action="{% url 'checkout' %}" method="POST">
                     {% csrf_token %}
-                    <p>Please Select a Delivery Option</p>
-                    <div>
-                        <input class="form-check-input" type="radio" id="delivery" name="standard_delivery" value="{{ standard_delivery }}" checked>
-                        <label class="form-check-label" for="delivery">
-                          Standard Delivery (3 - 5 Working Days): £{{ standard_delivery }}
-                        </label>
-                    </div>
-                    <div>
-                        <input class="form-check-input" type="radio" id="delivery" name="next_day_delivery" value="{{ next_day_delivery }}">
-                        <label class="form-check-label" for="delivery">
-                          Standard Delivery (3 - 5 Working Days): £{{ next_day_delivery }}
-                        </label>
-                      </div>
-                      <button class="btn btn-primary" type="submit">Set Delivery Option</button>
+                    <p>Please Select a Delivery Option
+                        <span>
+                            <select required aria-required="true" name="delivery" id="delivery" class="mb-4">
+                                <option selected value="{{ standard_delivery }}">Standard Delivery (3 - 5 Working Days): £{{ standard_delivery }}</option>
+                                <option value="{{ next_day_delivery }}">Next Day Delivery: £{{ next_day_delivery }}</option>
+                            </select>
+                        </span>
+                    </p>
                 </form>
             {% endif %}
+        {% endif %}
         </div>
         
+    </div>
+
+    <div class="row">
+        <div class="col text-center">
+            <h4>Grand Total: {% if delivery_cost %}£{{ total|add:delivery_cost }}{% else %}£{{ total }}{% endif %}</h4>
+        </div>
     </div>
 
     <div class="row mt-4">
@@ -131,14 +143,18 @@ Checkout
         </table>
     </div>
     <div class="row">
-        <div class="col text-center">
+        <div class="col text-center button-group">
             <a class="btn btn-info" href="">Edit Delivery Details</a>
+            <a class="btn btn-primary" href="{% url 'bank_details' %}">Proceed With Checkout</a>
         </div>
+    </div>
+    <div class="row">
+        <a href=""></a>
     </div>
     {% else %}
     <div class="row">
         <div class="col">
-            <form method="POST" action="{% url 'checkout' }">
+            <form method="POST" action="{% url 'checkout' %}">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label class="form-label" for="address_1">Address Line 1:</label>
@@ -165,22 +181,26 @@ Checkout
                         class="form-control" required aria-required="true" type="text" name="post_code">
                 </div>
                 <div class="mb-3">
-                    <input type="submit" value="Submit">
+                    <div class="button-group">
+                        {% if user.is_authenticated %}
+                        <button type="submit" class="btn btn-primary">Proceed with checkout</button>
+                        {% else %}
+                        <a class="btn btn-primary" href="">Checkout as guest</a>
+                        <a class="btn btn-primary" href="{% url 'account_login' %}">Login</a>
+                        {% endif %}
+                    </div>
                 </div>
             </form>
         </div>
     </div>
     {% endif %}
-    <div class="row mt-4">
-        <div class="col">
-            <div class="button-group">
-                {% if user.is_authenticated %}
-                <a class="btn btn-primary" href="">Proceed with checkout</a>
-                {% else %}
-                <a class="btn btn-primary" href="">Checkout as guest</a>
-                <a class="btn btn-primary" href="{% url 'account_login' %}">Login</a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    {% endblock %}
+{% endblock %}
+
+{% block postloadjs %}
+<script type="text/javascript">
+    $('#delivery').change(function(){
+        $('#delivery-form').submit();
+    })
+
+</script>
+{% endblock %}
