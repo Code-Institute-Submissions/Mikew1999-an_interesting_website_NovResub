@@ -13,10 +13,27 @@ Shopping bag
             </div>
         </div>
         {% if products %}
+            <div class="row mt-4">
+                <div class="col-2">
+                    <h2>Product Title:</h2>
+                </div>
+                <div class="col-2">
+                    <h2>Price, Quantity & Sizes</h2>
+                </div>
+                <div class="col-1">
+                    <h2>Item Total</h2>
+                </div>
+                <div class="col-3">
+                    <h2>Product Image</h2>
+                </div>
+                <div class="col-3">
+
+                </div>
+            </div>
             {% for item in items %}
                 <div class="row mt-4">
-                    <div class="col-4">
-                        <p class="float-right">{{ item.product.title|title }}</p>
+                    <div class="col-2">
+                        <p>{{ item.product.title|title }}</p>
                     </div>
                     <div class="col-2">
                         <p>Quantity: {{ item.quantity }}, Item Price = £{{ item.price }}</p>
@@ -24,17 +41,39 @@ Shopping bag
                             <p>Size: {{ item.size }}</p>
                         {% endif %}
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                         £{{ item.product_total }}
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <img class="img-thumbnail" style="height: 125px; width: 125px;" src="{{ item.product.image }}" alt="Product Image">
+                    </div>
+                    <div class="col-3">
+                        <div class="float-left mt-4">
+                            <form method="POST" action="{% url 'remove_item' item.product.pk %}">
+                                {% csrf_token %}
+                                {% if item.size %}
+                                    <input type="hidden" name="size" value="{{ item.size }}">
+                                {% endif %}
+                                <input class="float-left btn btn-danger" type="submit" value="Remove item from bag">
+                            </form>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
             <div class="row">
                 <div class="col">
                     Total = £{{ total|floatformat:2 }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form method="GET" action="{% url 'shopping_bag' %}">
+                        <input type="hidden" name="clear">
+                        <input type="submit" class="btn btn-danger" value="Clear all bag items" id="clear-bag" style="cursor: pointer;">
+                    </form>
+                </div>
+                <div class="col-12 mt-2">
+                    <a class="btn btn-primary" href="">Proceed to checkout</a>
                 </div>
             </div>
         {% else %}

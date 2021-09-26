@@ -11,7 +11,15 @@ def shopping_bag(request):
     items = []
     total = 0
 
+    if request.GET:
+        # Clears bag
+        if 'clear' in request.GET:
+            request.session['bag'] = bag
+            del request.session['bag']
+            return redirect(shopping_bag)
+
     for product_id, product_data in bag.items():
+        # If item doesn't have size
         if isinstance(product_data, int):
             product = get_object_or_404(Products, pk=product_id)
             product_price = float(product.price)
@@ -28,6 +36,7 @@ def shopping_bag(request):
             })
             products = True
         else:
+            # If item has size
             product = get_object_or_404(Products, pk=product_id)
             for size, quantity in product_data['items_by_size'].items():
                 product_price = float(product.price)
@@ -41,6 +50,7 @@ def shopping_bag(request):
                     'price': product_price,
                     'size': size
                 })
+                products = True
 
     context = {
         'items': items,
@@ -78,3 +88,12 @@ def add_to_bag(request, item_id):
 
     request.session['bag'] = bag
     return redirect(redirect_url)
+
+
+def remove_item(request, item_id):
+    ''' A view to remove an item from the shopping bag '''
+    bag = request.session.get('bag', {})
+    if request.POST:
+        bag.pop(item_id)
+    request.session['bag'] = bag
+    return redirect(shopping_bag)
