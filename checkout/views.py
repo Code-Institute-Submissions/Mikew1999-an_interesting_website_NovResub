@@ -7,4 +7,4 @@ def checkout(request):
     if bag == {}:
         return redirect(shopping_bag)
 
-    return render(request, 'checkout/checkout.html', context)
+    return render(request, 'checkout/checkout.html')

@@ -6,11 +6,6 @@ from products.views import products
 # Create your views here.
 def shopping_bag(request):
     ''' A view to return the shopping bag '''
-    bag = request.session.get('bag', {})
-    products = None
-    items = []
-    total = 0
-
     if request.GET:
         # Clears bag
         if 'clear' in request.GET:
@@ -18,47 +13,7 @@ def shopping_bag(request):
             del request.session['bag']
             return redirect(shopping_bag)
 
-    for product_id, product_data in bag.items():
-        # If item doesn't have size
-        if isinstance(product_data, int):
-            product = get_object_or_404(Products, pk=product_id)
-            product_price = float(product.price)
-            product_total = product_price * product_data
-            total += product_total
-            size = None
-            items.append({
-                'product_id': product_id,
-                'quantity': product_data,
-                'product_total': product_total,
-                'product': product,
-                'price': product_price,
-                'size': size,
-            })
-            products = True
-        else:
-            # If item has size
-            product = get_object_or_404(Products, pk=product_id)
-            for size, quantity in product_data['items_by_size'].items():
-                product_price = float(product.price)
-                product_total = product_price * quantity
-                total += product_total
-                items.append({
-                    'product_id': product_id,
-                    'quantity': quantity,
-                    'product': product,
-                    'product_total': product_total,
-                    'price': product_price,
-                    'size': size
-                })
-                products = True
-
-    context = {
-        'items': items,
-        'products': products,
-        'total': total
-    }
-
-    return render(request, 'shopping_bag/shopping_bag.html', context)
+    return render(request, 'shopping_bag/shopping_bag.html')
 
 
 def add_to_bag(request, item_id):
