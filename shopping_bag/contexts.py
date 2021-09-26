@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from products.models import Products
+from an_interesting_site import settings
 
 
 def bag_items(request):
@@ -46,6 +47,18 @@ def bag_items(request):
         'items': items,
         'products': products,
         'total': total
+    }
+
+    return context
+
+
+def delivery(request):
+    standard_delivery = 5
+    next_day_delivery = 10
+
+    context = {
+        'standard_delivery': standard_delivery,
+        'next_day_delivery': next_day_delivery,
     }
 
     return context
