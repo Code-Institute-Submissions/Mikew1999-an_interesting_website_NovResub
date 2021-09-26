@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Products, Category
+from .models import Products, Category, Likes
 from .forms import ProductForm
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -18,9 +18,14 @@ def products(request):
     search = None
     username = None
     user = request.user
+    likes = Likes.objects.all()
+    users_liked_products = []
 
     if user.is_authenticated:
         username = request.user.username
+        for like in likes:
+            if like.user.id == user.id:
+                users_liked_products.append(like.product.pk)
 
     if 'author' in request.GET:
         author = request.GET['author']
@@ -49,6 +54,8 @@ def products(request):
         'selected': selected,
         'sort': sort,
         'username': username,
+        'likes': likes,
+        'users_liked_products': users_liked_products,
     }
 
     return render(
@@ -136,3 +143,17 @@ def add_product(request):
     }
 
     return render(request, 'products/add_product.html', context)
+
+
+def like(request, product_id, user_id):
+    ''' A view to like a product '''
+    product = Products(product_id)
+    user = User(user_id)
+    new_like = Likes(product=product, user=user)
+    new_like.save()
+    return redirect('products')
+
+
+def unlike(request, product_id, user_id):
+    like = Likes.objects.filter(user=User(user_id)).filter(product=Products(product_id)).delete()
+    return redirect('products')

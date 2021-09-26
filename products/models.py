@@ -16,7 +16,7 @@ class Category(models.Model):
 
 
 class Products(models.Model):
-    '''A model to define the products objcet'''
+    '''A model to define the products object'''
     category = models.ForeignKey(
         'Category', null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=150, null=False, blank=False)
@@ -30,3 +30,9 @@ class Products(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Likes(models.Model):
+    ''' A Model to define a like '''
+    product = models.ForeignKey('Products', null=False, blank=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)

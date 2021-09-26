@@ -24,7 +24,6 @@
     </p>
 {% endif %}
 
-
 <div class="text-center btn-container text-white">
     <a class="btn btn-sm btn-primary" onclick="showHideCategories()">Categories</a>
     <a class="btn btn-sm btn-primary" onclick="showHideSort()">Sort</a>
@@ -95,12 +94,12 @@
                         {% csrf_token %}
                         
                         {% if user.is_authenticated %}
-                            {% if item.pk in user.liked %}
-                                <a class="liked">
+                            {% if item.pk in users_liked_products %}
+                                <a class="liked" href="{% url 'unlike' item.pk user.id %}">
                                     <i class="fas fa-thumbs-up"></i>
                                 </a>
                             {% else %}
-                                <a class="unliked">
+                                <a class="unliked" href="{% url 'like' item.pk user.id %}">
                                     <i class="far fa-thumbs-up"></i>
                                 </a>
                             {% endif %}
