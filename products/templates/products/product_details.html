@@ -59,7 +59,7 @@ Products | {{ product.pk }}
         <form method="POST" action="{% url 'add_to_bag' product.pk %}">
             {% csrf_token %}
             {% if product.has_sizes %}
-            <select name="size" id="size" class="mb-4">
+            <select required aria-required="true" name="size" id="size" class="mb-4">
                 <option selected value="">Please select a size</option>
                 <option value="xs">Extra Small</option>
                 <option value="s">Small</option>

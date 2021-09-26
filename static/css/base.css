@@ -142,3 +142,7 @@ label {
 #minus:hover {
     cursor: pointer;
 }
+
+.summary-table {
+    width: 100%;
+}
