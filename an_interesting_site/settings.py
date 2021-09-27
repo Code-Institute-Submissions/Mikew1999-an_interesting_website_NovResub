@@ -1,6 +1,5 @@
 import os
 import dj_database_url
-import dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -108,10 +107,9 @@ WSGI_APPLICATION = 'an_interesting_site.wsgi.application'
 #     }
 # }
 
-DATABASES = {}
-DATABASES['default'] = 
+DATABASES = {
     'default': dj_database_url.parse('postgres://bljzalyicxbfpf:fef3d061c58831399dd644d05b289e3fb449ffdc1c2574c17d0933aa0458622a@ec2-54-228-139-34.eu-west-1.compute.amazonaws.com:5432/dcep70lah4ad9s')
-
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -158,7 +156,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 categories_with_sizes = [3, 4]
-
-django_heroku.settings(locals())
-options = DATABASES['default'].get('OPTIONS', {})
-options.pop('sslmode', None)
