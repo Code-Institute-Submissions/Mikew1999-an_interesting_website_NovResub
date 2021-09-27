@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_title %}
+User Profile
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="display-1">User Profile</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <h2>Personal Details</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form action="{% url 'user_profile' user.id %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username">Username:</label>
+                    <input class="form-control" type="text" value="{{ user.username }}">
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email Address:</label>
+                    <input class="form-control" type="text" value="{{ user.email }}">
+                </div>
+                <div class="mb-3">
+                    <label for="number">Phone Number:</label>
+                    <input class="form-control" type="text" value="{{ user.number }}">
+                </div>
+                <div class="mb-3 text-center">
+                    <input class="btn btn-primary" type="submit" value="Amend Personal Details">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

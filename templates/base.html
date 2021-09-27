@@ -107,7 +107,7 @@
 
               <ul class="dropdown-menu mr-4" aria-labelledby="dropdownMenuLink">
                 <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="{% url 'user_profile' user.id %}">Profile</a></li>
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
               </ul>
             </div>
