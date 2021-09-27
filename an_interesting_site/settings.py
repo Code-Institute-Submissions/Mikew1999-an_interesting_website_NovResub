@@ -92,7 +92,7 @@ ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
-WSGI_APPLICATION = 'an_interesting_website.wsgi.application'
+WSGI_APPLICATION = 'an_interesting_site.wsgi.application'
 
 
 # Database
