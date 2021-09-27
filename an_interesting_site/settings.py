@@ -15,7 +15,8 @@ SECRET_KEY = 'p@ei#69*b*zz3u4yie-$()@cy^l(+x9&@6ypx+r0lm(3%_9hr7'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['an-interesting-website.herokuapp.com/', 'localhost']
+ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -40,7 +41,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,7 +62,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request', # required by allauth
+                'django.template.context_processors.request',  # required by allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'shopping_bag.contexts.bag_items',
@@ -98,15 +98,11 @@ WSGI_APPLICATION = 'an_interesting_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
-    'default': dj_database_url.parse('postgres://bljzalyicxbfpf:fef3d061c58831399dd644d05b289e3fb449ffdc1c2574c17d0933aa0458622a@ec2-54-228-139-34.eu-west-1.compute.amazonaws.com:5432/dcep70lah4ad9s')
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 # Password validation
@@ -146,9 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -51,4 +51,4 @@ def remove_item(request, item_id):
     if request.POST:
         bag.pop(item_id)
     request.session['bag'] = bag
-    return redirect(shopping_bag)
+    return redirect('shopping_bag')
