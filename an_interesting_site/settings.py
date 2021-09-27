@@ -15,7 +15,7 @@ SECRET_KEY = 'p@ei#69*b*zz3u4yie-$()@cy^l(+x9&@6ypx+r0lm(3%_9hr7'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['an-interesting-website.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['an-interesting-website.herokuapp.com/', 'localhost']
 
 # Application definition
 
@@ -92,7 +92,7 @@ ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
-WSGI_APPLICATION = 'an_interesting_site.wsgi.application'
+WSGI_APPLICATION = 'an_interesting_website.wsgi.application'
 
 
 # Database
@@ -146,7 +146,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
