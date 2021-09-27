@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from an_interesting_site import settings
 from reviews.models import Review
+from reviews.calculate_reviews import CalculateRating
 
 form = ProductForm()
 
@@ -20,6 +21,9 @@ def products(request):
     user = request.user
     likes = Likes.objects.all()
     users_liked_products = []
+
+    for product in products:
+        CalculateRating(product_id=product.pk)
 
     if user.is_authenticated:
         username = request.user.username

@@ -3,6 +3,8 @@ from .forms import ReviewForm
 from products.models import Products
 from .models import Review
 from django.contrib.auth.models import User
+from .calculate_reviews import CalculateRating
+import time
 
 
 def review(request, product_id):
