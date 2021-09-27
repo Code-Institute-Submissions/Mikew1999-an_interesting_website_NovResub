@@ -12,5 +12,5 @@ class Order(models.Model):
     email = models.EmailField(max_length=254, blank=False, null=False)
     phone = models.IntegerField(null=True, blank=True)
     delivery_cost = models.CharField(max_length=100, null=False, blank=False)
-    total = models.CharField(max_length=1000, null=False, blank=False)
+    total = models.CharField(max_length=10000, null=False, blank=False)
     items = models.CharField(max_length=100, null=False, blank=False)
