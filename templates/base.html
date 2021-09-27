@@ -73,12 +73,13 @@
         </span>
 
         <span class="mr-2">
+          <a href="{% url 'shopping_bag' %}">
           {% if total %}
-            £{{ total }}
+            £{{ total|floatformat:2 }}
           {% else %}
             £0.00
           {% endif %}
-          <a href="{% url 'shopping_bag' %}">
+          
             <i class="fas fa-shopping-cart"></i>
           </a>
         </span>

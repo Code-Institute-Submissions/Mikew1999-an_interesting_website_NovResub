@@ -165,13 +165,8 @@ Checkout
                     <input class="form-control" name="address_2" type="text">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="email">Email Address:</label>
-                    <input class="form-control" required aria-required="true" type="email" name="email"
-                        value="{{ user.email }}">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="number">Mobile Number: <small>Optional</small></label>
-                    <input class="form-control" type="number" name="number">
+                    <label for="town">Town / City:</label>
+                    <input class="form-control" type="text" name="town">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="post_code">Post Code: <small>Must be in correct format (e.g. SW1A
@@ -179,6 +174,15 @@ Checkout
                     <input onkeyup="this.value = this.value.toUpperCase();"
                         pattern="^(([A-Z][0-9]{1,2})|(([A-Z][A-Z-Y][0-9]{1,2})|(([A-Z][0-9][A-Z])|([A-Z][A-HJ-Y][0-9]?[A-Z])))) [0-9][A-Z]{2}$"
                         class="form-control" required aria-required="true" type="text" name="post_code">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email Address:</label>
+                    <input class="form-control" required aria-required="true" type="email" name="email"
+                        value="{{ user.email }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="number">Mobile Number: <small>Optional</small></label>
+                    <input class="form-control" type="number" name="number">
                 </div>
                 <div class="mb-3">
                     <div class="button-group">
