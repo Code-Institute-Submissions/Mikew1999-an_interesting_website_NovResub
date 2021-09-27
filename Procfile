@@ -1,1 +1,1 @@
-web: gunicorn an-interesting-website.wsgi:application
+web: gunicorn an-interesting-site.wsgi:application
