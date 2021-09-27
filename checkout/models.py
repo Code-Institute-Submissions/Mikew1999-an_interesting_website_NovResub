@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class Order(models.Model):
     ''' A model to define an order '''
     user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
