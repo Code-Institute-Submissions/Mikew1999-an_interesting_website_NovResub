@@ -16,7 +16,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ALLOWED_HOSTS = ['an-interesting-website.herokuapp.com']
 
-
 # Application definition
 
 INSTALLED_APPS = [
