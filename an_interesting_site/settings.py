@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,8 +14,6 @@ SECRET_KEY = 'p@ei#69*b*zz3u4yie-$()@cy^l(+x9&@6ypx+r0lm(3%_9hr7'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = True
-
-ALLOWED_HOSTS = ALLOWED_HOSTS = ['an-interesting-website.herokuapp.com']
 
 # Application definition
 
@@ -35,11 +34,9 @@ INSTALLED_APPS = [
     'reviews',
     'checkout',
     'user_profile',
-    'herokuapp',
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,13 +95,16 @@ WSGI_APPLICATION = 'an_interesting_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
+DATABASES = {
+    'default': dj_database_url.parse('postgres://xrjxublpsiqozs:3973b8e7b68748914ae9a2b19c6ec575bdd532ba20fd27a17422b6b783852698@ec2-54-228-139-34.eu-west-1.compute.amazonaws.com:5432/dnhh26tpkq433')
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -142,16 +142,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'),)
-
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
-import dj_database_url 
-prod_db  =  dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
