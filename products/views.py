@@ -85,8 +85,8 @@ def productdetails(request, product_id):
 
 
 def add_product(request):
-    ''' 
-    A view to return a create and render the add product form 
+    '''
+    A view to return a create and render the add product form
     and handle users response
     '''
     categories_with_sizes = settings.categories_with_sizes
@@ -108,26 +108,22 @@ def add_product(request):
 
     # If user is not logged in, re-direct user to login page
     # And show message telling user to login.
-    if username == None:
+    if username is None:
         return redirect('account_login')
 
     # Handles form response
     if request.POST:
         form = ProductForm(request.POST)
         if form.is_valid():
-            # 
             image = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
             title = form.cleaned_data['title']
             category_input = form.cleaned_data['category']
-            category_object = Category(category_input)
             price = form.cleaned_data['price']
             description = form.cleaned_data['description']
 
             rate = form.cleaned_data['rate']
             count = form.cleaned_data['count']
             has_sizes = form.cleaned_data['has_sizes']
-
-            products = Products.objects.all()
 
             author = User(user_id)
 
@@ -159,5 +155,6 @@ def like(request, product_id, user_id):
 
 
 def unlike(request, product_id, user_id):
-    like = Likes.objects.filter(user=User(user_id)).filter(product=Products(product_id)).delete()
+    like = Likes.objects.filter(user=User(user_id)).filter(product=Products(product_id))
+    like.delete()
     return redirect('products')

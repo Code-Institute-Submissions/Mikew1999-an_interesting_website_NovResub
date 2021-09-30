@@ -6,7 +6,7 @@ Shopping bag
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="display-4">Shopping Bag</h1>
@@ -49,11 +49,23 @@ Shopping bag
                     </div>
                     <div class="col-3">
                         <div class="float-left mt-4">
+                            <form method="POST" action="{% url 'amend_bag' item.product.pk %}">
+                                {% csrf_token %}
+                                {% if item.size %}
+                                    <input type="hidden" name="size" value="{{ item.size }}">
+                                {% endif %}
+                                <div class="input-group mb-2">
+                                    <input type="number" class="quantity" name="quantity" value="{{ item.quantity }}" min="0" max="99" class="form-control"
+                                        aria-label="Quantity">
+                                </div>
+                                <input class="float-left btn btn-warning" type="submit" value="Update Quantity">
+                            </form>
                             <form method="POST" action="{% url 'remove_item' item.product.pk %}">
                                 {% csrf_token %}
                                 {% if item.size %}
                                     <input type="hidden" name="size" value="{{ item.size }}">
                                 {% endif %}
+
                                 <input class="float-left btn btn-danger" type="submit" value="Remove item from bag">
                             </form>
                         </div>
@@ -69,6 +81,7 @@ Shopping bag
                 <div class="col-12">
                     <form method="GET" action="{% url 'shopping_bag' %}">
                         <input type="hidden" name="clear">
+
                         <input type="submit" class="btn btn-danger" value="Clear all bag items" id="clear-bag" style="cursor: pointer;">
                     </form>
                 </div>
@@ -85,4 +98,9 @@ Shopping bag
             </div>
         {% endif %}
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+<script type="text/javascript">
+</script>
 {% endblock %}

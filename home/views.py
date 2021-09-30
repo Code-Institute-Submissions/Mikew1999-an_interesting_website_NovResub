@@ -15,7 +15,6 @@ def index(request):
     if request.GET:
         if 'category' in request.GET:
             category = request.GET['category']
-            print(category)
 
     context = {
         'username': username,

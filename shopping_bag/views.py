@@ -6,6 +6,7 @@ from products.views import products
 # Create your views here.
 def shopping_bag(request):
     ''' A view to return the shopping bag '''
+    bag = request.session.get('bag', {})
     if request.GET:
         # Clears bag
         if 'clear' in request.GET:
@@ -19,12 +20,13 @@ def shopping_bag(request):
 def add_to_bag(request, item_id):
     ''' A view to add a product to the bag '''
     size = None
-    product = get_object_or_404(Products, pk=item_id)
     quantity = int(request.POST['quantity'])
-    total = float(request.POST['tot'])
     redirect_url = request.POST['redirect_url']
 
     bag = request.session.get('bag', {})
+
+    if quantity < 1:
+        return redirect('productdetails', product_id=item_id)
 
     if 'size' in request.POST:
         size = request.POST['size']
@@ -49,6 +51,35 @@ def remove_item(request, item_id):
     ''' A view to remove an item from the shopping bag '''
     bag = request.session.get('bag', {})
     if request.POST:
-        bag.pop(item_id)
+        if 'size' in request.POST:
+            size = request.POST['size']
+            del bag[item_id]['items_by_size'][size]
+            if bag[item_id]['items_by_size'] == {}:
+                bag.pop(item_id)
+        else:
+            bag.pop(item_id)
+    request.session['bag'] = bag
+    return redirect('shopping_bag')
+
+
+def amend_bag(request, item_id):
+    ''' A view to handle amending the bag '''
+    bag = request.session.get('bag', {})
+    if request.POST:
+        if 'quantity' in request.POST:
+            quantity = int(request.POST['quantity'])
+
+            if 'size' in request.POST:
+                size = request.POST['size']
+                bag[item_id]['items_by_size'][size] = quantity
+                print(quantity)
+                print(bag)
+
+            else:
+                if quantity == '0':
+                    bag.pop(item_id)
+                else:
+                    bag[item_id] = quantity
+
     request.session['bag'] = bag
     return redirect('shopping_bag')

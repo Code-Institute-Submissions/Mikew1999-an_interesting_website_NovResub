@@ -116,8 +116,8 @@
                     <p>
                         <form class="author-form" action="{% url 'products' %}" method="GET">
                             <a class="author-button">
-                                Author / Owner: {{ item.author }}
-                                <input type="hidden" name="author" value="{{ item.author }}">
+                                Author / Owner: {{ item.author.username|title }}
+                                <input type="hidden" name="author" value="{{ item.author.username|title }}">
                             </a>
                         </form>
                     </p>
