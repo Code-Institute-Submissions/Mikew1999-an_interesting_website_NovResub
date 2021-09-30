@@ -69,6 +69,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'shopping_bag.contexts.bag_items',
                 'shopping_bag.contexts.delivery',
+                'home.contexts.mostPopular',
             ],
         },
     },
