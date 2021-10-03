@@ -22,6 +22,11 @@ def products(request):
     likes = Likes.objects.all()
     users_liked_products = []
 
+    if request.POST:
+        if 'all_products_z' in request.POST:
+            sort = '-title'
+            products = Products.objects.all().order_by(sort)
+
     for product in products:
         CalculateRating(product_id=product.pk)
 

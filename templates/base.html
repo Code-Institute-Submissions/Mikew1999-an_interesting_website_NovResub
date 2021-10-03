@@ -131,6 +131,33 @@
     </div>
   </nav>
   {% endblock %}
+  <ul class="list-inline text-center mt-2">
+    <li class="list-inline-item">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Products</span>
+        </button>
+        <ul class="dropdown-menu">
+          <form id="products-form" method="GET" action="{% url 'products' %}">
+            <select name="sort" onchange="this.form.submit()">
+              <option value="title">All Products (A - Z)</option>
+              <option value="-title">All Products (Z - A)</option>
+              <option value="-price">Products by Price (High - Low)</option>
+              <option value="price">Products by Price (Low - High)</option>
+            </select>
+          </form>
+        </ul>
+      </div>
+    </li>
+    <li class="list-inline-item">
+      <div class="btn-group">
+        <a href="" class="btn btn-primary">Deals</a>
+      </div>
+    </li>
+    <li class="list-inline-item">
+      <a href="" class="btn btn-primary">Gift Service</a>
+    </li>
+  </ul>
 
   <!-- Messages -->
   {% if messages %}
