@@ -116,84 +116,67 @@ Checkout
         </div>
     </div>
 
-    {% if delivery_details %}
-    <div class="row mt-4">
-        <div class="col">
-            <p>Delivery Details Confirmed!</p>
-        </div>
-    </div>
-    <div class="row">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Address Line 1</th>
-                    <th scope="col">Address Line 2</th>
-                    <th scope="col">Post Code</th>
-                    <th scope="col">Email Address</th>
-                    <th scope="col">Town / City</th>
-                </tr>
-            </thead>
-                <tr>
-                    {% for x in delivery_details %}
-                        <td>
-                            {{ x }}
-                        </td>
-                    {% endfor %}
-                </tr>
-        </table>
-    </div>
-    <div class="row">
-        <div class="col text-center button-group">
-            <a class="btn btn-info" href="">Edit Delivery Details</a>
-            <a class="btn btn-primary" href="{% url 'bank_details' %}">Proceed With Checkout</a>
-        </div>
-    </div>
-    <div class="row">
-        <a href=""></a>
-    </div>
-    {% else %}
     <div class="row">
         <div class="col">
-            <form method="POST" action="{% url 'checkout' %}">
+            <form method="POST" action="">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label class="form-label" for="address_1">Address Line 1:</label>
-                    <input required aria-required="true" class="form-control" name="address_1" type="text">
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.address_line_1.errors }}
+                        <label for="{{ form.address_line_1.id_for_label }}" class="form-label float-left">Address Line 1:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="address_line_1" id="{{ form.address_line_1.id_for_label }}">
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="address_2">Address Line 2 (optional):</label>
-                    <input class="form-control" name="address_2" type="text">
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.address_line_2.errors }}
+                        <label for="{{ form.address_line_2.id_for_label }}" class="form-label float-left">Address Line 2:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="address_line_2" id="{{ form.address_line_2.id_for_label }}">
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="email">Email Address:</label>
-                    <input class="form-control" required aria-required="true" type="email" name="email"
-                        value="{{ user.email }}">
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.town.errors }}
+                        <label for="{{ form.town.id_for_label }}" class="form-label float-left">Town / City:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="town" id="{{ form.town.id_for_label }}">
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="number">Mobile Number: <small>Optional</small></label>
-                    <input class="form-control" type="number" name="number">
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.post_code.errors }}
+                        <label for="{{ form.post_code.id_for_label }}" class="form-label float-left">Post Code:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="post_code" id="{{ form.post_code.id_for_label }}">
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="post_code">Post Code: <small>Must be in correct format (e.g. SW1A
-                            2AA)</small></label>
-                    <input onkeyup="this.value = this.value.toUpperCase();"
-                        pattern="^(([A-Z][0-9]{1,2})|(([A-Z][A-Z-Y][0-9]{1,2})|(([A-Z][0-9][A-Z])|([A-Z][A-HJ-Y][0-9]?[A-Z])))) [0-9][A-Z]{2}$"
-                        class="form-control" required aria-required="true" type="text" name="post_code">
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.email.errors }}
+                        <label for="{{ form.email.id_for_label }}" class="form-label float-left">Email Address:</label>
+                        <input required aria-required="true" class="form-control" type="email" name="email" id="{{ form.email.id_for_label }}" value="{{ user.email }}">
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <div class="button-group">
-                        {% if user.is_authenticated %}
-                        <button type="submit" class="btn btn-primary">Proceed with checkout</button>
-                        {% else %}
-                        <a class="btn btn-primary" href="">Checkout as guest</a>
-                        <a class="btn btn-primary" href="{% url 'account_login' %}">Login</a>
-                        {% endif %}
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.phone.errors }}
+                        <label for="{{ form.phone.id_for_label }}" class="form-label float-left">Phone Number:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="phone" id="{{ form.phone.id_for_label }}">
+                    </div>
+                </div>
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        <div class="button-group">
+                            {% if user.is_authenticated %}
+                            <button type="submit" class="btn btn-primary">Proceed with checkout</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-primary">Checkout As Guest</button>
+                            <a class="btn btn-primary" href="{% url 'account_login' %}">Login</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    {% endif %}
 {% endblock %}
 
 {% block postloadjs %}
