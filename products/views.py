@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from an_interesting_site import settings
 from reviews.models import Review
 from reviews.calculate_reviews import CalculateRating
+import datetime
 
 form = ProductForm()
 
@@ -163,3 +164,15 @@ def unlike(request, product_id, user_id):
     like = Likes.objects.filter(user=User(user_id)).filter(product=Products(product_id))
     like.delete()
     return redirect('products')
+
+
+def deals(request):
+    products = Products.objects.all()
+
+    today = datetime.date.today()
+    day_of_week = today.isocalendar()[2]
+
+    user = request.user
+    user_id = user.id
+
+    return render(request, 'products/deals.html')

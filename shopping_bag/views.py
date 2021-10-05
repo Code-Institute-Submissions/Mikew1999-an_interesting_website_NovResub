@@ -72,11 +72,13 @@ def amend_bag(request, item_id):
             if 'size' in request.POST:
                 size = request.POST['size']
                 bag[item_id]['items_by_size'][size] = quantity
-                print(quantity)
-                print(bag)
+                if quantity == 0:
+                    del bag[item_id]['items_by_size'][size]
+                    if bag[item_id]['items_by_size'] == {}:
+                        bag.pop(item_id)
 
             else:
-                if quantity == '0':
+                if quantity == 0:
                     bag.pop(item_id)
                 else:
                     bag[item_id] = quantity
