@@ -32,37 +32,30 @@ Home
                 <h2>Top Products</h2>
             </div>
         </div>
+
         <div class="row">
-            <div class="col h-70">
-                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                      {% for x in topProducts %}
-                        <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}"
-                            data-bs-interval="10000">
-                            <div class="card">
+            <div class="col">
+                <div class="slideshow-container">
+                    {% for x in topProducts %}
+                    <div class="top-product-slide">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>{{ forloop.counter }}</div>
                                 <a href="{% url 'productdetails' product_id=x.pk %}">
                                     <img class="product-image" src="{{ x.image }}" alt="Product Image">
-                                </a>
-                                <div class="card-body">
                                     <p>{{ x.title }}</p>
-                                    <p></p>
-                                </div>
+                                </a>
                             </div>
                         </div>
-                      {% endfor %}
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="">Next</span>
-                    </button>
-                  </div>
+                    {% endfor %}
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
             </div>
-
         </div>
+
+
     </div>
     <div class="container">
         <div class="row">
@@ -106,6 +99,23 @@ Home
             form.submit();
         })
     })
+
+    var slideIndex = 1;
+    slideShow(slideIndex);
+
+    function slideShow(n) {
+        var i;
+        if (n > $('.top-product-slide').length) {
+            slideIndex = 1
+        };
+        if (n < 1) {
+            slideIndex = $('.top-product-slide').length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        $('.top-product-slide')[slideIndex-1].style.display = "block";
+    }
 </script>
 {% endblock %}
 
