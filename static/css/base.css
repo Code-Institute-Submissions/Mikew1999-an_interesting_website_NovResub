@@ -128,6 +128,11 @@ label {
     border-radius: 3px 0 0 3px;
 }
 
+.top-product-image {
+    width: 100%;
+    height: 80vh;
+}
+
 .category-card {
     padding-top: 50%;
     z-index: 100;

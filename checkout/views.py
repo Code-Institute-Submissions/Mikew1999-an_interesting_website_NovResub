@@ -1,57 +1,53 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from .forms import AddressDetails
 
 
 def checkout(request):
     ''' A view to return the checkout screen '''
     bag = request.session.get('bag', {})
-    user = request.user
-    delivery_details = False
-    delivery_cost = None
-    form = AddressDetails()
+    user = request.user.id
+    delivery = False
 
     if bag == {}:
         return redirect('shopping_bag')
 
     if request.POST:
-        form = AddressDetails(request.POST)
-        if form.is_valid():
-            address_line_1 = form.cleaned_data['address_line_1']
-            address_line_2 = form.cleaned_data['address_line_2']
-            town = form.cleaned_data['town']
-            post_code = form.cleaned_data['post_code']
-            email = form.cleaned_data['email']
-            phone = form.cleaned_data['phone']
-
-            if user.is_authenticated:
-                user_id = user.id
-                new_delivery_details = AddressDetails(
-                    address_line_1=address_line_1, address_line_2=address_line_2, town=town, post_code=post_code, phone=phone, user=User(user_id))
-                new_delivery_details.save()
-
-                delivery_details = AddressDetails.objects.filter(
-                    user=User(user_id))
-
+        if 'address_line_1' in request.POST:
+            address_line_1 = request.POST['address_line_1']
+            if 'address_line_2' in request.POST:
+                address_line_2 = request.POST['address_line_2']
             else:
-                delivery_details = {
-                    'address_line_1': address_line_1,
-                    'address_line_2': address_line_2,
-                    'town': town,
-                    'post_code': post_code,
-                    'email': email,
-                    'phone': phone
-                }
+                address_line_2 = ""
+            town = request.POST['town']
+            post_code = request.POST['post_code']
+            email = request.POST['email']
+            phone = request.POST['phone']
+
+            delivery = {
+                'address_line_1': address_line_1,
+                'address_line_2': address_line_2,
+                'town': town,
+                'post_code': post_code,
+                'email': email,
+                'phone': phone,
+                'user': user
+            }
+
+            request.session['delivery'] = delivery
+            return redirect(order_summary)
 
     context = {
         'user': user,
-        'form': form,
-        'user_id'
-        'delivery_details': delivery_details,
-        'delivery_cost': delivery_cost,
+        'delivery_details': delivery,
     }
 
     return render(request, 'checkout/checkout.html', context)
+
+
+def order_summary(request):
+    delivery = request.session.get('delivery', {})
+
+    return render(request, 'checkout/order_summary.html', delivery)
 
 
 def bank_details(request):

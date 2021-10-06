@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_title %}
+Order Summary
+{% endblock %}
+
+{% block content %}
+<div class="container mb-4">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-3 text-center">Order Summary</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2 class="display-4">Delivery Details</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        Address Line 1:
+                    </td>
+                    <td>
+                        {{ address_line_1 }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Address Line 2:
+                    </td>
+                    <td>
+                        {{ address_line_2 }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Town:
+                    </td>
+                    <td>
+                        {{ town }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Post Code:
+                    </td>
+                    <td>
+                        {{ post_code }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Email Address:
+                    </td>
+                    <td>
+                        {{ email }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Phone Number:
+                    </td>
+                    <td>
+                        {{ phone }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <h2 class="display-4">Items:</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Item Price</th>
+                        <th scope="col">Item Total</th>
+                    </tr>
+                </thead>
+                {% for item in items %}
+                <tr>
+                    <th scope="row">
+                        {{ forloop.counter }}
+                    </th>
+                    <td>
+                        {{ item.product.title|title }}
+                    </td>
+                    <td>
+                        {% if item.size %}
+                        {{ item.size }}
+                        {% else %}
+                        N/a
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ item.quantity }}
+                    </td>
+                    <td>
+                        £{{ item.price }}
+                    </td>
+                    <td>
+                        £{{ item.product_total }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -16,6 +16,7 @@
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
   <link rel="stylesheet" href="https://an-interesting-website.s3.amazonaws.com/static/css/base.css">
+  <!-- <link rel="stylesheet" href="{% static 'css/base.css' %}"> -->
   {% endblock %}
 
   {% block corejs %}
@@ -146,8 +147,9 @@
 
             <ul class="dropdown-menu">
               <li>
-                <form id="products-form" method="GET" action="{% url 'products' %}">
-                  <select name="sort" onchange="this.form.submit()">
+                <form id="products-form w-100" method="GET" action="{% url 'products' %}">
+                  <select class="form-select" name="sort" onchange="this.form.submit()">
+                    <option value="">-- Products --</option>
                     <option value="title">All Products (A - Z)</option>
                     <option value="-title">All Products (Z - A)</option>
                     <option value="-price">Products by Price (High - Low)</option>
@@ -155,14 +157,21 @@
                   </select>
                 </form>
               </li>
-
               <li>
-                <a href="{% url 'products' %}">All Products</a>
+                <form method="GET" action="{% url 'products' %}">
+                  <select class="form-select w-100" name="category" onchange="this.form.submit()">
+                    <option value="">-- Categories --</option>
+                    {% for category in categories %}
+                      <option value="{{ category.name }}">{{ category.friendly_name }}</option>
+                    {% endfor %}
+                  </select>
+                </form>
               </li>
             </ul>
 
           </div>
         </li>
+        
         <li class="list-inline-item">
           <a href="{% url 'deals' %}" class="btn">Deals</a>
         </li>

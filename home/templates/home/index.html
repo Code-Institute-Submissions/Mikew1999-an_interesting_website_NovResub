@@ -36,21 +36,21 @@ Home
         <div class="row">
             <div class="col">
                 <div class="slideshow-container">
-                    {% for x in topProducts %}
+                    {% for product in topProducts %}
                     <div class="top-product-slide">
                         <div class="card">
                             <div class="card-body">
                                 <div>{{ forloop.counter }}</div>
-                                <a href="{% url 'productdetails' product_id=x.pk %}">
-                                    <img class="product-image" src="{{ x.image }}" alt="Product Image">
-                                    <p>{{ x.title }}</p>
+                                <a href="{% url 'productdetails' product_id=product.pk %}">
+                                    <img class="top-product-image" src="{{ product.image }}" alt="Product Image">
+                                    <p>{{ product.title }}</p>
                                 </a>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
-                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                    <a class="btn prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="btn next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
             </div>
         </div>
@@ -103,18 +103,19 @@ Home
     var slideIndex = 1;
     slideShow(slideIndex);
 
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
     function slideShow(n) {
         var i;
-        if (n > $('.top-product-slide').length) {
-            slideIndex = 1
-        };
-        if (n < 1) {
-            slideIndex = $('.top-product-slide').length
-        }
+        var slides = document.getElementsByClassName('top-product-slide');
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }
-        $('.top-product-slide')[slideIndex-1].style.display = "block";
+        slides[slideIndex-1].style.display = "block";
     }
 </script>
 {% endblock %}
