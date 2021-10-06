@@ -45,8 +45,8 @@ def checkout(request):
 
 
 def order_summary(request):
+    ''' A view to return the order summary page '''
     delivery = request.session.get('delivery', {})
-
     return render(request, 'checkout/order_summary.html', delivery)
 
 
