@@ -104,11 +104,11 @@ label {
     display: none;
 }
 
-#prev:hover, #next:hover {
+.prev:hover, .next:hover {
     background-color: aqua;
 }
 
-#prev, #next {
+.prev, .next {
     cursor: pointer;
     position: absolute;
     top: 50%;
@@ -126,12 +126,13 @@ label {
 
 .next {
     right: 0;
+    margin-right: 10px;
     border-radius: 3px 0 0 3px;
 }
 
 .top-product-image {
-    width: 100%;
-    height: 80vh;
+    width: 60%;
+    height: 50vh;
 }
 
 .category-card {

@@ -15,7 +15,7 @@ Home
                 <div class="col x">
 
                     <h1 class="mx-auto black-outline display-1 inner-header">Check out the new <a class="black-outline"
-                            href="">deals</a></h1>
+                            href="{% url 'deals' %}">deals</a></h1>
                     
                         <a href="{% url 'products' %}" class="mt-4 btn btn-primary products-button btn-xl">View products</a>
 
@@ -28,14 +28,14 @@ Home
 <div class="second">
     <div class="container">
         <div class="row">
-            <div class="col">
-                <h2 class="text-center">An interesting website</h2>
-                <p class="text-center">
+            <div class="col text-center">
+                <h2>An interesting website</h2>
+                <p>
                     A Website designed to make buying and selling easy!
                 </p>
                 {% if user.is_authenticated %}
                     <div class="btn-group">
-                        <a class="btn" href="">View Profile</a>
+                        <a class="btn" href="{% url 'user_profile' user.id %}">View Profile</a>
                         <a class="btn" href="">My Orders</a>
                     </div>
                 {% else %}
@@ -44,6 +44,9 @@ Home
             </div>
         </div>
     </div>
+
+    <hr class="w-80">
+
     <div class="container">
         <div class="row">
             <div class="col">
@@ -59,20 +62,36 @@ Home
                         <div class="card">
                             <div class="card-body">
                                 <div>{{ forloop.counter }}</div>
-                                <a href="{% url 'productdetails' product_id=product.pk %}">
-                                    <img class="top-product-image" src="{{ product.image }}" alt="Product Image">
-                                    <p>{{ product.title }}</p>
-                                </a>
+                                <div class="text-center">
+                                    <a href="{% url 'productdetails' product_id=product.pk %}">
+                                        <img class="top-product-image" src="{{ product.image }}" alt="Product Image">
+                                        <p>{{ product.title }}</p>
+                                    </a>
+                                </div>
+                                <p>{{ product.description }}</p>
+                                <p>£{{ product.price }}</p>
+                                <p>
+                                    Rating: {{ product.rate }}
+                                    <br>
+                                    Number of reviews: {{ product.count }}
+                                </p>
+                                <div class="text-center">
+                                    <p><a class="btn btn-primary" href="{% url 'productdetails' product.pk %}">View Product</a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
-                    <div class="prev">
-                        <a class="btn " onclick="plusSlides(-1)">&#10094;</a>
-                    </div>
+                        
+                    <a class="btn prev" onclick="plusSlides(-1)">&#10094;</a>
                     
                     <a class="btn next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center mt-4 mb-4">
+                <a class="btn btn-primary" href="{% url 'products' %}">View All Product</a>
             </div>
         </div>
     </div>
@@ -123,7 +142,10 @@ Home
     var slideIndex = 1;
     slideShow(slideIndex);
 
-    document.getElementsByClassName
+    function plusSlides(n) {
+        slideIndex += n;
+        slideShow(slideIndex);
+    }
 
     function slideShow(n) {
         var i;
