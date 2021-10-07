@@ -123,7 +123,11 @@ Order Summary
     </div>
     <div class="row mb-4">
         <div class="col">
-            <a href="{% url 'bank_details' %}" class="btn btn-success">Proceed with order</a>
+            <form method="POST" action="{% url 'bank_details' %}">
+                {% csrf_token %}
+                <button type="submit" id="checkout-button" class="btn btn-success">Proceed with order</button>
+            </form>
+            
         </div>
     </div>
 </div>

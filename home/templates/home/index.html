@@ -39,7 +39,7 @@ Home
                         <a class="btn" href="">My Orders</a>
                     </div>
                 {% else %}
-                    <p><a href="">Sign in</a> or <a href="">Create a profile in minutes</a> to list products for sale and save your order history</p>
+                    <p><a href="{% url 'account_login' %}">Sign in</a> or <a href="{% url 'account_signup' %} ">Create a profile in minutes</a> to list products for sale and save your order history</p>
                 {% endif %}
             </div>
         </div>

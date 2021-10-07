@@ -47,21 +47,6 @@ def add_to_bag(request, item_id):
     return redirect(redirect_url)
 
 
-def remove_item(request, item_id):
-    ''' A view to remove an item from the shopping bag '''
-    bag = request.session.get('bag', {})
-    if request.POST:
-        if 'size' in request.POST:
-            size = request.POST['size']
-            del bag[item_id]['items_by_size'][size]
-            if bag[item_id]['items_by_size'] == {}:
-                bag.pop(item_id)
-        else:
-            bag.pop(item_id)
-    request.session['bag'] = bag
-    return redirect('shopping_bag')
-
-
 def amend_bag(request, item_id):
     ''' A view to handle amending the bag '''
     bag = request.session.get('bag', {})

@@ -68,10 +68,10 @@
     </form>
 </div>
 
-<div class="container mt-2">
+<div class="container-fluid p-4 mt-2">
     <div class="row">
         {% for item in products %}
-        <div class="col-12 col-lg-6 mt-2 mb-4">
+        <div class="col-12 col-md-6 col-xl-4 mt-2 mb-4">
             <div class="card">
                 <a href="{% url 'productdetails' product_id=item.pk %}">
                     <img class="product-image" src="{{ item.image }}" alt="Product Image">
@@ -111,7 +111,7 @@
                     </form>
 
                     <div class="button-group text-center">
-                        <a class="btn btn-primary text-white">Add to bag</a>
+                        <a href="{% url 'productdetails' item.pk %}" class="btn btn-primary text-white">View item</a>
                     </div>
                     <p>
                         <form class="author-form" action="{% url 'products' %}" method="GET">
