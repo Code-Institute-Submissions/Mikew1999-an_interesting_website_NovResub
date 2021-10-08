@@ -3,6 +3,7 @@ from products.models import Products
 from an_interesting_site import settings
 
 
+# context inspired from code institue walkthrough project
 def bag_items(request):
     bag = request.session.get('bag', {})
     products = None

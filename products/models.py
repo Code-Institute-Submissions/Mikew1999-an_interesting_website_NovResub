@@ -2,6 +2,7 @@ from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 
+# models inspired from code institute walkthrough project
 
 class Category(models.Model):
     ''' A model to describe the categories of products '''
