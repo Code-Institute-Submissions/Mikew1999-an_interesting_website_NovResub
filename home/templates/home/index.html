@@ -7,26 +7,21 @@ Home
 
 {% block content %}
 
-<div class="full-screen-image"
-    style="background-image: url('https://an-interesting-website.s3.amazonaws.com/media/clothes.jpg');">
-    <div class="inner">
-        <h4 class="container">
-            <div class="row">
-                <div class="col x">
 
-                    <h1 class="mx-auto black-outline display-1 inner-header">Check out the new <a class="black-outline"
-                            href="{% url 'deals' %}">deals</a></h1>
+        <div class="container">
+            <div class="row">
+                <div class="col main-top">
+
+                    <h1 class="mx-auto black-outline display-2">Check out the new <a class="black-outline"
+                            href="">deals</a></h1>
                     
                         <a href="{% url 'products' %}" class="mt-4 btn btn-primary products-button btn-xl">View products</a>
 
                 </div>
             </div>
-        </h4>
-    </div>
-</div>
+        </div>
 
-<div class="second">
-    <div class="container">
+        <div class="container">
         <div class="row">
             <div class="col text-center">
                 <h2>An interesting website</h2>
@@ -121,7 +116,6 @@ Home
             {% endfor %}
         </div>
     </div>
-</div>
 
 <!-- Image by <a
         href="https://pixabay.com/users/stocksnap-894430/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2618897">StockSnap</a>

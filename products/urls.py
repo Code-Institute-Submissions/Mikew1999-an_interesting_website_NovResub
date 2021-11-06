@@ -7,5 +7,4 @@ urlpatterns = [
     path('add_product/', views.add_product, name='add_product'),
     path('like/<product_id>/<user_id>', views.like, name='like'),
     path('unlike/<product_id>/<user_id>', views.unlike, name='unlike'),
-    path('deals/', views.deals, name='deals'),
 ]

@@ -166,13 +166,13 @@ def unlike(request, product_id, user_id):
     return redirect('products')
 
 
-def deals(request):
-    products = Products.objects.all()
+# def deals(request):
+#     products = Products.objects.all()
 
-    today = datetime.date.today()
-    day_of_week = today.isocalendar()[2]
+#     today = datetime.date.today()
+#     day_of_week = today.isocalendar()[2]
 
-    user = request.user
-    user_id = user.id
+#     user = request.user
+#     user_id = user.id
 
-    return render(request, 'products/deals.html')
+#     return render(request, 'products/deals.html')
