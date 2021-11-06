@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Birthstone&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Birthstone', cursive;
@@ -63,9 +64,15 @@ label {
 }
 
 .main-top {
+    border-top: 3px solid black;
     width: 100vw;
     height: 60vh;
-    background-image: url('static/images/clothes-1839935_1280.jpg');
+    background-image: url('../images/clothes-1839935_1280.jpg');
+}
+
+.box {
+    height: 100%;
+    width: 100%;
 }
 
 .btn-outline-black {
@@ -93,7 +100,7 @@ label {
 }
 
 .prev:hover, .next:hover {
-    background-color: aqua;
+    background-color: black;
 }
 
 .prev, .next {
@@ -126,11 +133,6 @@ label {
 .category-card {
     padding-top: 50%;
     z-index: 100;
-}
-
-.products-button {
-    margin-left: 25%;
-
 }
 
 .categories-container {

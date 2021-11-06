@@ -8,120 +8,126 @@ Home
 {% block content %}
 
 
-        <div class="container">
-            <div class="row">
-                <div class="col main-top">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col main-top text-center">
 
-                    <h1 class="mx-auto black-outline display-2">Check out the new <a class="black-outline"
-                            href="">deals</a></h1>
-                    
-                        <a href="{% url 'products' %}" class="mt-4 btn btn-primary products-button btn-xl">View products</a>
+            <h1 class="display-2 text-white">Shopping hub</h1>
+            <h1 class="black-outline display-3">Check out the new <a class="black-outline" href="">deals</a></h1>
 
-                </div>
+            <a href="{% url 'products' %}" class="mt-4 btn btn-primary products-button btn-xl">View products</a>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-6 col-md-3">
+            <div class="box">
+                <img style="width: 100%; height: 200px;"
+                    src="https://an-interesting-website.s3.amazonaws.com/media/electronics.jpg"
+                    alt="Category Image">
+                <span><h1>Electronics</h1></span>
             </div>
         </div>
-
-        <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <h2>An interesting website</h2>
-                <p>
-                    A Website designed to make buying and selling easy!
-                </p>
-                {% if user.is_authenticated %}
-                    <div class="btn-group">
-                        <a class="btn" href="{% url 'user_profile' user.id %}">View Profile</a>
-                        <a class="btn" href="">My Orders</a>
-                    </div>
-                {% else %}
-                    <p><a href="{% url 'account_login' %}">Sign in</a> or <a href="{% url 'account_signup' %} ">Create a profile in minutes</a> to list products for sale and save your order history</p>
-                {% endif %}
+        <div class="col-6 col-md-3">
+            <div class="box">
+                <img style="width: 100%; height: 200px;"
+                    src="https://an-interesting-website.s3.amazonaws.com/media/mens_clothing.jpg"
+                    alt="Category Image">
+                <span><h1>Clothing</h1></span>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="box">
+                <img style="width: 100%; height: 200px;"
+                    src="https://an-interesting-website.s3.amazonaws.com/media/garden.jpg"
+                    alt="Category Image">
+                <span><h1>Home / Garden</h1></span>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="box">
+                <img style="width: 100%; height: 200px;"
+                    src="https://an-interesting-website.s3.amazonaws.com/media/jewelery.jpg"
+                    alt="Category Image">
+                <span><h1>Jewelery</h1></span>
             </div>
         </div>
     </div>
+</div>
 
-    <hr class="w-80">
-
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h2>Top Products</h2>
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h3 style="font-family: 'Montserrat', sans-serif;">Shopping Hub</h3>
+            <p>
+                A website designed to make buying and selling easy!
+                <br>
+                Our roots are in the sale of electronic goods but since then we have branched out into an online marketplace.
+                <br>
+            </p>
+            {% if user.is_authenticated %}
+            <div class="btn-group">
+                <a class="btn" href="{% url 'user_profile' user.id %}">View Profile</a>
+                <a class="btn" href="">My Orders</a>
             </div>
+            {% else %}
+            <p><a href="{% url 'account_login' %}">Sign in</a> or <a href="{% url 'account_signup' %} ">Create a profile
+                    in minutes</a> to list products for sale and save your order history</p>
+            {% endif %}
         </div>
+    </div>
+</div>
 
-        <div class="row">
-            <div class="col">
-                <!-- Slideshow from w3 schools -->
-                <div class="slideshow-container">
-                    {% for product in topProducts %}
-                    <div class="top-product-slide">
-                        <div class="card">
-                            <div class="card-body">
-                                <div>{{ forloop.counter }}</div>
-                                <div class="text-center">
-                                    <a href="{% url 'productdetails' product_id=product.pk %}">
-                                        <img class="top-product-image" src="{{ product.image }}" alt="Product Image">
-                                        <p>{{ product.title }}</p>
-                                    </a>
-                                </div>
-                                <p>{{ product.description }}</p>
-                                <p>£{{ product.price }}</p>
-                                <p>
-                                    Rating: {{ product.rate }}
-                                    <br>
-                                    Number of reviews: {{ product.count }}
-                                </p>
-                                <div class="text-center">
-                                    <p><a class="btn btn-primary" href="{% url 'productdetails' product.pk %}">View Product</a></p>
-                                </div>
+<hr class="w-80">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h2>Top Products</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <!-- Slideshow from w3 schools -->
+            <div class="slideshow-container">
+                {% for product in topProducts %}
+                <div class="top-product-slide">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>{{ forloop.counter }}</div>
+                            <div class="text-center">
+                                <a href="{% url 'productdetails' product_id=product.pk %}">
+                                    <img class="top-product-image" src="{{ product.image }}" alt="Product Image">
+                                    <p>{{ product.title }}</p>
+                                </a>
+                            </div>
+                            <p>{{ product.description }}</p>
+                            <p>£{{ product.price }}</p>
+                            <p>
+                                Rating: {{ product.rate }}
+                                <br>
+                                Number of reviews: {{ product.count }}
+                            </p>
+                            <div class="text-center">
+                                <p><a class="btn btn-primary" href="{% url 'productdetails' product.pk %}">View
+                                        Product</a></p>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                        
-                    <a class="btn prev" onclick="plusSlides(-1)">&#10094;</a>
-                    
-                    <a class="btn next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col text-center mt-4 mb-4">
-                <a class="btn btn-primary" href="{% url 'products' %}">View All Product</a>
+                {% endfor %}
+
+                <a class="btn prev" onclick="plusSlides(-1)">&#10094;</a>
+
+                <a class="btn next" onclick="plusSlides(1)">&#10095;</a>
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            {% for category in categories %}
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <form class="category-form" method="GET" action="{% url 'products' %}">
-                            <span class="category-button">{{ category.friendly_name|title }}</span>
-                            <input type="hidden" name="category" value="{{ category.name }}">
-                        </form>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="category-image">
-                            <img style="width: 100%; height: 200px;"
-                                src="https://an-interesting-website.s3.amazonaws.com/media/{{ category.name }}.jpg"
-                                alt="Category Image">
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-<!-- Image by <a
-        href="https://pixabay.com/users/stocksnap-894430/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2618897">StockSnap</a>
-    from <a
-        href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2618897">Pixabay</a>
-    -->
+</div>
 
 {% endblock %}
 
@@ -145,12 +151,16 @@ Home
     function slideShow(n) {
         var i;
         var slides = document.getElementsByClassName('top-product-slide');
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }
-        slides[slideIndex-1].style.display = "block";
+        slides[slideIndex - 1].style.display = "block";
     }
 </script>
 {% endblock %}

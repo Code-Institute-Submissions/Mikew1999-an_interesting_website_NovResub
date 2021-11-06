@@ -15,7 +15,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
-  <link rel="stylesheet" href="https://an-interesting-website.s3.amazonaws.com/static/css/base.css">
+  <link rel="stylesheet" href="static/css/base.css">
+  <!-- <link rel="stylesheet" href="https://an-interesting-website.s3.amazonaws.com/static/css/base.css"> -->
   {% endblock %}
 
   {% block extra_css %}
@@ -35,7 +36,8 @@
   {% endblock %}
 
   {% block extra_js %}
-  <script src="https://an-interesting-website.s3.amazonaws.com/static/js/scripts.js"></script>
+  <script src="{% static 'js/scripts.js' %}"></script>
+  <!-- <script src="https://an-interesting-website.s3.amazonaws.com/static/js/scripts.js"></script> -->
   {% endblock %}
 
   <title>An interesting website | {% block extra_title %}{% endblock %}</title>
@@ -44,154 +46,158 @@
 <body>
   <!-- Header -->
   {% block header %}
-  <nav class="navbar navbar-expand-md bg-light navbar-light">
-    <div class="container-fluid">
-
-      <!-- Logo from https://fontawesome.com/v5.15/icons -->
-      <a class="navbar-brand" href="{% url 'home' %}">
-        <img
-          src="https://img.icons8.com/external-tulpahn-flat-tulpahn/48/000000/external-gift-ecology-tulpahn-flat-tulpahn.png" />
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-
-        <!-- Search form -->
-        <span class="mx-auto">
-          <form class="form" action="{% url 'products' %}" methods="GET">
-            <div class="input-group">
-              <input class="form-control border border-black" type="text" name="q" placeholder="Search our site">
-
-              <div class="input-group-append">
-                <button class="form-control btn btn-black border border-black" type="submit">
-                  <span class="icon">
-                    <i class="fas fa-search"></i>
-                  </span>
-                </button>
+  <div class="fixed-top" id="top-nav">
+    <nav class="navbar navbar-expand-md bg-light navbar-light">
+      <div class="container-fluid">
+  
+        <!-- Logo from https://fontawesome.com/v5.15/icons -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img
+            src="https://img.icons8.com/external-tulpahn-flat-tulpahn/48/000000/external-gift-ecology-tulpahn-flat-tulpahn.png" />
+        </a>
+  
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+  
+          <!-- Search form -->
+          <span class="mx-auto">
+            <form class="form" action="{% url 'products' %}" methods="GET">
+              <div class="input-group">
+                <input class="form-control border border-black" type="text" name="q" placeholder="Search our site">
+  
+                <div class="input-group-append">
+                  <button class="form-control btn btn-black border border-black" type="submit">
+                    <span class="icon">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </button>
+                </div>
               </div>
-            </div>
-          </form>
-        </span>
-
-        <span class="mr-2">
-          <a href="{% url 'shopping_bag' %}">
-            {% if total %}
-            £{{ total|floatformat:2 }}
-            {% else %}
-            £0.00
-            {% endif %}
-
-            <i class="fas fa-shopping-cart"></i>
-          </a>
-        </span>
-        {% if user.is_authenticated %}
-        <div class="btn-group">
-            
-          <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <span class="visually-hidden"><i class="far fa-user-circle"></i></span>
-          </button>
-
-          <ul class="dropdown-menu">
-            <li>
-              <a href="{% url 'user_profile' user.id %}">Profile</a>
-            </li>
-            <li>
-              <a href="">My Orders</a>
-            </li>
-            <li>
-              <a href="{% url 'account_logout' %}">Logout</a></li>
-            </li>
-          </ul>
-
-        </div>
-        {% else %}
-        <ul class="float-right list-inline">
-          <li class="list-inline-item">
-            <a href="{% url 'account_login' %}">Login</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="{% url 'account_signup' %}">Signup</a>
-          </li>
-        </ul>
-        {% endif %}
-
-        <!-- Icon from https://systemuicons.com/ -->
-        <!-- Profile links -->
-        <!-- -->
-      </div>
-    </div>
-  </nav>
-
-  <nav class="navbar navbar-light bg-light p-0">
-    <div class="container">
-
-      <ul class="list-inline mx-auto mt-0">
-        <li class="list-inline-item">
+            </form>
+          </span>
+  
+          <span class="mr-2">
+            <a href="{% url 'shopping_bag' %}">
+              {% if total %}
+              £{{ total|floatformat:2 }}
+              {% else %}
+              £0.00
+              {% endif %}
+  
+              <i class="fas fa-shopping-cart"></i>
+            </a>
+          </span>
+          {% if user.is_authenticated %}
           <div class="btn-group">
-            
+              
             <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
               aria-expanded="false">
-              <span class="visually-hidden">Products</span>
+              <span class="visually-hidden"><i class="far fa-user-circle"></i></span>
             </button>
-
+  
             <ul class="dropdown-menu">
-              <a href="" class="btn">Deals</a>
               <li>
-                <form id="products-form w-100" method="GET" action="{% url 'products' %}">
-                  <select class="form-select" name="sort" onchange="this.form.submit()">
-                    <option value="">-- Products --</option>
-                    <option value="title">All Products (A - Z)</option>
-                    <option value="-title">All Products (Z - A)</option>
-                    <option value="-price">Products by Price (High - Low)</option>
-                    <option value="price">Products by Price (Low - High)</option>
-                  </select>
-                </form>
+                <a href="{% url 'user_profile' user.id %}">Profile</a>
               </li>
               <li>
-                <form method="GET" action="{% url 'products' %}">
-                  <select class="form-select w-100" name="category" onchange="this.form.submit()">
-                    <option value="">-- Categories --</option>
-                    {% for category in categories %}
-                      <option value="{{ category.name }}">{{ category.friendly_name }}</option>
-                    {% endfor %}
-                  </select>
-                </form>
+                <a href="">My Orders</a>
+              </li>
+              <li>
+                <a href="{% url 'account_logout' %}">Logout</a></li>
               </li>
             </ul>
-
+  
           </div>
-        </li>
-        
-        <li class="list-inline-item">
-          <form method="GET" action="{% url 'add_product' %}">
-            <button type="submit" class="btn">List a Product for sale</button>
-          </form>
-        </li>
-        <li class="list-inline-item">
-          <a href="" class="btn">Gift Service</a>
-        </li>
-      </ul>
-
-    </div>
-  </nav>
+          {% else %}
+          <ul class="float-right list-inline">
+            <li class="list-inline-item">
+              <a href="{% url 'account_login' %}">Login</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="{% url 'account_signup' %}">Signup</a>
+            </li>
+          </ul>
+          {% endif %}
+  
+          <!-- Icon from https://systemuicons.com/ -->
+          <!-- Profile links -->
+          <!-- -->
+        </div>
+      </div>
+    </nav>
+  
+    <nav class="navbar navbar-light bg-light p-0" style="border-bottom: 3px solid black;">
+      <div class="container">
+  
+        <ul class="list-inline mx-auto mt-0">
+          <li class="list-inline-item">
+            <div class="btn-group">
+              
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <span class="visually-hidden">Products</span>
+              </button>
+  
+              <ul class="dropdown-menu">
+                <a href="" class="btn">Deals</a>
+                <li>
+                  <form id="products-form w-100" method="GET" action="{% url 'products' %}">
+                    <select class="form-select" name="sort" onchange="this.form.submit()">
+                      <option value="">-- Products --</option>
+                      <option value="title">All Products (A - Z)</option>
+                      <option value="-title">All Products (Z - A)</option>
+                      <option value="-price">Products by Price (High - Low)</option>
+                      <option value="price">Products by Price (Low - High)</option>
+                    </select>
+                  </form>
+                </li>
+                <li>
+                  <form method="GET" action="{% url 'products' %}">
+                    <select class="form-select w-100" name="category" onchange="this.form.submit()">
+                      <option value="">-- Categories --</option>
+                      {% for category in categories %}
+                        <option value="{{ category.name }}">{{ category.friendly_name }}</option>
+                      {% endfor %}
+                    </select>
+                  </form>
+                </li>
+              </ul>
+  
+            </div>
+          </li>
+          
+          <li class="list-inline-item">
+            <form method="GET" action="{% url 'add_product' %}">
+              <button type="submit" class="btn">List a Product for sale</button>
+            </form>
+          </li>
+          <li class="list-inline-item">
+            <a href="" class="btn">Gift Service</a>
+          </li>
+        </ul>
+  
+      </div>
+    </nav>
+  </div>
+  
   {% endblock %}
+  <main id="main">
+    <!-- Messages -->
+    {% if messages %}
+    <div class="message-container"></div>
+    {% endif %}
 
-  <!-- Messages -->
-  {% if messages %}
-  <div class="message-container"></div>
-  {% endif %}
+    {% block page_header %}
+    {% endblock %}
 
-  {% block page_header %}
-  {% endblock %}
-
-  <!-- Main section -->
-  {% block content %}
-  {% endblock %}
+    <!-- Main section -->
+    {% block content %}
+    {% endblock %}
+  </main>
 
   <!-- Extra javascript -->
   {% block postloadjs %}
