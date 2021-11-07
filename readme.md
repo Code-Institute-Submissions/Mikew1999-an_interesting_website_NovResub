@@ -1,5 +1,7 @@
 # An interesting website
 
+<!-- Slideshow from w3 schools -->
+
 View live project here https://an-interesting-website.herokuapp.com/
 
 This is a shop website which sells products made by the company and allows users to list their own products for sale.

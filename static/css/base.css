@@ -4,9 +4,19 @@
 
 #scroll-top {
     position: fixed;
+    height: 50px;
+    width: 30px;
+    background-color: black;
+    color: #fff;
     top: 70%;
     z-index: 100;
     display: none;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+#scroll-top:hover {
+    cursor: pointer;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -21,18 +31,12 @@ p, a, label, li {
     text-transform: uppercase;
 }
 
-label {
-    font-size: large;
+.text-xl {
+    font-size: xx-large;
 }
 
-.black-outline {
-    color: rgb(212, 198, 198);
-    -webkit-text-stroke: 1px black;
-    text-shadow: 
-        1px 1px 1px rgb(25, 4, 83),
-        1px -1px 1px rgb(25, 4, 83),
-        -1px 1px 1px rgb(25, 4, 83),
-        1px 1px 1px rgb(25, 4, 83);
+label {
+    font-size: large;
 }
 
 .w-10 {
@@ -86,6 +90,15 @@ label {
     width: 100%;
 }
 
+.category-button:hover {
+    cursor: pointer;
+}
+
+.top-product-image {
+    height: 200px;
+    width: 100%;
+}
+
 .btn-outline-black {
     border: 1px solid black;
     width: 150px;
@@ -104,10 +117,6 @@ label {
 
 .profile-dropdown {
     border: 1px solid black;
-}
-
-.top-product-slide {
-    display: none;
 }
 
 .prev:hover, .next:hover {
@@ -134,11 +143,6 @@ label {
     right: 0;
     margin-right: 10px;
     border-radius: 3px 0 0 3px;
-}
-
-.top-product-image {
-    width: 60%;
-    height: 50vh;
 }
 
 .category-card {

@@ -10,10 +10,10 @@ Home
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col main-top text-center">
+        <div class="col main-top text-center text-white">
 
-            <h1 class="uppercase display-2 text-white">Shopping hub</h1>
-            <h1 class="black-outline display-3">Check out the new <a class="black-outline" href="">deals</a></h1>
+            <h1 class="uppercase display-2">Shopping hub</h1>
+            <p class="text-xl">Check out the new <a class="text-white" href="">deals</a></p>
 
             <a href="{% url 'products' %}" class="mt-4 btn btn-primary products-button btn-xl">View products</a>
 
@@ -94,8 +94,9 @@ Home
             </p>
             {% if user.is_authenticated %}
             <div class="btn-group">
-                <a class="btn" href="{% url 'user_profile' user.id %}">View Profile</a>
-                <a class="btn" href="">My Orders</a>
+                <a class="btn text-info" href="{% url 'user_profile' user.id %}">View Profile</a>
+                <a class="btn text-info" href="">My Orders</a>
+                <a class="btn text-info" href="">Manage My Shop</a>
             </div>
             {% else %}
             <p><a href="{% url 'account_login' %}">Sign in</a> or <a href="{% url 'account_signup' %} ">Create a profile
@@ -114,11 +115,7 @@ Home
         </div>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <!-- Slideshow from w3 schools -->
-            <div class="slideshow-container">
-                {% for product in topProducts %}
+    <!-- {% for product in topProducts %}
                 <div class="top-product-slide">
                     <div class="card">
                         <div class="card-body">
@@ -143,12 +140,24 @@ Home
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-
-                <a class="btn prev" onclick="plusSlides(-1)">&#10094;</a>
-
-                <a class="btn next" onclick="plusSlides(1)">&#10095;</a>
+    {% endfor %} -->
+    <div class="row">
+        {% for product in topProducts %}
+            <div class="col-6 col-md-3">
+                <div class="top-product-box">
+                    <a href="{% url 'productdetails' product_id=product.pk %}">
+                        <img class="top-product-image" src="{{ product.image }}" alt="Product Image">
+                    </a>
+                    <div>
+                        <p class="text-muted uppercase">{{ product.title|upper }}</p>
+                    </div>
+                </div>
             </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <a class="btn" href="{% url 'products' %}">View All Products</a>
         </div>
     </div>
 </div>

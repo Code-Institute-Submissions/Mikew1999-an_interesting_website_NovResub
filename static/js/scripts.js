@@ -10,12 +10,7 @@ $(document).ready(function(){
     $(window).scroll(function(){
         scrollToTop = $('#scroll-top');
         if ($(window).scrollTop() > 200) {
-            if (scrollToTop.css('display') == 'none') {
-                scrollToTop.css('display', 'block');
-            }
-            else{
-                scrollToTop.css('display', 'none');
-            }
+            scrollToTop.css('display', 'block');
         }
         else {
             scrollToTop.css('display', 'none');
