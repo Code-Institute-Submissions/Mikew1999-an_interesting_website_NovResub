@@ -12,7 +12,7 @@ Home
     <div class="row">
         <div class="col main-top text-center">
 
-            <h1 class="display-2 text-white">Shopping hub</h1>
+            <h1 class="uppercase display-2 text-white">Shopping hub</h1>
             <h1 class="black-outline display-3">Check out the new <a class="black-outline" href="">deals</a></h1>
 
             <a href="{% url 'products' %}" class="mt-4 btn btn-primary products-button btn-xl">View products</a>
@@ -25,34 +25,58 @@ Home
     <div class="row">
         <div class="col-6 col-md-3">
             <div class="box">
-                <img style="width: 100%; height: 200px;"
-                    src="https://an-interesting-website.s3.amazonaws.com/media/electronics.jpg"
-                    alt="Category Image">
-                <span><h1>Electronics</h1></span>
+                <form action="{% url 'products' %}" method="post">
+                    <a class="category-button">
+                        {% csrf_token %}
+                        <img style="width: 100%; height: 200px;"
+                        src="https://an-interesting-website.s3.amazonaws.com/media/electronics.jpg"
+                        alt="Category Image">
+                        <input type="hidden" name="category" value="electronics">
+                        <span><h1>Electronics</h1></span>
+                    </a>
+                </form>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="box">
-                <img style="width: 100%; height: 200px;"
-                    src="https://an-interesting-website.s3.amazonaws.com/media/mens_clothing.jpg"
-                    alt="Category Image">
-                <span><h1>Clothing</h1></span>
+                <form action="{% url 'products' %}" method="post">
+                    <a class="category-button">
+                        {% csrf_token %}
+                        <img style="width: 100%; height: 200px;"
+                        src="https://an-interesting-website.s3.amazonaws.com/media/mens_clothing.jpg"
+                        alt="Category Image">
+                        <input type="hidden" name="category" value="clothing">
+                        <span><h1>Clothing</h1></span>
+                    </a>
+                </form>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="box">
-                <img style="width: 100%; height: 200px;"
-                    src="https://an-interesting-website.s3.amazonaws.com/media/garden.jpg"
-                    alt="Category Image">
-                <span><h1>Home / Garden</h1></span>
+                <form action="{% url 'products' %}" method="post">
+                    <a class="category-button">
+                        {% csrf_token %}
+                        <img style="width: 100%; height: 200px;"
+                        src="https://an-interesting-website.s3.amazonaws.com/media/garden.jpg"
+                        alt="Category Image">
+                        <input type="hidden" name="category" value="home_garden">
+                        <span><h1>Home / Garden</h1></span>
+                    </a>
+                </form>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="box">
-                <img style="width: 100%; height: 200px;"
-                    src="https://an-interesting-website.s3.amazonaws.com/media/jewelery.jpg"
-                    alt="Category Image">
-                <span><h1>Jewelery</h1></span>
+                <form action="{% url 'products' %}" method="post">
+                    <a class="category-button">
+                        {% csrf_token %}
+                        <img style="width: 100%; height: 200px;"
+                        src="https://an-interesting-website.s3.amazonaws.com/media/jewelery.jpg"
+                        alt="Category Image">
+                        <input type="hidden" name="category" value="jewelery">
+                        <span><h1>Jewelery</h1></span>
+                    </a>
+                </form>
             </div>
         </div>
     </div>
@@ -61,7 +85,7 @@ Home
 <div class="container">
     <div class="row">
         <div class="col text-center">
-            <h3 style="font-family: 'Montserrat', sans-serif;">Shopping Hub</h3>
+            <h3 class="uppercase" style="font-family: 'Montserrat', sans-serif;">Shopping Hub</h3>
             <p>
                 A website designed to make buying and selling easy!
                 <br>

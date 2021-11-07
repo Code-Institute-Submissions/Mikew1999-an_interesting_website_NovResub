@@ -24,6 +24,22 @@ def products(request):
     users_liked_products = []
 
     if request.POST:
+        if 'category' in request.POST:
+            selected_option = str(request.POST['category'])
+            if selected_option == 'electronics':
+                categories = 'electronics'
+                selected = categories
+            elif selected_option == 'clothing':
+                categories = ['mens_clothing', 'womens_clothing']
+                selected = categories
+            elif selected_option == 'home_garden':
+                categories = ['home', 'garden']
+                selected = categories
+            elif selected_option == 'jewelery':
+                categories = str(selected_option)
+                selected = categories
+
+            products = products.filter(category__name__in=categories)
         if 'all_products_z' in request.POST:
             sort = '-title'
             products = Products.objects.all().order_by(sort)

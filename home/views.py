@@ -12,10 +12,6 @@ def index(request):
     if user.is_authenticated:
         username = request.user.username
 
-    if request.GET:
-        if 'category' in request.GET:
-            category = request.GET['category']
-
     context = {
         'username': username,
         'categories': categories,
