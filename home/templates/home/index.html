@@ -115,32 +115,6 @@ Home
         </div>
     </div>
 
-    <!-- {% for product in topProducts %}
-                <div class="top-product-slide">
-                    <div class="card">
-                        <div class="card-body">
-                            <div>{{ forloop.counter }}</div>
-                            <div class="text-center">
-                                <a href="{% url 'productdetails' product_id=product.pk %}">
-                                    <img class="top-product-image" src="{{ product.image }}" alt="Product Image">
-                                    <p>{{ product.title }}</p>
-                                </a>
-                            </div>
-                            <p>{{ product.description }}</p>
-                            <p>£{{ product.price }}</p>
-                            <p>
-                                Rating: {{ product.rate }}
-                                <br>
-                                Number of reviews: {{ product.count }}
-                            </p>
-                            <div class="text-center">
-                                <p><a class="btn btn-primary" href="{% url 'productdetails' product.pk %}">View
-                                        Product</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    {% endfor %} -->
     <div class="row">
         {% for product in topProducts %}
             <div class="col-6 col-md-3">

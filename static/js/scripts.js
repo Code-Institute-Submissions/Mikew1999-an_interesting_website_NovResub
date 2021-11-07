@@ -1,8 +1,10 @@
 $(document).ready(function(){
     // Pushes main section down below navbars
     function setPaddingMain() {
-        main = $('#main');
+        let main = $('#main');
         main.css('margin-top', $('#top-nav').height());
+        let mainHeight = $(window).height() - $('#top-nav').height();
+        main.css('min-height', mainHeight);
     }
     setPaddingMain();
 
@@ -17,8 +19,8 @@ $(document).ready(function(){
         }
     })
 
+    // Scrolls to top of page
     $('#scroll-top-button').click(function(){
-        console.log("yeman")
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     })

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block extra_title %}
@@ -10,37 +10,23 @@ Products | {{ product.pk }}
     <div class="row">
         <div class="col">
             <!-- Title -->
-            <h2 class="text-center mt-2">{{ product.title|title }}</h2>
+            <h2 class="text-center display-6 mt-2">{{ product.title|title }}</h2>
         </div>
     </div>
-    <div class="row">
-        <div class="col-2"></div>
+    <div class="row mt-4">
         <!-- Image -->
-        <div class="col-8">
+        <div class="col-12 col-md-6">
             <a href="{{ product.image }}" target="_blank">
-                <img class="img-fluid" src="{{ product.image }}" alt="Product image">
+                <img class="full-product-image" src="{{ product.image }}" alt="Product image">
             </a>
         </div>
-        <div class="col-2"></div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <p>
-                <form id="category-form" action="{% url 'products' %}">
-                    <label for="category">
-                        See More in:
-                    </label>
-                    <a id="category-button" class="btn btn-sm btn-outline-primary">
-                        {{ product.category.name|title }}
-                        <input type="hidden" name="category" value="{{ product.category.name }}">
-                    </a>
-                </form>
-            </p>
-        </div>
-        <div class="col-12">
-            <p>
-                {{ product.description }}
-            </p>
+        <div class="col-12 col-md-6">
+            <div class="border p-1">
+                <h4>Product Details</h4>
+                <p class="pt-4 text-lg">
+                    {{ product.description }}
+                </p>
+            </div>
         </div>
     </div>
 

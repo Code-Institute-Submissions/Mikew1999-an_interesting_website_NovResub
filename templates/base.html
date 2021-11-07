@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
-  <link rel="stylesheet" href="static/css/base.css">
+  <link rel="stylesheet" href="/static/css/base.css">
   <!-- <link rel="stylesheet" href="https://an-interesting-website.s3.amazonaws.com/static/css/base.css"> -->
   {% endblock %}
 
@@ -133,6 +133,25 @@
         <ul class="list-inline mx-auto mt-0">
           <li class="list-inline-item">
             <div class="btn-group">
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <span class="visually-hidden">Categories</span>
+              </button>
+
+              <ul class="dropdown-menu">
+                {% for category in categories %}
+                  <form action="{% url 'products' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="category" value="{{ category }}">
+                    <li><input class="btn" style="width: 100%;" type="submit" value="{{ category.friendly_name }}"></li>        
+                  </form>
+                {% endfor %}
+              </ul>
+            </div>
+          </li>
+
+          <li class="list-inline-item">
+            <div class="btn-group">
               
               <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -169,12 +188,13 @@
           
           <li class="list-inline-item">
             <form method="GET" action="{% url 'add_product' %}">
-              <button type="submit" class="btn">List a Product for sale</button>
+              <button type="submit" class="btn">Make your own shop</button>
             </form>
           </li>
           <li class="list-inline-item">
             <a href="" class="btn">Gift Service</a>
           </li>
+
         </ul>
   
       </div>
@@ -188,7 +208,7 @@
   </div>
 
   {% endblock %}
-  <main id="main">
+  <main id="main" style="width: 100vw;">
     <!-- Messages -->
     {% if messages %}
     <div class="message-container"></div>
