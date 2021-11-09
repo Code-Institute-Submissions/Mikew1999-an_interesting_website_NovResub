@@ -1,10 +1,11 @@
+''' Required django import '''
 from django.shortcuts import get_object_or_404
 from products.models import Products
-from an_interesting_site import settings
 
 
 # context inspired from code institue walkthrough project
 def bag_items(request):
+    ''' Defines the contents of users shopping bag '''
     bag = request.session.get('bag', {})
     products = None
     items = []
@@ -54,12 +55,10 @@ def bag_items(request):
 
 
 def delivery(request):
-    standard_delivery = 5
-    next_day_delivery = 10
-
+    ''' Defines Delivery costs '''
     context = {
-        'standard_delivery': standard_delivery,
-        'next_day_delivery': next_day_delivery,
+        'standard_delivery': 5,
+        'next_day_delivery': 10,
     }
 
     return context

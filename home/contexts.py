@@ -1,14 +1,27 @@
+''' Imports Products '''
 from products.models import Products
-from reviews.models import Review
 
 
-def mostPopular(request):
+def top_products(request):
     ''' A view to check and return the most popular products '''
-    products = Products.objects.all()
+    products = Products.objects.all().order_by('rate')[:4]
 
-    products = products.order_by('rate')[:4]
     context = {
-        'topProducts': products,
+        'top_products': products,
+    }
+
+    return context
+
+
+def active_user(request):
+    ''' Sets username variable '''
+    username = None
+    user = request.user
+    if user.is_authenticated:
+        username = request.user.username
+
+    context = {
+        'username': username,
     }
 
     return context

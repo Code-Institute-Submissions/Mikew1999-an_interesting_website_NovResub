@@ -12,7 +12,7 @@ Home
     <div class="row">
         <div class="col main-top text-center text-white">
 
-            <h1 class="uppercase display-2">Shopping hub</h1>
+            <h1 class="uppercase display-3">Shopping hub</h1>
             <p class="text-xl">Check out the new <a class="text-white" href="">deals</a></p>
 
             <a href="{% url 'products' %}" class="mt-4 btn btn-primary products-button btn-xl">View products</a>
@@ -32,7 +32,7 @@ Home
                         src="https://an-interesting-website.s3.amazonaws.com/media/electronics.jpg"
                         alt="Category Image">
                         <input type="hidden" name="category" value="electronics">
-                        <span><h1>Electronics</h1></span>
+                        <span><p class="text-muted uppercase">Electronics</p></span>
                     </a>
                 </form>
             </div>
@@ -46,7 +46,7 @@ Home
                         src="https://an-interesting-website.s3.amazonaws.com/media/mens_clothing.jpg"
                         alt="Category Image">
                         <input type="hidden" name="category" value="clothing">
-                        <span><h1>Clothing</h1></span>
+                        <span><p class="text-muted uppercase">Clothing</p></span>
                     </a>
                 </form>
             </div>
@@ -60,7 +60,7 @@ Home
                         src="https://an-interesting-website.s3.amazonaws.com/media/garden.jpg"
                         alt="Category Image">
                         <input type="hidden" name="category" value="home_garden">
-                        <span><h1>Home / Garden</h1></span>
+                        <span><p class="text-muted uppercase">Home / Garden</p></span>
                     </a>
                 </form>
             </div>
@@ -74,7 +74,7 @@ Home
                         src="https://an-interesting-website.s3.amazonaws.com/media/jewelery.jpg"
                         alt="Category Image">
                         <input type="hidden" name="category" value="jewelery">
-                        <span><h1>Jewelery</h1></span>
+                        <span><p class="text-muted uppercase">Jewelery</p></span>
                     </a>
                 </form>
             </div>
@@ -116,7 +116,7 @@ Home
     </div>
 
     <div class="row">
-        {% for product in topProducts %}
+        {% for product in top_products %}
             <div class="col-6 col-md-3">
                 <div class="top-product-box">
                     <a href="{% url 'productdetails' product_id=product.pk %}">
@@ -131,7 +131,7 @@ Home
     </div>
     <div class="row">
         <div class="col text-center">
-            <a class="btn" href="{% url 'products' %}">View All Products</a>
+            <a class="btn" href="{% url 'products' %}">View All Top Products</a>
         </div>
     </div>
 </div>

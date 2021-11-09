@@ -88,7 +88,9 @@ label {
 
 .main-top {
     border-top: 3px solid black;
-    width: 100vw;
+    width: 100vw!important;
+    background-repeat:round;
+    background-size: cover;
     height: 60vh;
     background-image: url('../images/clothes-1839935_1280.jpg');
 }
@@ -174,4 +176,8 @@ label {
 
 .summary-table {
     width: 100%;
+}
+
+.info-background {
+    background-color: #17a2b8;
 }

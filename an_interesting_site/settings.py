@@ -1,3 +1,4 @@
+''' Required Imports '''
 import os
 import dj_database_url
 
@@ -69,7 +70,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'shopping_bag.contexts.bag_items',
                 'shopping_bag.contexts.delivery',
-                'home.contexts.mostPopular',
+                'home.contexts.top_products',
+                'home.contexts.active_user',
             ],
         },
     },
@@ -155,7 +157,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-if DEBUG == False:
+if DEBUG is False:
     # Cache control
     AWS_S3_OBJECT_PARAMETERS = {
         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
