@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from an_interesting_site import settings
 from reviews.models import Review
 from reviews.calculate_reviews import CalculateRating
-import datetime
 
 form = ProductForm()
 
@@ -64,7 +63,7 @@ def products(request):
             selected = ', '.join(categories)
 
         if 'q' in request.GET:
-            search = request.GET['q']
+            search = request.GET['q'].strip()
             results = Q(title__icontains=search) | Q(
                 category__name__icontains=search)
             products = products.filter(results)
@@ -180,15 +179,3 @@ def unlike(request, product_id, user_id):
     like = Likes.objects.filter(user=User(user_id)).filter(product=Products(product_id))
     like.delete()
     return redirect('products')
-
-
-# def deals(request):
-#     products = Products.objects.all()
-
-#     today = datetime.date.today()
-#     day_of_week = today.isocalendar()[2]
-
-#     user = request.user
-#     user_id = user.id
-
-#     return render(request, 'products/deals.html')
