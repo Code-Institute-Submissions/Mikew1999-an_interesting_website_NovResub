@@ -139,13 +139,15 @@
               </button>
 
               <ul class="dropdown-menu">
-                {% for category in categories %}
-                  <form action="{% url 'products' %}" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="category" value="{{ category }}">
-                    <li><input class="btn" style="width: 100%;" type="submit" value="{{ category.friendly_name }}"></li>        
-                  </form>
-                {% endfor %}
+                  {% for category in categories %}
+                  <li class="float-left">
+                    <form action="{% url 'products' %}" method="POST">
+                      {% csrf_token %}
+                      <input type="hidden" name="category" value="{{ category }}">
+                      <li><input class="btn" style="width: 100%;" type="submit" value="{{ category.friendly_name }}"></li>        
+                    </form>
+                  </li>
+                  {% endfor %}
               </ul>
             </div>
           </li>

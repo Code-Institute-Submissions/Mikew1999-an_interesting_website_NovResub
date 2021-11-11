@@ -25,23 +25,7 @@
 {% endif %}
 
 <div class="text-center btn-container text-white">
-    <a class="btn btn-sm btn-primary" onclick="showHideCategories()">Categories</a>
     <a class="btn btn-sm btn-primary" onclick="showHideSort()">Sort</a>
-</div>
-
-<div class="categories-container text-center mt-4">
-    <form method="GET">
-            <div class="form-check">
-                {% for category in categories %}
-                    <input type="checkbox" value="{{ category.name }}" name="category"
-                        {% if category.name in selected %}checked{% endif %}>
-                    <label class="mr-2" for="category">
-                        {{ category.friendly_name }}
-                    </label>
-                {% endfor %}
-            </div>
-        <input class="mx-auto form-control btn-outline-primary w-10" type="submit" value="Search">
-    </form>
 </div>
 
 <div class="sort-container text-center mt-4">
@@ -74,7 +58,7 @@
         <div class="col-12 col-md-6 col-xl-4 mt-2 mb-4">
             <div class="card">
                 <a href="{% url 'productdetails' product_id=item.pk %}">
-                    <img class="product-image" src="{{ item.image }}" alt="Product Image">
+                    <img style="width: 100%; height: 300px;" src="{{ item.image }}" alt="Product Image">
                 </a>
                 
                 <div class="card-body">
@@ -133,13 +117,6 @@
 <script type="text/javascript">
     $('.categories-container').css('display', 'none');
     $('.sort-container').css('display', 'none');
-
-    function showHideCategories() {
-        $('.categories-container').toggle();
-        if ($('.sort-container').css('display', 'block')) {
-            $('.sort-container').toggle();
-        }
-    }
 
     function showHideSort() {
         $('.sort-container').toggle();
