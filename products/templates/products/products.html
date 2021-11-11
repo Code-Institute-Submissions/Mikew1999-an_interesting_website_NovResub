@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_title %}
-    Products
+Products
 {% endblock %}
 
 {% block content %}
@@ -14,14 +14,14 @@
 </div>
 
 {% if selected %}
-    <p class="lead text-center">
-        <strong>{{ products.count }} products found from your search
+<p class="lead text-center">
+    <strong>{{ products.count }} products found from your search
         "{{ selected }}"</strong>
-        <br>
-        {% if sort != 'title' %}
-            Sorting by {{ sort }} <a href="{% url 'products' %}">Remove Sorting</a>
-        {% endif %}
-    </p>
+    <br>
+    {% if sort != 'title' %}
+    Sorting by {{ sort }} <a href="{% url 'products' %}">Remove Sorting</a>
+    {% endif %}
+</p>
 {% endif %}
 
 <div class="text-center btn-container text-white">
@@ -60,7 +60,7 @@
                 <a href="{% url 'productdetails' product_id=item.pk %}">
                     <img style="width: 100%; height: 300px;" src="{{ item.image }}" alt="Product Image">
                 </a>
-                
+
                 <div class="card-body">
                     <div class="card-header h-10">{{ item.title }}</div>
 
@@ -76,21 +76,21 @@
 
                     <form class="form" method="POST">
                         {% csrf_token %}
-                        
+
                         {% if user.is_authenticated %}
-                            {% if item.pk in users_liked_products %}
-                                <a class="liked" href="{% url 'unlike' item.pk user.id %}">
-                                    <i class="fas fa-thumbs-up"></i>
-                                </a>
-                            {% else %}
-                                <a class="unliked" href="{% url 'like' item.pk user.id %}">
-                                    <i class="far fa-thumbs-up"></i>
-                                </a>
-                            {% endif %}
+                        {% if item.pk in users_liked_products %}
+                        <a class="liked" href="{% url 'unlike' item.pk user.id %}">
+                            <i class="fas fa-thumbs-up"></i>
+                        </a>
                         {% else %}
-                            <a class="unliked" href="{% url 'account_login' %}">
-                                <i class="far fa-thumbs-up"></i>
-                            </a>
+                        <a class="unliked" href="{% url 'like' item.pk user.id %}">
+                            <i class="far fa-thumbs-up"></i>
+                        </a>
+                        {% endif %}
+                        {% else %}
+                        <a class="unliked" href="{% url 'account_login' %}">
+                            <i class="far fa-thumbs-up"></i>
+                        </a>
                         {% endif %}
                     </form>
 
@@ -110,6 +110,15 @@
         </div>
         {% endfor %}
     </div>
+    <div class="row">
+        <div class="col text-center">
+            <form id="more_products" action="{% url 'products' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="load_products" value="1">
+                <input class="btn" type="submit" value="Load More Products"></input>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -126,7 +135,7 @@
     }
 
     function moreless() {
-        $('.description').each(function() {
+        $('.description').each(function () {
             // Finds item description
             var itemDescription = ($(this).html());
             // Finds length of description
@@ -138,10 +147,14 @@
         })
     }
 
-    $('.author-button').click(function(){
+    $('.author-button').click(function () {
         $(this).prev('.author-form').submit();
     })
 
     moreless();
+
+    $('#more_products').submit(function(){
+        window.scrollTo(0,document.body.scrollHeight);
+    })
 </script>
 {% endblock %}

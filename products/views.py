@@ -15,7 +15,7 @@ def products(request):
     # Initial number of products to show
     num_of_products = 15
     # List of products
-    product_list = Products.objects.all().order_by(sort)[:15]
+    product_list = Products.objects.all().order_by(sort)[:num_of_products]
     # List of all categories
     category_list = Category.objects.all()
     # Initialising variables
@@ -41,7 +41,17 @@ def products(request):
                 selected = categories
 
             # Shows list of all
-            product_list = Products.objects.filter(category__name__in=categories)
+            product_list = Products.objects.filter(
+                category__name__in=categories)
+
+        if 'load_products' in request.POST:
+            count = Products.objects.all().count()
+            num_of_products += 5
+            if num_of_products >= count:
+                num_of_products = count
+
+            product_list = Products.objects.all().order_by(
+                sort)[:num_of_products]
 
     for product in product_list:
         CalculateRating(product_id=product.pk)
@@ -87,7 +97,6 @@ def products(request):
 
 def productdetails(request, product_id):
     ''' A view to return details of the specified product '''
-    form = ProductForm()
     product = get_object_or_404(Products, pk=product_id)
     price = product.price
     reviews = Review.objects.filter(product_id=product_id)
@@ -106,6 +115,7 @@ def add_product(request):
     A view to return a create and render the add product form
     and handle users response
     '''
+    form = ProductForm()
     user = request.user
     user_id = None
     username = None
