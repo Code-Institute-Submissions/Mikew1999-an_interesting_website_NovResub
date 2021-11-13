@@ -49,26 +49,26 @@
   <div class="fixed-top" id="top-nav">
     <nav class="navbar navbar-expand-md bg-light navbar-light">
       <div class="container-fluid">
-  
+
         <!-- Logo from https://fontawesome.com/v5.15/icons -->
         <a class="navbar-brand" href="{% url 'home' %}">
           <img
             src="https://img.icons8.com/external-tulpahn-flat-tulpahn/48/000000/external-gift-ecology-tulpahn-flat-tulpahn.png" />
         </a>
-  
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
           aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-  
+
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-  
+
           <!-- Search form -->
           <span class="mx-auto">
             <form class="form" action="{% url 'products' %}" methods="GET">
               <div class="input-group">
                 <input class="form-control border border-black" type="text" name="q" placeholder="Search our site">
-  
+
                 <div class="input-group-append">
                   <button class="form-control btn btn-black border border-black" type="submit">
                     <span class="icon">
@@ -79,7 +79,7 @@
               </div>
             </form>
           </span>
-  
+
           <span class="mr-2">
             <a href="{% url 'shopping_bag' %}">
               {% if total %}
@@ -87,18 +87,18 @@
               {% else %}
               £0.00
               {% endif %}
-  
+
               <i class="fas fa-shopping-cart"></i>
             </a>
           </span>
           {% if user.is_authenticated %}
           <div class="btn-group">
-              
+
             <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
               aria-expanded="false">
               <span class="visually-hidden"><i class="far fa-user-circle"></i></span>
             </button>
-  
+
             <ul class="dropdown-menu">
               <li>
                 <a href="{% url 'user_profile' user.id %}">Profile</a>
@@ -110,7 +110,7 @@
                 <a href="{% url 'account_logout' %}">Logout</a></li>
               </li>
             </ul>
-  
+
           </div>
           {% else %}
           <ul class="float-right list-inline">
@@ -126,10 +126,10 @@
         </div>
       </div>
     </nav>
-  
+
     <nav class="navbar navbar-light bg-light p-0" style="border-bottom: 3px solid black;">
       <div class="container">
-  
+
         <ul class="list-inline mx-auto mt-0">
           <li class="list-inline-item">
             <div class="btn-group">
@@ -139,100 +139,96 @@
               </button>
 
               <ul class="dropdown-menu">
-                  {% for category in categories %}
-                  <li class="float-left">
-                    <form action="{% url 'products' %}" method="POST">
-                      {% csrf_token %}
-                      <input type="hidden" name="category" value="{{ category }}">
-                      <li><input class="btn" style="width: 100%;" type="submit" value="{{ category.friendly_name }}"></li>        
-                    </form>
-                  </li>
-                  {% endfor %}
-              </ul>
-            </div>
+                {% for category in categories %}
+                <li class="float-left">
+                  <form action="{% url 'products' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="category" value="{{ category }}">
+                <li><input class="btn" style="width: 100%;" type="submit" value="{{ category.friendly_name }}"></li>
+                </form>
           </li>
-
-          <li class="list-inline-item">
-            <div class="btn-group">
-              
-              <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <span class="visually-hidden">Products</span>
-              </button>
-  
-              <ul class="dropdown-menu">
-                <a href="" class="btn">Deals</a>
-                <li>
-                  <form id="products-form w-100" method="GET" action="{% url 'products' %}">
-                    <select class="form-select" name="sort" onchange="this.form.submit()">
-                      <option value="">-- Products --</option>
-                      <option value="title">All Products (A - Z)</option>
-                      <option value="-title">All Products (Z - A)</option>
-                      <option value="-price">Products by Price (High - Low)</option>
-                      <option value="price">Products by Price (Low - High)</option>
-                    </select>
-                  </form>
-                </li>
-                <li>
-                  <form method="GET" action="{% url 'products' %}">
-                    <select class="form-select w-100" name="category" onchange="this.form.submit()">
-                      <option value="">-- Categories --</option>
-                      {% for category in categories %}
-                        <option value="{{ category.name }}">{{ category.friendly_name }}</option>
-                      {% endfor %}
-                    </select>
-                  </form>
-                </li>
-              </ul>
-  
-            </div>
-          </li>
-          
-          <li class="list-inline-item">
-            <form method="GET" action="{% url 'add_product' %}">
-              <button type="submit" class="btn">Make your own shop</button>
-            </form>
-          </li>
-          <li class="list-inline-item">
-            <a href="" class="btn">Gift Service</a>
-          </li>
-
+          {% endfor %}
         </ul>
-  
       </div>
-    </nav>
+      </li>
+
+      <li class="list-inline-item">
+        <div class="btn-group">
+
+          <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <span class="visually-hidden">Products</span>
+          </button>
+
+          <ul class="dropdown-menu">
+            <a href="" class="btn">Deals</a>
+            <li>
+              <form id="products-form w-100" method="GET" action="{% url 'products' %}">
+                <select class="form-select" name="sort" onchange="this.form.submit()">
+                  <option value="">-- Products --</option>
+                  <option value="title">All Products (A - Z)</option>
+                  <option value="-title">All Products (Z - A)</option>
+                  <option value="-price">Products by Price (High - Low)</option>
+                  <option value="price">Products by Price (Low - High)</option>
+                </select>
+              </form>
+            </li>
+            <li>
+              <form method="GET" action="{% url 'products' %}">
+                <select class="form-select w-100" name="category" onchange="this.form.submit()">
+                  <option value="">-- Categories --</option>
+                  {% for category in categories %}
+                  <option value="{{ category.name }}">{{ category.friendly_name }}</option>
+                  {% endfor %}
+                </select>
+              </form>
+            </li>
+          </ul>
+
+        </div>
+      </li>
+
+      <li class="list-inline-item">
+        <form method="GET" action="{% url 'add_product' %}">
+          <button type="submit" class="btn">Make your own shop</button>
+        </form>
+      </li>
+      <li class="list-inline-item">
+        <a href="" class="btn">Gift Service</a>
+      </li>
+
+      </ul>
+
+  </div>
+  </nav>
   </div>
 
   <div id="scroll-top">
     <a id="scroll-top-button">
-        <i class="fas fa-arrow-up"></i>
+      <i class="fas fa-arrow-up"></i>
     </a>
   </div>
 
   {% endblock %}
 
-  {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}><span class="text-primary">{{ message }}</span></li>
-      {% endfor %}
-  </ul>
-  {% endif %}
-
-  <main id="main" style="width: 100vw;">
-    <!-- Messages -->
-    {% if messages %}
-    <div class="message-container"></div>
-    {% endif %}
-
+  <main id="main">
     {% block page_header %}
     {% endblock %}
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}><span class="text-primary">{{ message }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <!-- Main section -->
     {% block content %}
     {% endblock %}
 
-    <footer >
+    <footer>
       <div class="container-fluid">
         <div class="row">
           <div class="col text-white text-center info-background">
@@ -277,23 +273,51 @@
           <!-- Other links -->
           <div class="col">
             <h5>SHOPPING HUB</h5>
-            
+
             <ul class="list-unstyled">
               <li>
-                <a href="">About Us</a>    
+                <a href="{% url 'about_us' %}">About Us</a>
               </li>
               <li>
                 <a href="{% url 'contact_us' %}">Contact Us</a>
               </li>
               <li>
-                <a href="">Privacy Policy</a>
+                <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
               </li>
             </ul>
 
           </div>
-          
+
           <div class="col">
             <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="{% url 'products' %}">All Products</a>
+              </li>
+              <li>
+                <a href="">New Arrivals</a>
+              </li>
+              <li>
+                <a href="">Deals</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li>
+                <a href="">View Profile</a>
+              </li>
+              <li>
+                <a href="">View My Orders</a>
+              </li>
+              <li>
+                <a href="">List a product for sale</a>
+              </li>
+              <li>
+                <a href="">View My shop</a>
+              </li>
+              <li>
+                <a href="">Dashboard</a>
+              </li>
+              {% endif %}
+            </ul>
           </div>
 
           <div class="col">

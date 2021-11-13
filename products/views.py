@@ -71,7 +71,7 @@ def products(request):
             search = request.GET['q'].strip()
             results = Q(title__icontains=search) | Q(
                 category__name__icontains=search)
-            product_list = product_list.filter(results)
+            product_list = Products.objects.filter(results)
             selected = str(search)
 
         if 'sort' in request.GET:

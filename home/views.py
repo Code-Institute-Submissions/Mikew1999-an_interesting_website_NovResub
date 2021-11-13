@@ -51,6 +51,8 @@ def contact(request):
                 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
                     server.login(sender_email, password)
                     server.sendmail(sender_email, receiver_email, message)
+
+                messages.add_message(request, messages.SUCCESS, 'Email sent, We will be in touch shortly!')
                 return redirect('home')
             except:
                 print("email not sent")
@@ -62,3 +64,13 @@ def contact(request):
     }
 
     return render(request, 'home/contact_us.html', context)
+
+
+def about_us(request):
+    ''' Returns the about us page '''
+    return render(request, 'home/about_us.html')
+
+
+def privacy_policy(request):
+    ''' Returns Privacy Policy Page '''
+    return render(request, 'home/privacy_policy.html')

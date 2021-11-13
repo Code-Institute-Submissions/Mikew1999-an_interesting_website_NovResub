@@ -13,17 +13,6 @@ Products
     <a href="{% url 'add_product' %}">List an item for sale</a>
 </div>
 
-{% if selected %}
-<p class="lead text-center">
-    <strong>{{ products.count }} products found from your search
-        "{{ selected }}"</strong>
-    <br>
-    {% if sort != 'title' %}
-    Sorting by {{ sort }} <a href="{% url 'products' %}">Remove Sorting</a>
-    {% endif %}
-</p>
-{% endif %}
-
 <div class="text-center btn-container text-white">
     <a class="btn btn-sm btn-primary" onclick="showHideSort()">Sort</a>
 </div>
@@ -52,71 +41,95 @@ Products
     </form>
 </div>
 
-<div class="container-fluid p-4 mt-2">
+
+
+<div class="container-fluid">
     <div class="row">
-        {% for item in products %}
-        <div class="col-12 col-md-6 col-xl-4 mt-2 mb-4">
-            <div class="card">
-                <a href="{% url 'productdetails' product_id=item.pk %}">
-                    <img style="width: 100%; height: 300px;" src="{{ item.image }}" alt="Product Image">
-                </a>
-
-                <div class="card-body">
-                    <div class="card-header h-10">{{ item.title }}</div>
-
-                    <p class="description mt-4 h-15">{{ item.description }}</p>
-
-                    <a href="{% url 'productdetails' product_id=item.pk %}">Read More</a>
-
-                    <p class="rating">
-                        Rating: {{ item.rate }}
-                        <br>
-                        Number of reviews: {{ item.count }}
-                    </p>
-
-                    <form class="form" method="POST">
-                        {% csrf_token %}
-
-                        {% if user.is_authenticated %}
-                        {% if item.pk in users_liked_products %}
-                        <a class="liked" href="{% url 'unlike' item.pk user.id %}">
-                            <i class="fas fa-thumbs-up"></i>
-                        </a>
-                        {% else %}
-                        <a class="unliked" href="{% url 'like' item.pk user.id %}">
-                            <i class="far fa-thumbs-up"></i>
-                        </a>
-                        {% endif %}
-                        {% else %}
-                        <a class="unliked" href="{% url 'account_login' %}">
-                            <i class="far fa-thumbs-up"></i>
-                        </a>
-                        {% endif %}
-                    </form>
-
-                    <div class="button-group text-center">
-                        <a href="{% url 'productdetails' item.pk %}" class="btn btn-primary text-white">View item</a>
-                    </div>
-                    <p>
-                        <form class="author-form" action="{% url 'products' %}" method="GET">
-                            <a class="author-button">
-                                Author / Owner: {{ item.author.username|title }}
-                                <input type="hidden" name="author" value="{{ item.author.username|title }}">
-                            </a>
-                        </form>
-                    </p>
+        <div class="col-3 pl-2">
+            <h4>Your Selection</h4>
+            <p class="text-muted">
+                {% if selected %}
+                    {{ selected }} <a href="{% url 'products' %}"><span class="icon">&times;</span></a>
+                </p>
+                {% else %}
+                    All Products
+                {% endif %}
+            </p>
+            <br>
+            
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <strong>{{ products.count }} Products found</strong>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-    </div>
-    <div class="row">
-        <div class="col text-center">
-            <form id="more_products" action="{% url 'products' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="load_products" value="1">
-                <input class="btn" type="submit" value="Load More Products"></input>
-            </form>
+            <div class="row">
+                {% for item in products %}
+                <div class="col-12 col-md-6 mt-2 mb-4">
+                    <div class="card">
+                        <a href="{% url 'productdetails' product_id=item.pk %}">
+                            <img style="width: 100%; height: 300px;" src="{{ item.image }}" alt="Product Image">
+                        </a>
+        
+                        <div class="card-body">
+                            <div class="card-header h-10">{{ item.title }}</div>
+        
+                            <p class="description mt-4 h-15">{{ item.description }}</p>
+        
+                            <a href="{% url 'productdetails' product_id=item.pk %}">Read More</a>
+        
+                            <p class="rating">
+                                Rating: {{ item.rate }}
+                                <br>
+                                Number of reviews: {{ item.count }}
+                            </p>
+        
+                            <form class="form" method="POST">
+                                {% csrf_token %}
+        
+                                {% if user.is_authenticated %}
+                                {% if item.pk in users_liked_products %}
+                                <a class="liked" href="{% url 'unlike' item.pk user.id %}">
+                                    <i class="fas fa-thumbs-up"></i>
+                                </a>
+                                {% else %}
+                                <a class="unliked" href="{% url 'like' item.pk user.id %}">
+                                    <i class="far fa-thumbs-up"></i>
+                                </a>
+                                {% endif %}
+                                {% else %}
+                                <a class="unliked" href="{% url 'account_login' %}">
+                                    <i class="far fa-thumbs-up"></i>
+                                </a>
+                                {% endif %}
+                            </form>
+        
+                            <div class="button-group text-center">
+                                <a href="{% url 'productdetails' item.pk %}" class="btn btn-primary text-white">View item</a>
+                            </div>
+                            <p>
+                                <form class="author-form" action="{% url 'products' %}" method="GET">
+                                    <a class="author-button">
+                                        Author / Owner: {{ item.author.username|title }}
+                                        <input type="hidden" name="author" value="{{ item.author.username|title }}">
+                                    </a>
+                                </form>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <form id="more_products" action="{% url 'products' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="load_products" value="1">
+                        <input class="btn" type="submit" value="Load More Products"></input>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
