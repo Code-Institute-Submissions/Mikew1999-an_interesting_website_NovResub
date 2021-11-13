@@ -210,6 +210,15 @@
   </div>
 
   {% endblock %}
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}><span class="text-primary">{{ message }}</span></li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+
   <main id="main" style="width: 100vw;">
     <!-- Messages -->
     {% if messages %}
@@ -243,13 +252,25 @@
 
             <ul class="list-inline">
               <li class="list-inline-item">
-                Hi
+                <a href="">
+                  <span class="icon">
+                    <i class="fab fa-facebook"></i>
+                  </span>
+                </a>
               </li>
               <li class="list-inline-item">
-                Hey
+                <a href="">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                </a>
               </li>
               <li class="list-inline-item">
-                Hi there
+                <a href="">
+                  <span class="icon">
+                    <i class="fab fa-linkedin"></i>
+                  </span>
+                </a>
               </li>
             </ul>
           </div>
@@ -257,12 +278,12 @@
           <div class="col">
             <h5>SHOPPING HUB</h5>
             
-            <ul>
+            <ul class="list-unstyled">
               <li>
                 <a href="">About Us</a>    
               </li>
               <li>
-                <a href="">Contact Us</a>
+                <a href="{% url 'contact_us' %}">Contact Us</a>
               </li>
               <li>
                 <a href="">Privacy Policy</a>

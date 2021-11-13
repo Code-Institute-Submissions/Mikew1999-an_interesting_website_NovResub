@@ -144,13 +144,10 @@ def add_product(request):
             category_input = form.cleaned_data['category']
             price = form.cleaned_data['price']
             description = form.cleaned_data['description']
-
             rate = form.cleaned_data['rate']
             count = form.cleaned_data['count']
             has_sizes = form.cleaned_data['has_sizes']
-
             author = User(user_id)
-
             new_product = Products(
                             title=title, image=image,
                             category=category_input, price=price,

@@ -1,18 +1,20 @@
-from django.db import models
-from django.forms import ModelForm
+''' Required django import '''
 from django.contrib.auth.models import User
+from django.db import models
+
 
 # models inspired from code institute walkthrough project
-
 class Category(models.Model):
     ''' A model to describe the categories of products '''
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        ''' String method '''
+        return str(self.name)
 
     def get_friendly_name(self):
+        ''' Returns the friendly name of category '''
         return self.friendly_name
 
 
@@ -25,15 +27,23 @@ class Products(models.Model):
     has_sizes = models.BooleanField(default=False, blank=True, null=True)
     description = models.TextField()
     image = models.URLField(max_length=1024, null=True, blank=True)
-    rate = models.DecimalField(max_digits=2, decimal_places=1, blank=True, null=True, default=0)
+    rate = models.DecimalField(
+        max_digits=2, decimal_places=1, blank=True, null=True, default=0)
     count = models.PositiveIntegerField(blank=True, null=True, default=0)
-    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.title
+        ''' Returns string of title '''
+        return str(self.title)
 
 
 class Likes(models.Model):
     ''' A Model to define a like '''
-    product = models.ForeignKey('Products', null=False, blank=False, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        'Products', null=False, blank=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, null=False, blank=False, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.product)
