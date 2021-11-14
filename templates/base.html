@@ -144,7 +144,9 @@
                   <form action="{% url 'products' %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="category" value="{{ category }}">
-                <li><input class="btn" style="width: 100%;" type="submit" value="{{ category.friendly_name }}"></li>
+                <li>
+                  <input class="btn" style="width: 100%;" type="submit" value="{{ category.friendly_name }}">
+                </li>
                 </form>
           </li>
           {% endfor %}
@@ -190,7 +192,7 @@
 
       <li class="list-inline-item">
         <form method="GET" action="{% url 'add_product' %}">
-          <button type="submit" class="btn">Make your own shop</button>
+          <button type="submit" class="btn">Your shop / products</button>
         </form>
       </li>
       <li class="list-inline-item">
@@ -213,6 +215,10 @@
 
   <main id="main">
     {% block page_header %}
+    <noscript>
+      <!-- anchor linking to external file -->
+      <p>This Website requires Javascript to function. Please enable Javascript on your browser.</p>
+    </noscript>
     {% endblock %}
 
     {% if messages %}
@@ -318,10 +324,6 @@
               </li>
               {% endif %}
             </ul>
-          </div>
-
-          <div class="col">
-
           </div>
         </div>
       </div>

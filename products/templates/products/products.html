@@ -13,81 +13,140 @@ Products
     <a href="{% url 'add_product' %}">List an item for sale</a>
 </div>
 
-<div class="text-center btn-container text-white">
-    <a class="btn btn-sm btn-primary" onclick="showHideSort()">Sort</a>
-</div>
-
-<div class="sort-container text-center mt-4">
-    <form method="GET">
-        <label for="sort">Sorting</label>
-        <select class="form-select" name="sort" aria-label="Sort">
-            <option selected value="{{ sort }}">Product {{ sort }} ascending</option>
-            <option value="-title">Product title ascending</option>
-            <option value="category__name">Category descending</option>
-            <option value="-category__name">Category Ascending</option>
-            <option value="price">Price descending</option>
-            <option value="-price">Price</option>
-        </select>
-
-        <ul class="list-inline-group">
-            <li class="list-inline-item">
-                <a class="btn btn-sm" href="{% url 'products' %}">Clear Sorting</a>
-            </li>
-            <li class="list-inline-item">
-                <input class="btn btn-sm" type="submit" value="Search">
-            </li>
-        </ul>
-
-    </form>
-</div>
-
-
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3 pl-2">
-            <h4>Your Selection</h4>
-            <p class="text-muted">
+        <div class="col-12 col-md-3 pr-1">
+            <h4>Your Selection:</h4>
+            <p class="text-muted ">
                 {% if selected %}
-                    {{ selected }} <a href="{% url 'products' %}"><span class="icon">&times;</span></a>
-                </p>
-                {% else %}
-                    All Products
-                {% endif %}
+                {{ selected }} <a href="{% url 'products' %}"><span class="icon">&times;</span></a>
             </p>
-            <br>
+            {% else %}
+            All Products
+            {% endif %}
+            </p>
+
+            <hr style="float: left; width: 80%; margin-top: 0;">
+
+            <h4>Categories:</h4>
+
+            <ul class="list-unstyled">
+                {% for category in categories %}
+                <form action="{% url 'products' %}" method="post">
+                    {% csrf_token %}
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="category" value="{{ category }}">
+                        <label class="ml-1" for="category">{{ category.friendly_name }}</label>
+                    </li>
+                </form>
+                {% endfor %}
+            </ul>
+
+            <hr style="float: left; width: 80%; margin-top: 0;">
             
+            <h4>Condition:</h4>
+
+            <ul class="list-unstyled">
+                <form action="">
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="condition" value="new">
+                        <label class="ml-1" for="condition">Brand New</label>
+                    </li>
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="condition" value="used_new">
+                        <label class="ml-1" for="condition">Used, like new</label>
+                    </li>
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="condition" value="worn_good">
+                        <label class="ml-1" for="condition">Worn but good condition</label>
+                    </li>
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="condition" value="worn">
+                        <label class="ml-1" for="condition">Worn</label>
+                    </li>
+                </form>
+            </ul>
+
+            <hr style="float: left; width: 80%; margin-top: 0;">
+
+            <h4>Price Range:</h4>
+
+            <ul class="list-unstyled">
+                <form action="">
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="price_range" value="one_twenty">
+                        <label for="price_range">£1 - £20</label>
+                    </li>
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="price_range" value="twentyone__fourty">
+                        <label for="price_range">£21 - £40</label>
+                    </li>
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="price_range" value="fourtyone_sixty">
+                        <label for="price_range">£41 - £60</label>
+                    </li>
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="price_range" value="sixtyone_onehundred">
+                        <label for="price_range">£61 - £100</label>
+                    </li>
+                    <li>
+                        <input onclick="this.form.submit();" type="checkbox" name="price_range" value="100+">
+                        <label for="price_range">£100 +</label>
+                    </li>
+                </form>
+            </ul>
         </div>
         <div class="col">
             <div class="row">
-                <div class="col">
+                <div class="col pl-1">
                     <strong>{{ products.count }} Products found</strong>
+                </div>
+                <div class="col">
+                    <ul class="list-unstyled">
+
+                        <li class="float-right">
+                            <span>
+                                Sort by:
+                                <form action="{% url 'products' %}">
+                                    <select onchange="this.form.submit();" class="form-select" name="sort" aria-label="Sort">
+                                        <option value="{{ sort }}">Product {{ sort }} ascending</option>
+                                        <option value="-title">Product title ascending</option>
+                                        <option value="category__name">Category descending</option>
+                                        <option value="-category__name">Category Ascending</option>
+                                        <option value="price">Price descending</option>
+                                        <option value="-price">Price</option>
+                                    </select>
+                                </form>
+                            </span>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
             <div class="row">
                 {% for item in products %}
-                <div class="col-12 col-md-6 mt-2 mb-4">
-                    <div class="card">
+                <div class="col-12 col-md-6 col-lg-4 mt-2 mb-4 pl-1">
+                    <div class="">
                         <a href="{% url 'productdetails' product_id=item.pk %}">
                             <img style="width: 100%; height: 300px;" src="{{ item.image }}" alt="Product Image">
                         </a>
-        
-                        <div class="card-body">
-                            <div class="card-header h-10">{{ item.title }}</div>
-        
-                            <p class="description mt-4 h-15">{{ item.description }}</p>
-        
+
+                        <div class="">
+                            <div class="pt-1 h-10">{{ item.title }}</div>
+
+                            <p class="description h-15">{{ item.description }}</p>
+
                             <a href="{% url 'productdetails' product_id=item.pk %}">Read More</a>
-        
+
                             <p class="rating">
                                 Rating: {{ item.rate }}
                                 <br>
                                 Number of reviews: {{ item.count }}
                             </p>
-        
+
                             <form class="form" method="POST">
                                 {% csrf_token %}
-        
+
                                 {% if user.is_authenticated %}
                                 {% if item.pk in users_liked_products %}
                                 <a class="liked" href="{% url 'unlike' item.pk user.id %}">
@@ -104,16 +163,15 @@ Products
                                 </a>
                                 {% endif %}
                             </form>
-        
+
                             <div class="button-group text-center">
-                                <a href="{% url 'productdetails' item.pk %}" class="btn btn-primary text-white">View item</a>
+                                <a href="{% url 'productdetails' item.pk %}" class="btn btn-primary text-white">View
+                                    item</a>
                             </div>
                             <p>
                                 <form class="author-form" action="{% url 'products' %}" method="GET">
-                                    <a class="author-button">
-                                        Author / Owner: {{ item.author.username|title }}
                                         <input type="hidden" name="author" value="{{ item.author.username|title }}">
-                                    </a>
+                                        <input class="btn" type="submit" value="Author / Owner: {{ item.author.username|title }}">
                                 </form>
                             </p>
                         </div>
@@ -137,16 +195,6 @@ Products
 
 {% block postloadjs %}
 <script type="text/javascript">
-    $('.categories-container').css('display', 'none');
-    $('.sort-container').css('display', 'none');
-
-    function showHideSort() {
-        $('.sort-container').toggle();
-        if ($('.categories-container').css('display', 'block')) {
-            $('.categories-container').toggle();
-        }
-    }
-
     function moreless() {
         $('.description').each(function () {
             // Finds item description
@@ -166,8 +214,8 @@ Products
 
     moreless();
 
-    $('#more_products').submit(function(){
-        window.scrollTo(0,document.body.scrollHeight);
+    $('#more_products').submit(function () {
+        window.scrollTo(0, document.body.scrollHeight);
     })
 </script>
 {% endblock %}

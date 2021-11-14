@@ -78,6 +78,10 @@ def products(request):
             sort = request.GET['sort']
             product_list = Products.objects.all().order_by(sort)
 
+        if 'condition' in request.GET:
+            condition = request.GET['condition']
+            print(condition)
+
     context = {
         'products': product_list,
         'categories': category_list,
