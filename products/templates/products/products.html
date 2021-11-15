@@ -7,7 +7,15 @@ Products
 
 {% block content %}
 
-<h1 class="display-3 pl-2 mb-2 text-center">Products</h1>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="header-images">
+                <div class="header-text text-center"><h1 class="display-4">Products</h1></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="text-center mb-2">
     <a href="{% url 'add_product' %}">List an item for sale</a>
@@ -133,8 +141,6 @@ Products
 
                         <div class="">
                             <div class="pt-1 h-10">{{ item.title }}</div>
-
-                            <p class="description h-15">{{ item.description }}</p>
 
                             <a href="{% url 'productdetails' product_id=item.pk %}">Read More</a>
 

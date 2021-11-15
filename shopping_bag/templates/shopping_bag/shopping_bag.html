@@ -6,98 +6,85 @@ Shopping bag
 {% endblock %}
 
 {% block content %}
+<div class="shopping-bag">
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center">
-                <h1 class="display-4">Shopping Bag</h1>
+            <div class="col">
+                <div class="header-images">
+                    <div class="header-text text-center"><h1 class="display-4">Shopping bag</h1></div>
+                </div>
             </div>
         </div>
-        {% if items %}
         <div class="row">
-            <div class="col">
-                <table class="table table-responsive table-border">
-                    <thead>
-                        <th>
-                            Product Title:
-                        </th>
-                        <th>
-                            Price:
-                        </th>
-                        <th>
-                            Item Size:
-                        </th>
-                        <th>
-                            Quantity:
-                        </th>
-                        <th>
-                            Item Total:
-                        </th>
-                    </thead>
-                    {% for item in items %}
-                    <tr>
-                        <td>
-                            {{ item.product.title|title }}
-                        </td>
-                        <td>
-                            £{{ item.product.price }}
-                        </td>
-                        <td>
-                            {% if item.size %}
-                                {{ item.size|title }}
-                            {% else %}
-                                N/a
-                            {% endif %}
-                        </td>
-                        <td>
-                            <form method="POST" class="amend-bag" action="{% url 'amend_bag' item.product.pk %}">
-                                {% csrf_token %}
-                                {% if item.size %}
-                                    <input type="hidden" name="size" value="{{ item.size }}">
-                                {% endif %}
-                                <div class="input-group w-70 mb-2">
-                                    <span class="input-group-text" id="minus"><i class="fas fa-minus"></i></span>
-                                    <input type="text" id="quantity" name="quantity" value="{{ item.quantity }}" min="0" max="99" class="form-control"
-                                        aria-label="Quantity">
-                                    <span class="input-group-text" id="plus"><i class="fas fa-plus"></i></span>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        {% if items %}
+                        {% for item in items %}
+                        <div class="item-container">
+                            <img src="{{ item.product.image }}" class="img-thumbnail"
+                                style="width: 25%; height: 100px; border: 0;">
+                            <p style="display: inline; margin-bottom: 50%;">
+                                {{ item.product.title }}
+                                <span class="mb-2">
+                                    <strong>£{{ item.price }}</strong>
+                                    <div class="text-center">
+                                        <form method="POST" class="amend-bag"
+                                            action="{% url 'amend_bag' item.product.pk %}">
+                                            {% csrf_token %}
+                                            {% if item.size %}
+                                            <input type="hidden" name="size" value="{{ item.size }}">
+                                            {% endif %}
+                                            <div class="input-group mb-2">
+                                                Quantity:
+                                                <span class="input-group-text" id="minus"><i
+                                                        class="fas fa-minus"></i></span>
+                                                <input style="width: 50px" type="text" id="quantity" name="quantity"
+                                                    value="{{ item.quantity }}" min="0" max="99" aria-label="Quantity">
+                                                <span class="input-group-text" id="plus"><i
+                                                        class="fas fa-plus"></i></span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </span>
+                                <br>
+
+                            </p>
+
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p>Your bag is empty</p>
+                        <p><a href="{% url 'products' %}">Continue Shopping</a></p>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        <div class="total-container">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <a style="width: 100%;" class="btn btn-primary" href="">Proceed to checkout</a>
+                                    <a style="width: 100%; margin-top: 1rem;" class="btn btn-light" href="{% url 'products' %}">Continue Shopping</a>
                                 </div>
-                            </form>
-                        </td>
-                        <td>
-                            £{{ total|floatformat:2 }}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col text-center">
-                <a href="{% url 'products' %}">Continue Shopping</a>
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col">
-                <div class="btn-group">
-                    <a class="btn btn-primary" href="{% url 'checkout' %}">Proceed to checkout</a>
-                    <a href="">
-                        <form method="GET" action="{% url 'shopping_bag' %}">
-                            <input type="hidden" name="clear">
-                            <input type="submit" class="btn btn-danger" value="Clear all bag items" id="clear-bag" style="cursor: pointer;">
-                        </form>
-                    </a>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Items ({% if items %}{{ items|length }}{% else %}0{% endif %}):</h4>
+                                    <h4>Delivery:</h4>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 lead">{{ total }}</p>
+                                    <p class="lead">
+                                    </p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            
         </div>
-        {% else %}
-            <div class="row mt-4">
-                <div class="col text-center">
-                    <p>Your bag is empty</p>
-                    <p><a href="{% url 'products' %}">Continue Shopping</a></p>
-                </div>
-            </div>
-        {% endif %}
     </div>
+</div>
 {% endblock %}
 
 {% block postloadjs %}

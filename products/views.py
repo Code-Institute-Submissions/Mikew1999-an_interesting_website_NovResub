@@ -81,6 +81,10 @@ def products(request):
         if 'condition' in request.GET:
             condition = request.GET['condition']
             print(condition)
+        
+        if 'price_range' in request.GET:
+            price_range = request.GET['price_range']
+            print(price_range)
 
     context = {
         'products': product_list,
