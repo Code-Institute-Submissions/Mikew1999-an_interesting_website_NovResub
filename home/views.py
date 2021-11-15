@@ -1,7 +1,7 @@
 ''' Render '''
 from django.shortcuts import render, redirect
 from products.models import Category
-from .models import ContactMe
+from .models import ContactMe, Newsletter
 from .forms import ContactMeForm
 from django.contrib import messages
 from an_interesting_site import settings
@@ -18,6 +18,23 @@ def index(request):
     if user.is_authenticated:
         username = request.user.username
 
+    if request.POST:
+        if 'newsletter_email' in request.POST:
+            email_input = str(request.POST['newsletter_email'])
+            email_address = Newsletter.objects.filter(email=email_input)[:1].values('email')
+            if email_address:
+                if email_input == email_address[0]['email']:
+                    messages.add_message(request, messages.ERROR,
+                        'You have already signed up for our newsletter')
+            else:
+                try:
+                    new_email = Newsletter(email=email_input)
+                    new_email.save()
+                    messages.add_message(request, messages.SUCCESS,
+                        'You have successfully signed up for our newsletter')
+                except:
+                    messages.add_message(request, messages.ERROR,
+                        'Something went wrong, please try again and if the issue continues please contact support@aninterestingwebsite.com')
     context = {
         'username': username,
         'categories': categories,

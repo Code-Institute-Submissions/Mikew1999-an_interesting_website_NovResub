@@ -11,3 +11,11 @@ class ContactMe(models.Model):
     def __str__(self):
         ''' Returns string of name '''
         return str(self.name)
+
+
+class Newsletter(models.Model):
+    ''' Defines the newsletter table '''
+    email = models.EmailField(blank=False, null=False)
+
+    def __str__(self):
+        return str(self.email)

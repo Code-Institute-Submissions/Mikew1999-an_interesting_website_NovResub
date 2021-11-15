@@ -11,14 +11,16 @@ Shopping bag
         <div class="row">
             <div class="col">
                 <div class="header-images">
-                    <div class="header-text text-center"><h1 class="display-4">Shopping bag</h1></div>
+                    <div class="header-text text-center">
+                        <h1 class="display-5">Shopping bag</h1>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 {% if items %}col-lg-6{% endif %}">
                         {% if items %}
                         {% for item in items %}
                         <div class="item-container">
@@ -48,22 +50,26 @@ Shopping bag
                                     </div>
                                 </span>
                                 <br>
-
                             </p>
-
                         </div>
                         {% endfor %}
                         {% else %}
-                        <p>Your bag is empty</p>
-                        <p><a href="{% url 'products' %}">Continue Shopping</a></p>
+                        <div class="text-center">
+                            <p>Your bag is empty</p>
+                            <p><a href="{% url 'products' %}">Continue Shopping</a></p>
+                        </div>
                         {% endif %}
                     </div>
+                    {% if items %}
                     <div class="col">
                         <div class="total-container">
                             <div class="row">
                                 <div class="col text-center">
-                                    <a style="width: 100%;" class="btn btn-primary" href="">Proceed to checkout</a>
-                                    <a style="width: 100%; margin-top: 1rem;" class="btn btn-light" href="{% url 'products' %}">Continue Shopping</a>
+                                    {% if items %}
+                                    <a style="width: 100%;" class="btn btn-primary" href="{% url 'checkout' %}">Proceed to checkout</a>
+                                    {% endif %}
+                                    <a style="width: 100%; margin-top: 1rem;" class="btn btn-light"
+                                        href="{% url 'products' %}">Continue Shopping</a>
                                 </div>
                             </div>
                             <div class="row">
@@ -77,9 +83,10 @@ Shopping bag
                                     </p>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

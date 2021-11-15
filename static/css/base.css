@@ -203,6 +203,7 @@ label {
 
 .total-container {
     padding: 10px;
+    margin-bottom: 1rem;
 }
 
 .total-container, .item-container {

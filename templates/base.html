@@ -238,18 +238,25 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col text-white text-center info-background">
-            <form action="">
-              <div class="btn-group pt-2 pb-2">
-                <span class="mr-2">Get in touch</span>
-                <input type="email" name="email" class="mr-2 rounded border-white">
-                <button class="btn" type="submit">Submit</button>
+            <form action="{% url 'home' %}" method="post">
+              {% csrf_token %}
+              <div class="input-group text-center">
+                <input class="border border-black" type="email" name="newsletter_email" placeholder="someone@example.com">
+
+                <div class="input-group-append">
+                  <button class="form-control btn btn-black border border-black" type="submit">
+                    <span class="icon">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </button>
+                </div>
               </div>
             </form>
           </div>
         </div>
         <div class="row">
           <!-- Socials -->
-          <div class="col">
+          <div class="col-12 col-md-4 text-center">
             <h5>Check out our social media</h5>
 
             <ul class="list-inline">
@@ -277,7 +284,7 @@
             </ul>
           </div>
           <!-- Other links -->
-          <div class="col">
+          <div class="col-12 col-md-4 text-center">
             <h5>SHOPPING HUB</h5>
 
             <ul class="list-unstyled">
@@ -294,7 +301,7 @@
 
           </div>
 
-          <div class="col">
+          <div class="col-12 col-md-4 text-center">
             <h5>Quick Links</h5>
             <ul class="list-unstyled">
               <li>
