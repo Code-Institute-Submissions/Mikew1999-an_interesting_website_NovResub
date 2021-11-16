@@ -11,7 +11,6 @@ def bag_items(request):
     products = None
     items = []
     total = 0
-    delivery_cost = None
 
     for product_id, product_data in bag.items():
         # If item doesn't have size
@@ -49,29 +48,12 @@ def bag_items(request):
 
     # Checks and applies deal
     deal = check_deals(request)
-    if deal == 'Free Delivery on all orders':
-        delivery_cost = 0
-    elif deal == '10% off Electronics':
-        print("10% off electronics")
-    else:
-        ten_percent = total / 10
-        total -= ten_percent
 
     context = {
         'items': items,
         'products': products,
         'total': total,
-        'delivery_cost': delivery_cost,
-    }
-
-    return context
-
-
-def delivery(request):
-    ''' Defines Delivery costs '''
-    context = {
-        'standard_delivery': 5,
-        'next_day_delivery': 10,
+        'deal': deal,
     }
 
     return context

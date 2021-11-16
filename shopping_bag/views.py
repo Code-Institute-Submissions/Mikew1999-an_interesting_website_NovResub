@@ -1,12 +1,23 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from products.models import Products
 from products.views import products
+from .contexts import bag_items
 
 
 # Create your views here.
 def shopping_bag(request):
     ''' A view to return the shopping bag '''
     bag = request.session.get('bag', {})
+    bag_contents = bag_items(request)
+    total = bag_contents['total']
+    deal = bag_contents['deal']
+    delivery_cost = request.session.get('delivery_cost', {})
+
+    if deal == 'Free Delivery on all orders':
+        delivery_cost['cost'] = 0
+    elif total >= 50:
+        delivery_cost['cost'] = 0
+
     if request.GET:
         # Clears bag
         if 'clear' in request.GET:
@@ -14,7 +25,25 @@ def shopping_bag(request):
             del request.session['bag']
             return redirect(shopping_bag)
 
-    return render(request, 'shopping_bag/shopping_bag.html')
+    if request.POST:
+        # set delivery details
+        if 'delivery' in request.POST:
+            delivery = request.POST['delivery']
+            if delivery == 'Next Day':
+                delivery_cost['cost'] = 10
+            elif delivery == '3 - 5':
+                delivery_cost['cost'] = 7
+            else:
+                delivery_cost['cost'] = 3
+
+    request.session['delivery_cost'] = delivery_cost
+
+    context = {
+        'delivery_details': request.session['delivery_cost'],
+        'total': total,
+    }
+
+    return render(request, 'shopping_bag/shopping_bag.html', context)
 
 
 def add_to_bag(request, item_id):

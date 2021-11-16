@@ -73,14 +73,38 @@ Shopping bag
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col mt-2">
                                     <h4>Items ({% if items %}{{ items|length }}{% else %}0{% endif %}):</h4>
                                     <h4>Delivery:</h4>
+                                    {% if delivery_details == '{}' %}
+                                        <form action="{% url 'shopping_bag' %}" method="post">
+                                            <ul class="list-unstyled">
+                                                {% csrf_token %}
+                                                <li>
+                                                    <input onclick="this.form.submit();" type="checkbox" name="delivery" value="Next Day">
+                                                    <label for="delivery">Next day delivery: £10</label>
+                                                </li>
+                                                <li>
+                                                    <input onclick="this.form.submit();" type="checkbox" name="delivery" value="3 - 5">
+                                                    <label for="delivery">3 - 5 Working days: £7</label>
+                                                </li>
+                                                <li>
+                                                    <input onclick="this.form.submit();" type="checkbox" name="delivery" value="10+">
+                                                    <label for="delivery">10+ Working days: £3</label>
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    {% endif %}
                                 </div>
-                                <div class="col">
-                                    <p class="mb-0 lead">{{ total }}</p>
-                                    <p class="lead">
-                                    </p>
+                                <div class="col mt-2">
+                                    <h4>£{{ total|floatformat:2 }}</h4>
+                                    {% if delivery_cost == 0 %}
+                                        <h4>Free Delivery</h4>
+                                    {% elif total > 50 %}
+                                        <h4>Free Delivery</h4>
+                                    {% else %}
+                                        <h4>£{{ delivery_details.cost }}</h4>
+                                    {% endif %}
                                 </div>
                             </div>
 

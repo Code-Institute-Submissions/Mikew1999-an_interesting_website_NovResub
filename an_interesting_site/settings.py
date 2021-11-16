@@ -69,7 +69,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'shopping_bag.contexts.bag_items',
-                'shopping_bag.contexts.delivery',
                 'home.contexts.top_products',
                 'home.contexts.active_user',
             ],
