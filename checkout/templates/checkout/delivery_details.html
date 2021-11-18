@@ -27,7 +27,7 @@ Delivery details
                         <label for="{{ form.address_line_1.id_for_label }}" class="form-label float-left">Address Line
                             1:</label>
                         <input required aria-required="true" class="form-control" type="text" name="address_line_1"
-                            id="{{ form.address_line_1.id_for_label }}">
+                            id="{{ form.address_line_1.id_for_label }}" value="{{ address_details.1.address_line_1 }}">
                     </div>
                 </div>
                 <div class="field-wrapper mt-2">
@@ -36,7 +36,7 @@ Delivery details
                         <label for="{{ form.address_line_2.id_for_label }}" class="form-label float-left">Address Line
                             2:</label>
                         <input class="form-control" type="text" name="address_line_2"
-                            id="{{ form.address_line_2.id_for_label }}">
+                            id="{{ form.address_line_2.id_for_label }}" value="{{ address_details.1.address_line_2 }}">
                     </div>
                 </div>
                 <div class="field-wrapper mt-2">
@@ -44,7 +44,7 @@ Delivery details
                         {{ form.town.errors }}
                         <label for="{{ form.town.id_for_label }}" class="form-label float-left">Town / City:</label>
                         <input required aria-required="true" class="form-control" type="text" name="town"
-                            id="{{ form.town.id_for_label }}">
+                            id="{{ form.town.id_for_label }}" value="{{ address_details.1.town }}">
                     </div>
                 </div>
                 <div class="field-wrapper mt-2">
@@ -52,7 +52,7 @@ Delivery details
                         {{ form.post_code.errors }}
                         <label for="{{ form.postcode.id_for_label }}" class="form-label float-left">Post Code:</label>
                         <input required aria-required="true" class="form-control" type="text" name="postcode"
-                            id="{{ form.post_code.id_for_label }}">
+                            id="{{ form.post_code.id_for_label }}" value="{{ address_details.1.postcode }}">
                     </div>
                 </div>
                 <div class="field-wrapper mt-2">
@@ -60,7 +60,7 @@ Delivery details
                         {{ form.email.errors }}
                         <label for="{{ form.email.id_for_label }}" class="form-label float-left">Email Address:</label>
                         <input required aria-required="true" class="form-control" type="email" name="email"
-                            id="{{ form.email.id_for_label }}" value="{{ user.email }}">
+                            id="{{ form.email.id_for_label }}" value="{% if user.is_authenticated %}{{ user.email }}{% else %}{{ address_details.1.email }}{% endif %}">
                     </div>
                 </div>
                 <div class="field-wrapper mt-2">
@@ -68,7 +68,7 @@ Delivery details
                         {{ form.phone.errors }}
                         <label for="{{ form.phone.id_for_label }}" class="form-label float-left">Phone Number:</label>
                         <input required aria-required="true" class="form-control" type="text" name="phone"
-                            id="{{ form.phone.id_for_label }}">
+                            id="{{ form.phone.id_for_label }}" value="{{ address_details.1.phone }}">
                     </div>
                 </div>
                 <div class="field-wrapper mt-2">

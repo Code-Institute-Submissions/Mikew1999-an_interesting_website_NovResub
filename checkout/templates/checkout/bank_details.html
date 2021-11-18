@@ -5,53 +5,30 @@
 Checkout | Bank Details
 {% endblock %}
 
+<script src="{% static 'checkout/js/checkout.js' %}"></script>
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <h2 class="display-3">Confirm Bank Details</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <form id="payment-form" action="{% url 'bank_details' %}" method="POST">
-                    {% csrf_token %}
-					<fieldset class="px-3">
-                        <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
-                        <!-- A Stripe card element will go here -->
-                        <div class="mb-3" id="card-element"></div>
-
-                        <!-- Used to display form errors -->
-                        <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                    </fieldset>
-                    <div class="submit-button text-right mt-5 mb-2">                    
-						<a href="" class="btn btn-outline-black rounded-0">
-							<span class="icon">
-								<i class="fas fa-chevron-left"></i>
-							</span>
-							<span class="font-weight-bold">Adjust Bag</span>
-						</a>
-						<button id="submit-button" class="btn btn-black rounded-0">
-							<span class="font-weight-bold">Complete Order</span>
-							<span class="icon">
-								<i class="fas fa-lock"></i>
-							</span>
-						</button>
-						<p class="small text-danger my-0">
-							<span class="icon">
-								<i class="fas fa-exclamation-circle"></i>
-							</span>
-							<span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
-						</p>
-					</div>
-                </form>
+<div class="container">
+    <div class="row">
+        <div class="col p-4">
+            <div class="header-images">
+                <div class="header-text text-center">
+                    <h1 class="display-5">Confirm Bank Details</h1>
+                </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <!-- Display a payment form -->
+            
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block postloadjs %}

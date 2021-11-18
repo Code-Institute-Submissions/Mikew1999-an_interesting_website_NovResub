@@ -8,6 +8,10 @@ This is a shop website which sells products made by the company and allows users
 
 It is designed to enable the shopper to find a product they like easily by providing a search form and various ways to filter the results.
 
+# Data schema
+
+
+
 ## User Experience (UX)
 
 ## User stories
@@ -38,11 +42,21 @@ It is designed to enable the shopper to find a product they like easily by provi
 
 ### Colour scheme
 
+The background colour is white on all pages with many pictures to brighten up the page.
+The Shopping bag page has a slightly gray background to make the boxes pop out more.
+The buttons are mainly blue and green to ensure they are visible to make the site more intuitive to navigate.
+
 ### Typography
+
+I have mainly used Oswald and Montserrat for my fonts as I feel that they provide the site with a professional look but also doesn't look too dated.
 
 ### Imagery
 
+I have mainly used imagery from https://fakestoreapi.com/ for the products and product images as they are visually appealing to showcase the marketplace. 
+The site allows the users to view pictures of the products so they can quickly find what they are looking for.
+
 # Wireframes
+
 
 # Features
 
@@ -50,7 +64,21 @@ It is designed to enable the shopper to find a product they like easily by provi
 
 ## Frameworks & libraries used
 
+Django
+
+Bootstrap
+
+Jquery
+
 ## Languages used
+
+HTML5
+
+CSS3
+
+Javascript
+
+Python 3
 
 # Testing 
 
@@ -58,7 +86,25 @@ It is designed to enable the shopper to find a product they like easily by provi
 
 ## Known bugs
 
+When using multiple monitors the width and height of objects becomes altered.
+
 # Deployment
+
+## To run the server locally
+
+1) Open up environment
+2) In the terminal type: 'pip3 install -r requirements.txt'
+    This will install all of the required libraries for the project
+3) In the terminal type: 'python3 manage.py runserver'
+4) Select open browser next to port 8000
+
+## To Deploy
+
+1) Freeze requirements into requirements.txt file: pip3 freeze > requirements.txt
+2) Create Procfile at the root of the repository and type 'web: gunicorn an_interesting_site.wsgi:application'.
+3) Login to Heroku
+4) 
 
 # Credits
 
+https://fakestoreapi.com/ for the products and images to base my site around.

@@ -15,7 +15,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'hi')
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = True
-# 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ['an-interesting-website.herokuapp.com', 'localhost']
 
@@ -189,5 +188,5 @@ email_password = os.environ.get('password')
 # Stripe
 
 STRIPE_CURRENCY = 'gbp'
-STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_PUBLIC_KEY = 'pk_test_51Je9YQK25WcuIKuVU0QvHdpI22wEDHjJwkSNmarkvBLK2FANdX5Q3MLVooSUym7nHxTEWk6JCXHb7uQ8ivEdj0Az00Bw6nF3J9'
+STRIPE_SECRET_KEY = 'sk_test_51Je9YQK25WcuIKuVMssctpYOXdCkUjS8SjLTzag9JiAPdHHWCtK870aIr4qNUZ4jd2NoCfCkJM16sfjiUacbyM4G00fDnjPJyh'

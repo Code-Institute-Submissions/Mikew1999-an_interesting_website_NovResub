@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
-  <link rel="stylesheet" href="/static/css/base.css">
-  <!-- <link rel="stylesheet" href="https://an-interesting-website.s3.amazonaws.com/static/css/base.css"> -->
+  <!-- <link rel="stylesheet" href="/static/css/base.css"> -->
+  <link rel="stylesheet" href="https://an-interesting-website.s3.amazonaws.com/static/css/base.css">
   {% endblock %}
 
   {% block extra_css %}
@@ -36,8 +36,8 @@
   {% endblock %}
 
   {% block extra_js %}
-  <script src="{% static 'js/scripts.js' %}"></script>
-  <!-- <script src="https://an-interesting-website.s3.amazonaws.com/static/js/scripts.js"></script> -->
+  <!-- <script src="{% static 'js/scripts.js' %}"></script> -->
+  <script src="https://an-interesting-website.s3.amazonaws.com/static/js/scripts.js"></script>
   {% endblock %}
 
   <title>An interesting website | {% block extra_title %}{% endblock %}</title>
@@ -163,27 +163,14 @@
           </button>
 
           <ul class="dropdown-menu">
-            <a href="" class="btn">Deals</a>
             <li>
-              <form id="products-form w-100" method="GET" action="{% url 'products' %}">
-                <select class="form-select" name="sort" onchange="this.form.submit()">
-                  <option value="">-- Products --</option>
-                  <option value="title">All Products (A - Z)</option>
-                  <option value="-title">All Products (Z - A)</option>
-                  <option value="-price">Products by Price (High - Low)</option>
-                  <option value="price">Products by Price (Low - High)</option>
-                </select>
-              </form>
+              <a href="{% url 'add_product' %}" class="btn">List a product for sale</a>
             </li>
             <li>
-              <form method="GET" action="{% url 'products' %}">
-                <select class="form-select w-100" name="category" onchange="this.form.submit()">
-                  <option value="">-- Categories --</option>
-                  {% for category in categories %}
-                  <option value="{{ category.name }}">{{ category.friendly_name }}</option>
-                  {% endfor %}
-                </select>
-              </form>
+              <a href="{% url 'products' %}" class="btn">All Products</a>
+            </li>
+            <li>
+              <a href="" class="btn">Deals</a>
             </li>
           </ul>
 
@@ -194,9 +181,6 @@
         <form method="GET" action="{% url 'add_product' %}">
           <button type="submit" class="btn">Your shop / products</button>
         </form>
-      </li>
-      <li class="list-inline-item">
-        <a href="" class="btn">Gift Service</a>
       </li>
 
       </ul>
@@ -237,15 +221,14 @@
     <footer class="w-100">
       <div class="container-fluid">
         <div class="row info-background">
-          <div class="col-3"></div>
-          <div class="col-5 mt-2 mb-2 text-white ">
+          <div class="col-12 text-center mt-2 mb-2 text-white ">
             <form action="{% url 'home' %}" method="post">
               {% csrf_token %}
               <div class="input-group">
                 <span class="m-auto pr-2">
                   Sign up for our newsletter
                 </span>
-                <input class="form-control border border-black" type="email" name="newsletter_email"
+                <input style="width: auto!important;" class="form-control border border-black" type="email" name="newsletter_email"
                   placeholder="someone@example.com">
 
                 <div class="input-group-append">

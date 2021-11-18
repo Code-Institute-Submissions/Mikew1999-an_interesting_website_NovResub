@@ -1,7 +1,10 @@
 ''' Checkout pages and form handling '''
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.conf import settings
+import os
+import json
 import stripe
 from shopping_bag.contexts import bag_items
 from .models import DeliveryDetails
@@ -25,6 +28,11 @@ def checkout(request):
 
 def address(request):
     ''' A view to return the delivery details page '''
+    bag = request.session.get('bag', {})
+
+    if bag == {}:
+        return redirect('shopping_bag')
+
     address_details = request.session.get('address_details', {})
     form = Delivery()
     if request.POST:
@@ -38,17 +46,16 @@ def address(request):
         email = request.POST['email']
         phone = request.POST['phone']
 
-        if 'guest' in request.POST:
-            address_details['1'] = {
-                'address_line_1': address_line_1,
-                'address_line_2': address_line_2,
-                'town': town,
-                'postcode': postcode,
-                'email': email,
-                'phone': phone
-            }
+        address_details['1'] = {
+            'address_line_1': address_line_1,
+            'address_line_2': address_line_2,
+            'town': town,
+            'postcode': postcode,
+            'email': email,
+            'phone': phone
+        }
 
-        else:
+        if 'guest' not in request.POST:
             new_delivery_details = DeliveryDetails(
                 user=User(request.user.id),
                 address_line_1=address_line_1, address_line_2=address_line_2,
@@ -62,6 +69,7 @@ def address(request):
 
     context = {
         'form': form,
+        'address_details': address_details,
     }
 
     return render(request, 'checkout/delivery_details.html', context)
@@ -69,34 +77,53 @@ def address(request):
 
 def order_summary(request):
     ''' A view to return the order summary page '''
-    delivery = request.session.get('delivery', {})
-    return render(request, 'checkout/order_summary.html', delivery)
-
-
-def bank_details(request):
-    ''' A view to return billing details form '''
-    stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY
-    bag = request.session.get('bag', {})
-
-    if bag == {}:
-        return redirect('shopping_bag')
-
-    current_bag = bag_items(request)
-    total = current_bag['total']
-    stripe_total = round(total * 100)
-    stripe.api_key = stripe_secret_key
-    intent = stripe.PaymentIntent.create(
-        amount=stripe_total,
-        currency=settings.STRIPE_CURRENCY
-    )
+    address_details = request.session.get('address_details', {})
 
     context = {
-        'stripe_public_key': stripe_public_key,
-        'client_secret': intent.client_secret,
+        'address_details': address_details,
     }
 
-    return render(request, 'checkout/bank_details.html', context)
+    return render(request, 'checkout/order_summary.html', context)
+
+
+def create_checkout_session(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    session = stripe.checkout.Session.create(
+        line_items=[{
+            'price_data': {
+                'currency': 'gbp',
+                'product_data': {
+                    'name': 'T-shirt',
+                },
+                'unit_amount': 2000,
+        },
+        'quantity': 1,
+        }],
+        mode='payment',
+        success_url='https://an-interesting-website.s3.amazonaws.com/checkout/success.html',
+        cancel_url='https://an-interesting-website.s3.amazonaws.com/checkout/cancel.html',
+    )
+
+    return redirect(request, session.url, code=303)
+
+# def bank_details(request):
+#     ''' A view to return billing details form '''
+#     stripe_public_key = settings.STRIPE_PUBLIC_KEY
+#     stripe_secret_key = settings.STRIPE_SECRET_KEY
+#     bag = request.session.get('bag', {})
+#     delivery_cost = request.session.get('delivery_cost', {})
+
+#     if bag == {}:
+#         return redirect('shopping_bag')
+
+#     current_bag = bag_items(request)
+#     total = current_bag['total']
+#     context = {
+#         'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
+#         'client_secret': settings.STRIPE_SECRET_KEY,
+#     }
+
+#     return render(request, 'checkout/bank_details.html', context)
 
 
 def success(request):

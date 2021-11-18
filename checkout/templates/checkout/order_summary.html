@@ -8,13 +8,20 @@ Order Summary
 {% block content %}
 <div class="container mb-4">
     <div class="row">
-        <div class="col">
-            <h1 class="display-3 text-center">Order Summary</h1>
+        <div class="col p-4">
+            <div class="header-images">
+                <div class="header-text text-center">
+                    <h1 class="display-5">Order Summary</h1>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+
+<div class="container mt-4">
     <div class="row">
         <div class="col">
-            <h2 class="display-4">Delivery Details</h2>
+            <h3>Delivery Details</h3>
         </div>
     </div>
     <div class="row">
@@ -25,7 +32,7 @@ Order Summary
                         Address Line 1:
                     </td>
                     <td>
-                        {{ address_line_1 }}
+                        {{ address_details.1.address_line_1 }}
                     </td>
                 </tr>
                 <tr>
@@ -33,7 +40,7 @@ Order Summary
                         Address Line 2:
                     </td>
                     <td>
-                        {{ address_line_2 }}
+                        {{ address_details.1.address_line_2 }}
                     </td>
                 </tr>
                 <tr>
@@ -41,7 +48,7 @@ Order Summary
                         Town:
                     </td>
                     <td>
-                        {{ town }}
+                        {{ address_details.1.town }}
                     </td>
                 </tr>
                 <tr>
@@ -49,7 +56,7 @@ Order Summary
                         Post Code:
                     </td>
                     <td>
-                        {{ post_code }}
+                        {{ address_details.1.postcode }}
                     </td>
                 </tr>
                 <tr>
@@ -57,7 +64,7 @@ Order Summary
                         Email Address:
                     </td>
                     <td>
-                        {{ email }}
+                        {{ address_details.1.email }}
                     </td>
                 </tr>
                 <tr>
@@ -65,18 +72,15 @@ Order Summary
                         Phone Number:
                     </td>
                     <td>
-                        {{ phone }}
+                        {{ address_details.1.phone }}
                     </td>
                 </tr>
             </table>
         </div>
     </div>
-</div>
-
-<div class="container mt-4">
     <div class="row">
         <div class="col">
-            <h2 class="display-4">Items:</h2>
+            <h3>Items:</h3>
         </div>
     </div>
     <div class="row">
@@ -123,7 +127,7 @@ Order Summary
     </div>
     <div class="row mb-4">
         <div class="col">
-            <form method="POST" action="{% url 'bank_details' %}">
+            <form method="POST" action="{% url 'create_checkout_session' %}">
                 {% csrf_token %}
                 <button type="submit" id="checkout-button" class="btn btn-success">Proceed with order</button>
             </form>
