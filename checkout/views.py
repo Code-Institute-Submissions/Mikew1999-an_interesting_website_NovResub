@@ -1,51 +1,70 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.conf import settings
+''' Checkout pages and form handling '''
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from products.models import Products
-from shopping_bag.contexts import bag_items
+from django.conf import settings
 import stripe
+from shopping_bag.contexts import bag_items
+from .models import DeliveryDetails
+from .forms import Delivery
 
 
 def checkout(request):
     ''' A view to return the checkout screen '''
     bag = request.session.get('bag', {})
     user = request.user.id
-    delivery = False
 
     if bag == {}:
         return redirect('shopping_bag')
 
-    if request.POST:
-        if 'address_line_1' in request.POST:
-            address_line_1 = request.POST['address_line_1']
-            if 'address_line_2' in request.POST:
-                address_line_2 = request.POST['address_line_2']
-            else:
-                address_line_2 = ""
-            town = request.POST['town']
-            post_code = request.POST['post_code']
-            email = request.POST['email']
-            phone = request.POST['phone']
-
-            delivery = {
-                'address_line_1': address_line_1,
-                'address_line_2': address_line_2,
-                'town': town,
-                'post_code': post_code,
-                'email': email,
-                'phone': phone,
-                'user': user
-            }
-
-            request.session['delivery'] = delivery
-            return redirect(order_summary)
-
     context = {
         'user': user,
-        'delivery_details': delivery,
     }
 
     return render(request, 'checkout/checkout.html', context)
+
+
+def address(request):
+    ''' A view to return the delivery details page '''
+    address_details = request.session.get('address_details', {})
+    form = Delivery()
+    if request.POST:
+        address_line_1 = request.POST['address_line_1']
+        if 'address_line_2' in request.POST:
+            address_line_2 = request.POST['address_line_2']
+        else:
+            address_line_2 = ''
+        town = request.POST['town']
+        postcode = request.POST['postcode']
+        email = request.POST['email']
+        phone = request.POST['phone']
+
+        if 'guest' in request.POST:
+            address_details['1'] = {
+                'address_line_1': address_line_1,
+                'address_line_2': address_line_2,
+                'town': town,
+                'postcode': postcode,
+                'email': email,
+                'phone': phone
+            }
+
+        else:
+            new_delivery_details = DeliveryDetails(
+                user=User(request.user.id),
+                address_line_1=address_line_1, address_line_2=address_line_2,
+                town=town, postcode=postcode, email=email, phone=phone
+            )
+            new_delivery_details.save()
+
+        request.session['address_details'] = address_details
+
+        return redirect('order_summary')
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'checkout/delivery_details.html', context)
 
 
 def order_summary(request):
@@ -76,15 +95,15 @@ def bank_details(request):
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
     }
-    
+
     return render(request, 'checkout/bank_details.html', context)
 
 
 def success(request):
-    ''' '''
+    ''' Order Success page '''
     return render(request, 'checkout/success.html')
 
 
 def cancel(request):
-    ''' '''
+    ''' Cancels transaction '''
     return render(request, 'checkout/cancel.html')

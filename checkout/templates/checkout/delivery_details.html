@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_title %}
+Delivery details
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col p-4">
+            <div class="header-images">
+                <div class="header-text text-center">
+                    <h1 class="display-5">Delivery Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <form method="POST" action="{% url 'delivery_details' %}">
+                {% csrf_token %}
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.address_line_1.errors }}
+                        <label for="{{ form.address_line_1.id_for_label }}" class="form-label float-left">Address Line
+                            1:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="address_line_1"
+                            id="{{ form.address_line_1.id_for_label }}">
+                    </div>
+                </div>
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.address_line_2.errors }}
+                        <label for="{{ form.address_line_2.id_for_label }}" class="form-label float-left">Address Line
+                            2:</label>
+                        <input class="form-control" type="text" name="address_line_2"
+                            id="{{ form.address_line_2.id_for_label }}">
+                    </div>
+                </div>
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.town.errors }}
+                        <label for="{{ form.town.id_for_label }}" class="form-label float-left">Town / City:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="town"
+                            id="{{ form.town.id_for_label }}">
+                    </div>
+                </div>
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.post_code.errors }}
+                        <label for="{{ form.postcode.id_for_label }}" class="form-label float-left">Post Code:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="postcode"
+                            id="{{ form.post_code.id_for_label }}">
+                    </div>
+                </div>
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.email.errors }}
+                        <label for="{{ form.email.id_for_label }}" class="form-label float-left">Email Address:</label>
+                        <input required aria-required="true" class="form-control" type="email" name="email"
+                            id="{{ form.email.id_for_label }}" value="{{ user.email }}">
+                    </div>
+                </div>
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        {{ form.phone.errors }}
+                        <label for="{{ form.phone.id_for_label }}" class="form-label float-left">Phone Number:</label>
+                        <input required aria-required="true" class="form-control" type="text" name="phone"
+                            id="{{ form.phone.id_for_label }}">
+                    </div>
+                </div>
+                <div class="field-wrapper mt-2">
+                    <div class="mb-3">
+                        <div class="button-group">
+                            {% if user.is_authenticated %}
+                            <button type="submit" class="btn btn-primary">Proceed with checkout</button>
+                            {% else %}
+                            <input type="hidden" name="guest" value="1">
+                            <button type="submit" class="btn btn-primary">Checkout As Guest</button>
+                            <a class="btn btn-primary" href="{% url 'account_login' %}">Login</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
