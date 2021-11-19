@@ -100,11 +100,25 @@ def create_checkout_session(request):
 
 def success(request):
     ''' Order Success page '''
-    print(request.META.get('HTTP_REFERER'))
+    bag = bag_items(request)
+    user = request.user
+    delivery_cost = request.session.get('delivery_cost', {})
+    delivery_cost = round(delivery_cost['cost'], 2)
+    order_total = round(bag['total'], 2)
+    grand_total = order_total + delivery_cost
+    if user.is_authenticated():
+        user_id = user.id
+        user = User(user_id)
+    else:
+        user = ''
+    if 'stripe' in (request.META.get('HTTP_REFERER')):
+        new_order = Order(user=user,
+                          address_line_1=address_line_1, address_line_2=address_line_2,
+                          town=town, postcode=postcode, email=email, phone=phone, delivery_cost=delivery_cost,
+                          order_total=order_total, grand_total=grand_total
+                          )
     new_delivery_details = DeliveryDetails(
-        user=User(request.user.id),
-        address_line_1=address_line_1, address_line_2=address_line_2,
-        town=town, postcode=postcode, email=email, phone=phone
+
     )
     new_delivery_details.save()
     return render(request, 'checkout/success.html')

@@ -1,12 +1,25 @@
 # An interesting website
 
-<!-- Slideshow from w3 schools -->
-
 View live project here https://an-interesting-website.herokuapp.com/
 
 This is a shop website which sells products made by the company and allows users to list their own products for sale.
 
 It is designed to enable the shopper to find a product they like easily by providing a search form and various ways to filter the results.
+
+# To do
+
+1) Complete order model and migrate
+2) Complete order form handling (mostly done)
+3) Send email confirming order (already sent emails elsewhere in code)
+3) Change form handling slightly in products view to filter within the currently selected category / search
+4) Change form handling of categories form to filter category__name 
+5) Fix validation issues with code
+6) Add orders to user profile
+7) Finish form handling for amend profile (5 mins work)
+8) Amend product functionality
+9) Remove Comment / rating
+10) Show users product listings
+11) show message to user when product bought / email to user
 
 # Data schema
 
@@ -60,7 +73,18 @@ The site allows the users to view pictures of the products so they can quickly f
 
 # Features
 
+Search for products
+
+
 # Technologies Used
+
+Amazon Web services
+
+Github
+
+Gitpod
+
+Heroku
 
 ## Frameworks & libraries used
 
@@ -86,7 +110,10 @@ Python 3
 
 ## Known bugs
 
-When using multiple monitors the width and height of objects becomes altered.
+1) When using multiple monitors the width and height of objects becomes altered.
+2) Css and JS not linked properly to AWS
+3) Bug when validating payment then going back to success page
+4) In checkout app when clicking the categories drop down the categories do not appear due to re-assigning the categories variable
 
 # Deployment
 
