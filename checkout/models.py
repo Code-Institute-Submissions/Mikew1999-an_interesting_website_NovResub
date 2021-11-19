@@ -1,10 +1,12 @@
 ''' Import user model for foreign key '''
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 
-class DeliveryDetails(models.Model):
-    ''' Stores the delivery Details '''
+class Order(models.Model):
+    ''' Defines an order '''
+    order_number = models.CharField(max_length=32, null=False, editable=False)
     user = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.SET_NULL)
     address_line_1 = models.CharField(max_length=254, null=False, blank=False)
@@ -13,6 +15,11 @@ class DeliveryDetails(models.Model):
     postcode = models.CharField(max_length=10, null=False, blank=False)
     email = models.EmailField(max_length=100)
     phone = models.CharField(max_length=15)
-
-    def __str__(self):
-        return str(self.address_line_1)
+    date = models.DateTimeField(auto_now_add=True)
+    delivery_cost = models.DecimalField(
+        max_digits=6, decimal_places=2, null=False, default=0)
+    order_total = models.DecimalField(
+        max_digits=10, decimal_places=2, null=False, default=0)
+    grand_total = models.DecimalField(
+        max_digits=10, decimal_places=2, null=False, default=0)
+    items = ArrayField(models.CharField(max_length=10, blank=True))

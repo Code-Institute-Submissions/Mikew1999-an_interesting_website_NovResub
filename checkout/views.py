@@ -1,15 +1,10 @@
 ''' Checkout pages and form handling '''
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.http import JsonResponse
 from django.conf import settings
-import os
-import json
 import stripe
 from shopping_bag.contexts import bag_items
-from .models import DeliveryDetails
-from .forms import Delivery
-
+from .models import Order
 
 def checkout(request):
     ''' A view to return the checkout screen '''
@@ -34,7 +29,6 @@ def address(request):
         return redirect('shopping_bag')
 
     address_details = request.session.get('address_details', {})
-    form = Delivery()
     if request.POST:
         address_line_1 = request.POST['address_line_1']
         if 'address_line_2' in request.POST:
@@ -55,20 +49,11 @@ def address(request):
             'phone': phone
         }
 
-        if 'guest' not in request.POST:
-            new_delivery_details = DeliveryDetails(
-                user=User(request.user.id),
-                address_line_1=address_line_1, address_line_2=address_line_2,
-                town=town, postcode=postcode, email=email, phone=phone
-            )
-            new_delivery_details.save()
-
         request.session['address_details'] = address_details
 
         return redirect('order_summary')
 
     context = {
-        'form': form,
         'address_details': address_details,
     }
 
@@ -78,7 +63,8 @@ def address(request):
 def order_summary(request):
     ''' A view to return the order summary page '''
     address_details = request.session.get('address_details', {})
-
+    bag = bag_items(request)
+    print(bag['items'])
     context = {
         'address_details': address_details,
     }
@@ -87,15 +73,19 @@ def order_summary(request):
 
 
 def create_checkout_session(request):
+    bag = bag_items(request)
+    delivery_cost = request.session.get('delivery_cost', {})
+    unit_amount = round(bag['total'], 2) + round(delivery_cost['cost'], 2)
+    unit_amount = round(unit_amount * 100)
     stripe.api_key = settings.STRIPE_SECRET_KEY
     session = stripe.checkout.Session.create(
         line_items=[{
             'price_data': {
                 'currency': 'gbp',
                 'product_data': {
-                    'name': 'T-shirt',
+                    'items': 'Total',
                 },
-                'unit_amount': 2000,
+                'unit_amount': unit_amount,
             },
             'quantity': 1,
         }],
@@ -108,6 +98,14 @@ def create_checkout_session(request):
 
 def success(request):
     ''' Order Success page '''
+    print(bag['items'])
+    print(request.META.get('HTTP_REFERER'))
+    new_delivery_details = DeliveryDetails(
+            user=User(request.user.id),
+            address_line_1=address_line_1, address_line_2=address_line_2,
+            town=town, postcode=postcode, email=email, phone=phone
+        )
+    new_delivery_details.save()
     return render(request, 'checkout/success.html')
 
 
