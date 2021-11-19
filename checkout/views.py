@@ -96,34 +96,14 @@ def create_checkout_session(request):
                     'name': 'T-shirt',
                 },
                 'unit_amount': 2000,
-        },
-        'quantity': 1,
+            },
+            'quantity': 1,
         }],
         mode='payment',
-        success_url='https://an-interesting-website.s3.amazonaws.com/checkout/success.html',
-        cancel_url='https://an-interesting-website.s3.amazonaws.com/checkout/cancel.html',
-    )
+        success_url='https://an-interesting-website.herokuapp.com/checkout/success',
+        cancel_url='https://an-interesting-website.herokuapp.com/checkout/cancel')
 
-    return redirect(request, session.url, code=303)
-
-# def bank_details(request):
-#     ''' A view to return billing details form '''
-#     stripe_public_key = settings.STRIPE_PUBLIC_KEY
-#     stripe_secret_key = settings.STRIPE_SECRET_KEY
-#     bag = request.session.get('bag', {})
-#     delivery_cost = request.session.get('delivery_cost', {})
-
-#     if bag == {}:
-#         return redirect('shopping_bag')
-
-#     current_bag = bag_items(request)
-#     total = current_bag['total']
-#     context = {
-#         'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
-#         'client_secret': settings.STRIPE_SECRET_KEY,
-#     }
-
-#     return render(request, 'checkout/bank_details.html', context)
+    return redirect(session.url, code=303)
 
 
 def success(request):

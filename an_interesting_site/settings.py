@@ -1,6 +1,8 @@
 ''' Required Imports '''
 import os
 import dj_database_url
+if os.path.exists("env.py"):
+    import env
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -177,8 +179,8 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 MEDIAFILES_LOCATION = 'media'
 
 # Override static and media URL's in production
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
 
 categories_with_sizes = [3, 4]
 
@@ -188,4 +190,4 @@ email_password = os.environ.get('password')
 
 STRIPE_CURRENCY = 'gbp'
 STRIPE_PUBLIC_KEY = 'pk_test_51Je9YQK25WcuIKuVU0QvHdpI22wEDHjJwkSNmarkvBLK2FANdX5Q3MLVooSUym7nHxTEWk6JCXHb7uQ8ivEdj0Az00Bw6nF3J9'
-STRIPE_SECRET_KEY = 'sk_test_51Je9YQK25WcuIKuVMssctpYOXdCkUjS8SjLTzag9JiAPdHHWCtK870aIr4qNUZ4jd2NoCfCkJM16sfjiUacbyM4G00fDnjPJyh'
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
