@@ -6,7 +6,6 @@ from django.db import models
 
 class Order(models.Model):
     ''' Defines an order '''
-    order_number = models.CharField(max_length=32, null=False, editable=False)
     user = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.SET_NULL)
     address_line_1 = models.CharField(max_length=254, null=False, blank=False)
@@ -22,4 +21,4 @@ class Order(models.Model):
         max_digits=10, decimal_places=2, null=False, default=0)
     grand_total = models.DecimalField(
         max_digits=10, decimal_places=2, null=False, default=0)
-    items = ArrayField(models.CharField(max_length=10, blank=True))
+    items = ArrayField(models.CharField(max_length=3000), default='')

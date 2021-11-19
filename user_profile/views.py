@@ -11,9 +11,6 @@ def user_profile(request, user_id):
     products = Products.objects.filter(author=User(user_id))[:4]
     orders = None
 
-    if 'more' in request.GET:
-        products = Products.objects.filter(author=User(user_id))
-
     context = {
         'user': user,
         'products': products,
